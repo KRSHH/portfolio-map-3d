@@ -164,6 +164,62 @@
   display: block;
 }
 
+/* The audience word ("Explore the ___ universe.", AudienceWord.tsx): a window one line tall that the
+   words roll up through, easing to each word's width, over an underline in the core's colors. */
+.audience {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  transition: width 0.5s var(--ease);
+}
+
+.audience::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.18em;
+  height: max(2px, 0.06em);
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--orb-bright), var(--violet));
+}
+
+.audience-window {
+  display: block;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.audience-track {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.6s var(--ease);
+}
+
+.audience-track > span {
+  display: block;
+  height: 1.2em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.audience-track > span::before {
+  content: attr(data-word);
+}
+
+.audience[data-jump],
+.audience[data-jump] .audience-track {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience,
+  .audience-track {
+    transition: none;
+  }
+}
+
 /* Shared type style. */
 .lede {
   max-width: 52ch;
@@ -406,6 +462,71 @@
   .promo-video {
     margin-top: 24px;
   }
+}
+
+/* ---------- Who it's for ---------- */
+
+.audience-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audience-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+}
+
+.audience-icon {
+  color: var(--text-muted);
+}
+
+.audience-card h3 {
+  margin: 8px 0 0;
+  color: var(--text);
+  font: 500 var(--text-body) / var(--line-body) var(--heading);
+}
+
+.audience-card > p {
+  margin: 0;
+  color: var(--text-muted);
+  font: var(--type-body);
+}
+
+/* The maps that show it, or the service that builds it, sit at the foot of the card. */
+.audience-examples,
+.audience-service {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.audience-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.audience-service {
+  min-height: var(--touch);
+}
+
+a.world-pill-button {
+  display: inline-flex;
+  color: inherit;
+  text-decoration: none;
 }
 
 /* ---------- Get started ---------- */

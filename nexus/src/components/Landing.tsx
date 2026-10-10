@@ -1,20 +1,23 @@
 /* The landing page: the framework, and the network it joins. Its hero is the live Nexus,
    drifting behind the headline; everything below is short, factual and in the third person. */
 import { useEffect, useRef, type RefObject } from "react";
-import { ChevronDown, Minus, Plus, RotateCcw } from "lucide-react";
+import { Briefcase, Building, CalendarDays, ChevronDown, Minus, Plus, Rocket, RotateCcw, type LucideIcon } from "lucide-react";
 import { FRAMEWORK_REPO } from "../../../federation/protocol.ts";
-import { PROMO_VIDEO, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "../config.ts";
+import { AUDIENCES, HERO_WORDS, PROMO_VIDEO, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "../config.ts";
 import { formatDate, plural } from "../lib/copy.ts";
 import { LANDING, type Route } from "../lib/route.ts";
 import { routeHref } from "../hooks/useRoute.ts";
 import type { NetworkState } from "../hooks/useNetwork.ts";
+import type { World } from "../lib/network.ts";
 import type { EngineStatus } from "../hooks/useEngine.ts";
 import type { NexusEngine } from "../three/engine.ts";
+import { AudienceWord } from "./AudienceWord.tsx";
 import { CodeBlock } from "./CodeBlock.tsx";
 import { ArrowRight, Check, External, Mark } from "./Icons.tsx";
 import { MusicButton } from "./MusicButton.tsx";
 import { NetworkList } from "./NetworkList.tsx";
 import { SceneHost } from "./SceneHost.tsx";
+import { WorldIdentity } from "./WorldIdentity.tsx";
 
 /** "fritzhand/portfolio-map-3d", from the repository's address. */
 const REPO_PATH = new URL(FRAMEWORK_REPO).pathname.replace(/^\/|\/$/g, "");
@@ -26,6 +29,15 @@ const EXAMPLE_MAP = `${import.meta.env.BASE_URL}example/`;
 const DOCS = `${FRAMEWORK_REPO}/tree/main/docs`;
 const JOINING = `${FRAMEWORK_REPO}/blob/main/docs/network.md#joining`;
 const TERMS = `${FRAMEWORK_REPO}/blob/main/NETWORK.md`;
+
+/** Each audience's icon, by its id in AUDIENCES; an audience without one shows none. */
+const AUDIENCE_ICONS: Record<string, LucideIcon> = { accelerators: Rocket, funds: Briefcase, hubs: Building, events: CalendarDays };
+
+/** Opens a service package's details (an audience card links to it). */
+function openPackage(id: string) {
+  const details = document.querySelector<HTMLDetailsElement>(`#package-${id} details`);
+  if (details) details.open = true;
+}
 
 const START = `npx degit ${REPO_PATH} my-map
 cd my-map && npm install
@@ -127,7 +139,10 @@ export function Landing({ route, net, engine, gl, onEnter, pickRef }: Props) {
           <div className="hero-inner">
             <div className="hero-text" ref={text}>
               <h1 id="hero-title">
-                <span>Explore the</span> <span>company universe.</span>
+                <span>Explore the</span>{" "}
+                <span>
+                  <AudienceWord words={HERO_WORDS} /> universe.
+                </span>
               </h1>
               <p className="lede">
                 Choose a planet. Browse its companies.
@@ -179,6 +194,50 @@ export function Landing({ route, net, engine, gl, onEnter, pickRef }: Props) {
           </section>
         ) : null}
 
+        <section className="section" id="who" aria-labelledby="who-title">
+          <div className="container">
+            <h2 id="who-title">Who it's for</h2>
+            <p className="section-lede">Any organization with companies to show: a program, a portfolio, a region or an event.</p>
+            <ul className="audience-list">
+              {AUDIENCES.map((a) => {
+                const Icon = AUDIENCE_ICONS[a.id];
+                // Only maps that are in the network now; a service only when it is offered.
+                const shown = model ? a.examples.map((id) => model.byId.get(id)).filter((w): w is World => Boolean(w)) : [];
+                const service = a.service ? WHITE_GLOVE.packages.find((p) => p.id === a.service) : undefined;
+                return (
+                  <li key={a.id} className="audience-card">
+                    {Icon ? <Icon size={20} className="audience-icon" aria-hidden="true" /> : null}
+                    <h3>{a.name}</h3>
+                    <p>{a.summary}</p>
+                    {shown.length ? (
+                      <ul className="audience-examples" aria-label={`Maps for ${a.name.toLowerCase()}`}>
+                        {shown.map((w) => (
+                          <li key={w.id}>
+                            {gl === "unavailable" ? (
+                              <a className="world-pill-button" href={w.url}>
+                                <WorldIdentity name={w.name} accent={w.accent} logo={w.logo} />
+                              </a>
+                            ) : (
+                              <button type="button" className="world-pill-button" onClick={() => onEnter(w.id)} aria-label={`Explore ${w.name} in the Nexus`}>
+                                <WorldIdentity name={w.name} accent={w.accent} logo={w.logo} />
+                              </button>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                    {service ? (
+                      <a className="text-link audience-service" href={`#package-${service.id}`} onClick={() => openPackage(service.id)}>
+                        {service.name} service <ArrowRight size={16} />
+                      </a>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+
         <section className="section" id="network" aria-labelledby="network-title">
           <div className="container">
             <div className="section-head">
@@ -216,7 +275,7 @@ export function Landing({ route, net, engine, gl, onEnter, pickRef }: Props) {
             <p className="section-lede">{WHITE_GLOVE.provider ? `Map setup by ${WHITE_GLOVE.provider}.` : "Help building and maintaining your map."}</p>
             <ul className="service-list">
               {[...WHITE_GLOVE.packages.filter((p) => !p.addon), ...WHITE_GLOVE.packages.filter((p) => p.addon)].map((p) => (
-                <li key={p.id} className={p.addon ? "package is-addon" : "package"}>
+                <li key={p.id} id={`package-${p.id}`} className={p.addon ? "package is-addon" : "package"}>
                   <details className="package-details">
                     <summary>
                       <span className="package-overview"><span className="package-name">{p.name}</span><span>{p.summary}</span></span>

@@ -1,7 +1,8 @@
 # portfolio-map-3d
 
 An open source framework for publishing an organization's companies (an accelerator's cohort, an
-incubator's members, a fund's portfolio, a community's startups) as a 3D map with three ways in:
+incubator's members, a fund's portfolio, a community's startups, an event's exhibitors) as a 3D map
+with three ways in:
 
 | View | What it's for |
 |---|---|

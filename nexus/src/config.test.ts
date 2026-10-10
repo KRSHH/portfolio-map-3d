@@ -2,7 +2,35 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ID_PATTERN } from "../../federation/protocol.ts";
 import { isHttpsUrl } from "../../federation/validate.ts";
-import { EMAIL_PATTERN, MUSIC, PROMO_VIDEO, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
+import { AUDIENCES, EMAIL_PATTERN, HERO_WORDS, MUSIC, PROMO_VIDEO, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
+
+describe("HERO_WORDS", () => {
+  it("are single lowercase words, short enough to keep the hero's line whole, none twice", () => {
+    expect(HERO_WORDS.length).toBeGreaterThan(0);
+    expect(new Set(HERO_WORDS).size).toBe(HERO_WORDS.length);
+    for (const w of HERO_WORDS) expect(/^[a-z]{2,12}$/.test(w), w).toBe(true);
+  });
+});
+
+describe("AUDIENCES", () => {
+  it("have unique ids, a name and a summary", () => {
+    const ids = AUDIENCES.map((a) => a.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const a of AUDIENCES) {
+      expect(ID_PATTERN.test(a.id), a.id).toBe(true);
+      expect(a.name.trim()).not.toBe("");
+      expect(a.summary.trim()).not.toBe("");
+    }
+  });
+
+  it("name maps by their network ids, and only services that are offered", () => {
+    const packages = new Set(WHITE_GLOVE.packages.map((p) => p.id));
+    for (const a of AUDIENCES) {
+      for (const id of a.examples) expect(ID_PATTERN.test(id), id).toBe(true);
+      if (a.service !== null) expect(packages.has(a.service), a.service).toBe(true);
+    }
+  });
+});
 
 describe("WHITE_GLOVE", () => {
   it("sends requests to an email address or an https form, with an optional provider and note", () => {

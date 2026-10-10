@@ -1,6 +1,12 @@
-/* What the Nexus's operators configure: the "Services" section on the landing page (a paid
-   setup service, at #built-for-you) and the network's promo video. Edit the values here; the page
-   renders whatever they say, in the third person.
+/* What the Nexus's operators configure: the hero's audience words and the "Who it's for" section
+   on the landing page, the "Services" section (a paid setup service, at #built-for-you) and the
+   network's promo video. Edit the values here; the page renders whatever they say, in the third
+   person.
+
+   - HERO_WORDS: "Explore the ___ universe." The first word is the one screen readers hear and the
+     one shown with reduced motion; the rest roll up after it, in order.
+   - AUDIENCES: who uses a map, each with the maps in the network that show it (world ids; a world
+     not in the network is left out) or a link to the service that builds it.
 
    - provider: who offers it; null names "the maintainers of portfolio-map-3d".
    - intake: where "Request a setup" goes: an email address (the button opens an email with the
@@ -11,6 +17,51 @@
      package has a price); a checkoutUrl adds a "Book" button; an add-on (addon: true) comes after
      the packages, across the row; exampleHref adds a "See an example" link (an https page, or
      "#video" for the promo video on this page). */
+/** "Explore the ___ universe.": one lowercase word each, short enough to keep the line whole. */
+export const HERO_WORDS: readonly string[] = ["company", "startup", "portfolio", "vendor"];
+
+export interface Audience {
+  /** Lowercase letters, digits and hyphens; picks its icon on the landing page. */
+  id: string;
+  name: string;
+  summary: string;
+  /** Maps in the network that show this use, by world id; shown only while they are in the network. */
+  examples: string[];
+  /** A service package (its id) that builds this kind of map, linked under the summary; or null. */
+  service: string | null;
+}
+
+export const AUDIENCES: Audience[] = [
+  {
+    id: "accelerators",
+    name: "Accelerators and incubators",
+    summary: "Each cohort by track or program, as a globe, a walkable world and a directory.",
+    examples: ["ambition-accelerated"],
+    service: null,
+  },
+  {
+    id: "funds",
+    name: "Funds and angel groups",
+    summary: "A portfolio by sector or fund, for founders, co-investors and partners to explore.",
+    examples: [],
+    service: null,
+  },
+  {
+    id: "hubs",
+    name: "Hubs and regions",
+    summary: "A hub's members, or a region's startups and support organizations, by district.",
+    examples: ["embarc-collective", "florida-ecosystem-map", "india-ecosystem-map"],
+    service: null,
+  },
+  {
+    id: "events",
+    name: "Conferences and summits",
+    summary: "The event's floor plan as a walkable world, with a booth for each exhibitor, sponsor and vendor.",
+    examples: [],
+    service: "event-world",
+  },
+];
+
 export interface WhiteGlovePackage {
   /** Lowercase letters, digits and hyphens. */
   id: string;
@@ -72,6 +123,21 @@ export const WHITE_GLOVE: WhiteGlove = {
       exampleHref: null,
     },
     {
+      id: "event-world",
+      name: "Event world",
+      summary: "A conference or summit floor as a walkable world.",
+      includes: [
+        "Lay out halls, stages and booths from your floor plan",
+        "Place each exhibitor, sponsor and vendor by its logo",
+        "Find a booth by name or category",
+        "Join the network as your event's map",
+      ],
+      price: null,
+      checkoutUrl: null,
+      addon: false,
+      exampleHref: null,
+    },
+    {
       id: "care",
       name: "Updates",
       summary: "Keep your map current.",
@@ -119,8 +185,8 @@ export const PROMO_VIDEO: PromoVideo | null = {
   src: "https://community.embarccollective.com/promo/nexus-16x9.mp4",
   portrait: "https://community.embarccollective.com/promo/nexus-9x16.mp4",
   poster: "https://community.embarccollective.com/promo/nexus-cover-16x9.jpg",
-  seconds: 50,
-  caption: "Filmed from the live sites: Ambition Accelerated's walkable Florida and its portal, the Nexus, and the Florida Ecosystem Map. With music.",
+  seconds: 53,
+  caption: "Filmed from the live sites: Ambition Accelerated's walkable Florida and its portal, the Nexus, and Embarc Collective's member globe. With music.",
 };
 
 /**
@@ -155,7 +221,7 @@ export const REQUEST_SUBJECT = "Map service request";
 export const REQUEST_QUESTIONS = [
   "Organization and website:",
   "Service, if known:",
-  "Number of companies:",
+  "Number of companies or exhibitors:",
   "Company list or data source:",
   "Map domain:",
   "Target launch date:",

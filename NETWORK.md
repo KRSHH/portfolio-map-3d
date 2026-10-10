@@ -42,8 +42,8 @@ reachable at last check".
 The maintainers approve an entry when:
 
 1. **It is a real organization publishing its own companies**: an accelerator, incubator, fund,
-   university program, chamber, community. Not a list scraped from someone else, not a single
-   company's marketing site.
+   university program, chamber, community, or an event publishing its exhibitors. Not a list
+   scraped from someone else, not a single company's marketing site.
 2. **It keeps the data contract** ([docs/data-contract.md](./docs/data-contract.md)): every fact
    has a source, nothing is invented, no personal contact data. A spot check of a few records.
 3. **It does not impersonate**: the map's name and publisher match the organization that vouched
