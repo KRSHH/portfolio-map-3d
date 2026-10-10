@@ -462,6 +462,23 @@
   margin-top: 8px;
 }
 
+/* ---------- The video ---------- */
+
+.promo-video {
+  display: block;
+  width: 100%;
+  max-width: 1080px;
+  aspect-ratio: 16 / 9;
+  margin-top: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.promo-alt {
+  margin-top: 14px;
+}
+
 /* ---------- Have it built for you ---------- */
 
 .provider {
@@ -527,6 +544,30 @@
 
 .package .btn {
   align-self: flex-start;
+}
+
+/* An add-on: after the packages, across the whole row. */
+.package.is-addon {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  .package.is-addon .includes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 24px;
+  }
+}
+
+.package-kicker {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.package-kicker + h3 {
+  margin-top: -6px;
 }
 
 .wg-note {

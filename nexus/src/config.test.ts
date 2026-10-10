@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ID_PATTERN } from "../../federation/protocol.ts";
 import { isHttpsUrl } from "../../federation/validate.ts";
-import { EMAIL_PATTERN, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
+import { EMAIL_PATTERN, PROMO_VIDEO, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
 
 describe("WHITE_GLOVE", () => {
   it("sends requests to an email address or an https form, with an optional provider and note", () => {
@@ -23,7 +23,15 @@ describe("WHITE_GLOVE", () => {
       for (const line of p.includes) expect(line.trim()).not.toBe("");
       expect(p.price === null || p.price.trim().length > 0).toBe(true);
       expect(p.checkoutUrl === null || isHttpsUrl(p.checkoutUrl)).toBe(true);
+      expect(typeof p.addon).toBe("boolean");
+      expect(p.exampleHref === null || isHttpsUrl(p.exampleHref) || /^#[a-z][a-z0-9-]*$/.test(p.exampleHref), String(p.exampleHref)).toBe(true);
     }
+    // At least one package stands on its own; add-ons go with it.
+    expect(WHITE_GLOVE.packages.some((p) => !p.addon)).toBe(true);
+  });
+
+  it("links an example on this page only when the page has it", () => {
+    for (const p of WHITE_GLOVE.packages) if (p.exampleHref === "#video") expect(PROMO_VIDEO, p.id).not.toBeNull();
   });
 
   it("knows a GitHub form is public", () => {
@@ -51,5 +59,15 @@ describe("WHITE_GLOVE", () => {
   it("takes one plain email address, nothing more", () => {
     for (const ok of ["someone@example.org", "a.b+c@sub.example.org"]) expect(EMAIL_PATTERN.test(ok), ok).toBe(true);
     for (const bad of ["no-at.example.org", "a@b", "a b@example.org", "a@example.org?cc=x@example.org", "<a@example.org>"]) expect(EMAIL_PATTERN.test(bad), bad).toBe(false);
+  });
+});
+
+describe("PROMO_VIDEO", () => {
+  it("is off, or names https files, a length and a caption", () => {
+    if (!PROMO_VIDEO) return;
+    for (const url of [PROMO_VIDEO.src, PROMO_VIDEO.poster, ...(PROMO_VIDEO.portrait ? [PROMO_VIDEO.portrait] : [])]) expect(isHttpsUrl(url), url).toBe(true);
+    expect(PROMO_VIDEO.src).toMatch(/\.mp4$/);
+    expect(Number.isInteger(PROMO_VIDEO.seconds) && PROMO_VIDEO.seconds > 0).toBe(true);
+    expect(PROMO_VIDEO.caption.trim()).not.toBe("");
   });
 });

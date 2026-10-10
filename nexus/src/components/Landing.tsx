@@ -2,7 +2,7 @@
    drifting behind the headline; everything below is plain, factual text. */
 import { useEffect, useRef } from "react";
 import { FRAMEWORK, FRAMEWORK_REPO, MANIFEST_FILE, OWNER_DNS_LABEL, ownerTxtValue } from "../../../federation/protocol.ts";
-import { WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "../config.ts";
+import { PROMO_VIDEO, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "../config.ts";
 import { formatDate, plural } from "../lib/copy.ts";
 import { LANDING, type Route } from "../lib/route.ts";
 import { routeHref } from "../hooks/useRoute.ts";
@@ -142,6 +142,28 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
             </div>
           </div>
         </section>
+
+        {PROMO_VIDEO ? (
+          <section className="section section-alt" id="video" aria-labelledby="video-title">
+            <div className="container">
+              <h2 id="video-title">The network in {PROMO_VIDEO.seconds} seconds</h2>
+              <p className="section-lede" id="video-caption">
+                {PROMO_VIDEO.caption}
+              </p>
+              {/* preload="none": nothing is fetched until the visitor presses play. */}
+              <video className="promo-video" controls playsInline preload="none" poster={PROMO_VIDEO.poster} aria-labelledby="video-title" aria-describedby="video-caption">
+                <source src={PROMO_VIDEO.src} type="video/mp4" />
+              </video>
+              {PROMO_VIDEO.portrait ? (
+                <p className="promo-alt">
+                  <a className="text-link" href={PROMO_VIDEO.portrait}>
+                    The vertical cut, for phones <ArrowRight size={16} />
+                  </a>
+                </p>
+              ) : null}
+            </div>
+          </section>
+        ) : null}
 
         <section className="section" id="ways" aria-labelledby="ways-title">
           <div className="container">
@@ -286,8 +308,9 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
             <p className="section-lede">Prefer not to do it yourself? We can set up, launch and maintain your map for you.</p>
             <p className="provider">{WHITE_GLOVE.provider ? `Offered by ${WHITE_GLOVE.provider}` : `Offered by the maintainers of ${FRAMEWORK}`}</p>
             <ul className="packages">
-              {WHITE_GLOVE.packages.map((p) => (
-                <li key={p.id} className="package">
+              {[...WHITE_GLOVE.packages.filter((p) => !p.addon), ...WHITE_GLOVE.packages.filter((p) => p.addon)].map((p) => (
+                <li key={p.id} className={p.addon ? "package is-addon" : "package"}>
+                  {p.addon ? <p className="package-kicker">Add-on</p> : null}
                   <h3>{p.name}</h3>
                   <p className="package-summary">{p.summary}</p>
                   <ul className="includes">
@@ -298,6 +321,13 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
                       </li>
                     ))}
                   </ul>
+                  {p.exampleHref ? (
+                    <p className="package-example">
+                      <a className="text-link" href={p.exampleHref}>
+                        See an example<span className="sr-only">: {p.name}</span> <ArrowRight size={16} />
+                      </a>
+                    </p>
+                  ) : null}
                   <p className="package-price">{p.price ?? "Quoted per organization"}</p>
                   {p.checkoutUrl ? (
                     <a className="btn btn-outline btn-small" href={p.checkoutUrl}>
