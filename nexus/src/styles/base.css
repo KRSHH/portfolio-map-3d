@@ -23,7 +23,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -41,8 +41,8 @@ h3,
 h4 {
   margin: 0;
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 p {
@@ -132,11 +132,11 @@ code {
   justify-content: center;
   gap: 8px;
   min-height: var(--touch);
-  padding: 0 18px;
-  border-radius: 999px;
+  padding: 0 16px;
+  border-radius: var(--radius-s);
   border: 1px solid transparent;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
@@ -147,24 +147,23 @@ code {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--accent-ink);
-  box-shadow: 0 8px 28px -10px var(--accent-glow);
+  background: var(--primary);
+  color: var(--primary-ink);
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
+  background: var(--primary-hover);
 }
 
 .btn-outline {
-  border-color: var(--border-strong);
-  background: var(--hover);
+  border-color: var(--border);
+  background: var(--surface);
   color: var(--text);
 }
 
 .btn-outline:hover {
-  border-color: var(--accent-line);
-  background: var(--accent-soft);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
 }
 
 .btn-ghost {
@@ -177,13 +176,13 @@ code {
 }
 
 .btn-large {
-  min-height: 52px;
-  padding: 0 24px;
+  min-height: 48px;
+  padding: 0 20px;
   font-size: 16px;
 }
 
 .btn-small {
-  padding: 0 14px;
+  padding: 0 12px;
   font-size: 14px;
 }
 
@@ -214,7 +213,7 @@ code {
   align-items: center;
   gap: 6px;
   color: var(--link);
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -225,14 +224,13 @@ code {
 .sample-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
+  padding: 2px 8px;
+  border-radius: var(--radius-s);
   background: var(--warn);
   color: var(--warn-ink);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 16px;
   white-space: nowrap;
 }
 
@@ -376,20 +374,20 @@ code {
 .code {
   position: relative;
   min-width: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-s);
   border: 1px solid var(--border);
   background: var(--bg-deep);
 }
 
 .code pre {
   margin: 0;
-  padding: 13px 104px 13px 16px;
+  padding: 12px 96px 12px 16px;
   overflow-x: auto;
   font-family: var(--mono);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 24px;
   color: var(--text);
-  border-radius: 12px;
+  border-radius: var(--radius-s);
 }
 
 .code pre:focus-visible {
@@ -412,17 +410,19 @@ code {
   gap: 6px;
   min-height: 38px;
   padding: 0 12px;
-  border-radius: 9px;
-  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
   background: var(--surface-2);
+  /* A long line fades out before it reaches the button. */
+  box-shadow: -16px 0 12px -4px var(--bg-deep);
   color: var(--text);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .code-copy:hover {
-  border-color: var(--accent-line);
+  border-color: var(--border-strong);
 }
 
 @media (pointer: coarse) {
@@ -449,7 +449,7 @@ code {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 22px 20px 20px;
+  padding: 24px;
   overflow: hidden;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -479,7 +479,9 @@ code {
 }
 
 .net-card-title :is(h2, h3, h4) {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
 }
 
 .net-host {
@@ -490,11 +492,14 @@ code {
 
 .net-tagline {
   color: var(--text-muted);
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .net-counts {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
 }
 
 .net-actions {
@@ -512,7 +517,8 @@ code {
 }
 
 .net-hidden-title {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .net-hidden-list {
@@ -527,7 +533,7 @@ code {
   display: grid;
   gap: 4px;
   padding: 14px 16px;
-  border-radius: 12px;
+  border-radius: var(--radius-s);
   border: 1px dashed var(--border-strong);
   background: var(--surface);
 }
@@ -550,7 +556,7 @@ code {
 }
 
 .empty-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -568,7 +574,8 @@ code {
 
 .publisher {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .nowrap {
@@ -580,12 +587,13 @@ code {
   align-items: flex-start;
   gap: 6px;
   color: var(--text-muted);
-  font-size: 13.5px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .proof svg {
   flex: none;
-  margin-top: 2px;
+  margin-top: 1px;
   color: var(--accent);
 }
 
@@ -593,4 +601,79 @@ code {
 .panel-meta {
   display: grid;
   gap: 2px;
+}
+
+/* ---------- Music: the floating button (both pages) ---------- */
+
+/* Bottom right, clear of the world's panel and bottom sheets: the world sets --gap and the HUD's
+   insets (--inset-r includes the panel's gaps; a phone's sheet sits flush with the bottom). The
+   landing page has none of them. */
+.music-fab {
+  position: fixed;
+  z-index: 18;
+  right: max(var(--inset-r, 0px), var(--gap, 16px), env(safe-area-inset-right, 0px));
+  bottom: calc(var(--inset-b, 0px) + max(var(--gap, 16px), env(safe-area-inset-bottom, 0px)));
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.music-fab:hover {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.music-fab[aria-pressed="true"] {
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.sound-bars line {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sound-bar 0.8s ease-in-out infinite alternate;
+}
+
+.sound-bars line:nth-child(2) {
+  animation-duration: 0.65s;
+  animation-delay: -0.4s;
+}
+
+.sound-bars line:nth-child(3) {
+  animation-duration: 0.9s;
+  animation-delay: -0.2s;
+}
+
+.sound-bars line:nth-child(4) {
+  animation-duration: 0.7s;
+  animation-delay: -0.55s;
+}
+
+@keyframes sound-bar {
+  from {
+    transform: scaleY(0.35);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-bars line {
+    animation: none;
+  }
 }

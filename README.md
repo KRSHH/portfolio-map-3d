@@ -42,7 +42,7 @@ its proof drops out. [NETWORK.md](./NETWORK.md) has the terms and the review cri
 [docs/network.md](./docs/network.md) the protocol.
 
 **Rather have it built for you?** The maintainers offer a paid white-glove service: setup, a
-custom walk world, and ongoing care. See "Have it built for you" on the
+custom walk world, and ongoing care. See "Services" on the
 [landing page](https://wearenexus.xyz/#built-for-you), or request a setup by email at
 [jeremy@embarccollective.com](mailto:jeremy@embarccollective.com?subject=Setup%20request).
 
@@ -86,6 +86,7 @@ pull framework updates (`git pull upstream main`) without conflicts.
 | [docs/network.md](./docs/network.md) | The manifest, the registry, the Nexus, joining |
 | [docs/deploying.md](./docs/deploying.md) | Vercel, Netlify, GitHub Pages, any static host |
 | [docs/live-explorers.md](./docs/live-explorers.md) | Multiplayer in the walk world (optional, Supabase Realtime) |
+| [docs/mcp.md](./docs/mcp.md) | Build a map with an AI assistant (MCP), and the sites' tools for agents (WebMCP) |
 | [docs/architecture.md](./docs/architecture.md) | How the code is laid out, and why |
 
 ## What's in the repository
@@ -94,7 +95,8 @@ pull framework updates (`git pull upstream main`) without conflicts.
 site/              YOUR map: site.json, taxonomy.json, data/, logos/, people/, brand/  (the example)
 src/               the map app (Vite + React 19 + TypeScript + three.js / React Three Fiber)
 scripts/           validate-site, manifest, import-csv, new-site, check-bundle, build-network, check-registry
-federation/        the network protocol: types, links, manifest and registry checks (shared by all)
+federation/        the network protocol: types, links, manifest and registry checks (shared by all); agent tools
+mcp/               the builder: a local MCP server that builds site/ through the content contract
 nexus/             the Nexus: the landing page and the shared world (deployed by the network)
 registry/          one JSON file per map in the network
 schema/            site.schema.json, for editor autocompletion
@@ -112,6 +114,7 @@ npm run manifest       # print the network manifest your build will publish
 npm run import         # companies from a CSV (docs/importing.md)
 npm run new-site       # replace the example with a blank site for your organization
 npm run join-check -- https://your-map   # the linking handshake against your live map, before you apply
+npm run mcp -- --list  # the builder's tools; MCP clients start node mcp/server.mjs (docs/mcp.md)
 npm run registry:check # the registry's entries (CI runs it)
 npm run nexus:dev      # the Nexus, locally (add ?sample for sample worlds)
 npm run nexus:build    # fetch the network (scripts/build-network.mjs) and build the Nexus

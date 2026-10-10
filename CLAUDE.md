@@ -70,6 +70,14 @@ field; never send the visitor id stored in the browser. Build-time values reach 
 through `define` in `vite.config.ts`; never read `import.meta.env` as a whole object; never accept a
 secret or service-role key.
 
+## Agents (MCP and WebMCP)
+
+Tools for AI agents are defined once (`federation/agent.ts`): a JSON Schema, hints and a function
+([docs/mcp.md](./docs/mcp.md)). The builder (`mcp/`) changes `site/` only through `guardedWrite()`,
+which runs `validateSite()` on a copy and refuses a change that adds a problem; never add a write
+path around it. The sites' WebMCP tools (`src/agent.ts`, `nexus/src/agent.ts`) read public data
+only: no sources, nothing that links a person to a company.
+
 ## The protocol
 
 `federation/` is plain, erasable TypeScript with `.ts` import extensions (Node 22.18+ runs it, Vite

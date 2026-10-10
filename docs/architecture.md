@@ -10,6 +10,7 @@ for real devices it keeps.
 ```
 src/site.ts        the site config (site/site.json) and the labels helper L
 src/network.ts     the map's link into the network: NEXUS_HREF, PORTAL_HREF, arrival from the Nexus
+src/agent.ts       the map's tools for AI agents in the browser (WebMCP), loaded only where it exists
 src/data/          catalog (the one reader of site/), types, graph (connections, provider finder),
                    search (companies, people), labels, layout (the walk world's geometry), hub (the
                    hub's and the portal's footprints), tests
@@ -23,7 +24,9 @@ src/views/         mindmap/ (both globes: controller, globeContent, globeLayout,
                    walk/ (engine, world, hub, portal, pins, minimap, nav, avatar, explorers),
                    diag/ (the /?diag graphics check)
 src/debug/         the ?debug scene probe
-federation/        the network protocol (plain TypeScript, read by the map, the Nexus and Node)
+federation/        the network protocol (plain TypeScript, read by the map, the Nexus and Node), and
+                   agent.ts: tools for AI agents, defined once for MCP and WebMCP
+mcp/               the builder: a local MCP server whose writes to site/ go through validateSite()
 scripts/           validate-site, manifest, import-csv (+ csv), new-site, check-bundle,
                    build-network, check-registry, contract-patterns
 nexus/             the Nexus app (landing page + shared world)

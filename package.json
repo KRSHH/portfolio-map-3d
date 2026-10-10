@@ -26,6 +26,7 @@
     "new-site": "node scripts/new-site.mjs",
     "registry:check": "node scripts/check-registry.mjs",
     "join-check": "node scripts/join-check.mjs",
+    "mcp": "node mcp/server.mjs",
     "network": "node scripts/build-network.mjs",
     "nexus:dev": "vite --config nexus/vite.config.ts",
     "nexus:build": "node scripts/build-network.mjs --keep-on-error && tsc -p nexus/tsconfig.json && vite build --config nexus/vite.config.ts",
@@ -43,6 +44,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

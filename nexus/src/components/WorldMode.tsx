@@ -14,6 +14,7 @@ import type { NetworkState } from "../hooks/useNetwork.ts";
 import { navigate, routeHref } from "../hooks/useRoute.ts";
 import type { NexusEngine } from "../three/engine.ts";
 import { ArrowLeft, ArrowRight, Close, ListIcon, Mark, Orbit } from "./Icons.tsx";
+import { MusicButton } from "./MusicButton.tsx";
 import { EmptyNetwork, NetworkList } from "./NetworkList.tsx";
 import { NetworkSearch } from "./NetworkSearch.tsx";
 import { SceneHost } from "./SceneHost.tsx";
@@ -220,7 +221,7 @@ export function WorldMode({ route, net, engine, gl, reduced, pickRef, onRetry }:
       <div className="world-fallback">
         <header className="fallback-head">
           <div className="hud-brand">
-            <Mark size={26} className="brand-mark" />
+            <Mark size={28} className="brand-mark" />
             <span className="hud-brand-name">Nexus</span>
             {route.sample ? <span className="sample-badge">Sample data</span> : null}
           </div>
@@ -236,6 +237,7 @@ export function WorldMode({ route, net, engine, gl, reduced, pickRef, onRetry }:
           {net.status === "error" ? <p className="status status-problem">{net.message}</p> : null}
           {model ? <NetworkList model={model} headingLevel={2} joinHref={routeHref({ ...LANDING, sample: route.sample }, "#how")} /> : null}
         </main>
+        <MusicButton />
       </div>
     );
   }
@@ -291,7 +293,7 @@ export function WorldMode({ route, net, engine, gl, reduced, pickRef, onRetry }:
 
       <header className="hud-top">
         <div className="hud-brand">
-          <Mark size={26} className="brand-mark" />
+          <Mark size={28} className="brand-mark" />
           <span className="hud-brand-name">Nexus</span>
           {route.sample ? <span className="sample-badge">Sample data</span> : null}
         </div>
@@ -328,6 +330,7 @@ export function WorldMode({ route, net, engine, gl, reduced, pickRef, onRetry }:
       {iw ? <WorldPanel key={`${iw.world.id}:${panelNonce}`} iw={iw} highlight={highlight} initialFilter={panelFilter} onClose={closePanel} /> : null}
 
       {toastRegion}
+      <MusicButton />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 /* The landing page: the framework, and the network it joins. Its hero is the live Nexus,
-   drifting behind the headline; everything below is plain, factual text. */
+   drifting behind the headline; everything below is short, factual and in the third person. */
 import { useEffect, useRef } from "react";
-import { FRAMEWORK, FRAMEWORK_REPO, MANIFEST_FILE, OWNER_DNS_LABEL, ownerTxtValue } from "../../../federation/protocol.ts";
+import { FRAMEWORK, FRAMEWORK_REPO, MANIFEST_FILE } from "../../../federation/protocol.ts";
 import { PROMO_VIDEO, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "../config.ts";
 import { formatDate, plural } from "../lib/copy.ts";
 import { LANDING, type Route } from "../lib/route.ts";
@@ -10,7 +10,8 @@ import type { NetworkState } from "../hooks/useNetwork.ts";
 import type { EngineStatus } from "../hooks/useEngine.ts";
 import type { NexusEngine } from "../three/engine.ts";
 import { CodeBlock } from "./CodeBlock.tsx";
-import { ArrowRight, Check, Code, Directory, External, Globe, Mark, Walk } from "./Icons.tsx";
+import { ArrowRight, Check, Directory, External, GitHubMark, Globe, Mark, Walk } from "./Icons.tsx";
+import { MusicButton } from "./MusicButton.tsx";
 import { NetworkList } from "./NetworkList.tsx";
 import { SceneHost } from "./SceneHost.tsx";
 
@@ -20,13 +21,14 @@ const REPO_PATH = new URL(FRAMEWORK_REPO).pathname.replace(/^\/|\/$/g, "");
 /** The framework's example map, deployed next to the Nexus (a separate app). */
 const EXAMPLE_MAP = `${import.meta.env.BASE_URL}example/`;
 
-const REGISTRY_EXAMPLE = `{
-  "id": "your-map",
-  "name": "Your Portfolio",
-  "url": "https://map.example.org",
-  "joined": "2026-10-09",
-  "maintainer": "your-github-handle"
-}`;
+/** The guides and the network's terms, in the repository. */
+const DOCS = `${FRAMEWORK_REPO}/tree/main/docs`;
+const JOINING = `${FRAMEWORK_REPO}/blob/main/docs/network.md#joining`;
+const TERMS = `${FRAMEWORK_REPO}/blob/main/NETWORK.md`;
+
+const START = `npx degit ${REPO_PATH} my-map
+cd my-map && npm install
+npm run dev`;
 
 interface Props {
   route: Route;
@@ -68,8 +70,12 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
   const stat = !model
     ? ""
     : model.worlds.length
-      ? `${model.worlds.length} ${plural(model.worlds.length, "map", "maps")} in the network, ${model.companies.toLocaleString("en-US")} ${plural(model.companies, "company", "companies")} in all.`
-      : "No maps have joined yet. Yours can be the first.";
+      ? `${model.worlds.length} ${plural(model.worlds.length, "map", "maps")} and ${model.companies.toLocaleString("en-US")} ${plural(model.companies, "company", "companies")} in the network.`
+      : "No maps have joined yet.";
+
+  // A price of null reads "Quoted per organization": said once when it holds for every package.
+  const quoted = WHITE_GLOVE.packages.every((p) => p.price === null);
+  const intake = WHITE_GLOVE.intake;
 
   return (
     <>
@@ -81,18 +87,17 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
           <a className="brand" href={routeHref({ ...LANDING, sample: route.sample })} aria-label="The Nexus, home">
             <Mark size={28} className="brand-mark" />
             <span className="brand-name">The Nexus</span>
-            <span className="brand-sub">{FRAMEWORK}</span>
           </a>
           <nav className="site-nav" aria-label="Sections">
             {route.sample ? <span className="sample-badge">Sample data</span> : null}
-            <a className="nav-link nav-optional" href="#how">
-              How it works
-            </a>
             <a className="nav-link nav-optional" href="#network">
               Network
             </a>
+            <a className="nav-link nav-optional" href="#how">
+              How it works
+            </a>
             <a className="nav-link nav-optional" href="#built-for-you">
-              Built for you
+              Services
             </a>
             <a className="nav-link" href="#get-started">
               Get started
@@ -114,53 +119,52 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
           <div className="hero-scrim" aria-hidden="true" />
           <div className="hero-inner">
             <div className="hero-text" ref={text}>
-              <p className="eyebrow">Open source · {FRAMEWORK}</p>
-              <h1 id="hero-title">Every portfolio, one shared world.</h1>
+              <h1 id="hero-title">
+                <span>Every portfolio,</span> <span>one shared universe.</span>
+              </h1>
               <p className="lede">
-                {FRAMEWORK} is an open source framework for publishing your companies as a 3D globe, a walkable world and a searchable directory. Every map built with it links into
-                this shared world, the Nexus.
+                {FRAMEWORK} is an open source framework for publishing an organization's companies as a 3D globe, a walkable world and a directory. Every map built with it links
+                to the Nexus.
               </p>
               <div className="cta-row">
-                <button type="button" className="btn btn-primary btn-large" onClick={() => onEnter()}>
-                  Enter the Nexus <ArrowRight size={20} />
+                <button type="button" className="btn btn-orb btn-large" onClick={() => onEnter()}>
+                  Enter the Nexus <ArrowRight size={18} />
                 </button>
                 <a className="btn btn-outline btn-large" href="#get-started">
-                  Build your map
+                  Get started
                 </a>
-                <a className="btn btn-ghost btn-large" href={FRAMEWORK_REPO}>
-                  <Code size={20} /> GitHub
+                <a className="btn btn-outline btn-large btn-square" href={FRAMEWORK_REPO} aria-label={`${FRAMEWORK} on GitHub`} title={`${FRAMEWORK} on GitHub`}>
+                  <GitHubMark size={20} />
                 </a>
               </div>
-              <p className="hero-example">
+              <p className="hero-meta">
+                <span className="hero-stat" aria-live="polite">
+                  {stat}
+                </span>
                 <a className="text-link" href={EXAMPLE_MAP}>
                   See the example map <ArrowRight size={16} />
                 </a>
-              </p>
-              <p className="hero-stat" aria-live="polite">
-                {stat}
               </p>
             </div>
           </div>
         </section>
 
         {PROMO_VIDEO ? (
-          <section className="section section-alt" id="video" aria-labelledby="video-title">
+          <section className="section" id="video" aria-labelledby="video-title">
             <div className="container">
               <h2 id="video-title">The network in {PROMO_VIDEO.seconds} seconds</h2>
-              <p className="section-lede" id="video-caption">
-                {PROMO_VIDEO.caption}
-              </p>
               {/* preload="none": nothing is fetched until the visitor presses play. */}
               <video className="promo-video" controls playsInline preload="none" poster={PROMO_VIDEO.poster} aria-labelledby="video-title" aria-describedby="video-caption">
                 <source src={PROMO_VIDEO.src} type="video/mp4" />
               </video>
-              {PROMO_VIDEO.portrait ? (
-                <p className="promo-alt">
+              <p className="video-meta">
+                <span id="video-caption">{PROMO_VIDEO.caption}</span>
+                {PROMO_VIDEO.portrait ? (
                   <a className="text-link" href={PROMO_VIDEO.portrait}>
                     The vertical cut, for phones <ArrowRight size={16} />
                   </a>
-                </p>
-              ) : null}
+                ) : null}
+              </p>
             </div>
           </section>
         ) : null}
@@ -168,155 +172,120 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
         <section className="section" id="ways" aria-labelledby="ways-title">
           <div className="container">
             <h2 id="ways-title">Three ways in, one data set</h2>
-            <p className="section-lede">Every map built with the framework shows the same records three ways. Visitors choose the one that suits them.</p>
-            <ul className="ways">
-              <li className="way">
-                <Globe size={28} className="way-icon" />
+            <ul className="panel-grid panel-grid-3">
+              <li>
+                <Globe size={20} className="item-icon" />
                 <h3>Globe</h3>
-                <p>A slowly rotating globe of company logos. Each district is its own region of the sphere, sized by its number of companies. Select a logo and the company's details slide up.</p>
+                <p>A rotating globe of logos, with a region for each sector, track or program.</p>
               </li>
-              <li className="way">
-                <Walk size={28} className="way-icon" />
+              <li>
+                <Walk size={20} className="item-icon" />
                 <h3>Walk</h3>
-                <p>An explorer in a walkable world of districts, with a pin and logo for every company. Walk up to a pin, or click it, to open the company. A portal in the world leads here.</p>
+                <p>A walkable world with a pin for every company and a portal to the Nexus.</p>
               </li>
-              <li className="way">
-                <Directory size={28} className="way-icon" />
+              <li>
+                <Directory size={20} className="item-icon" />
                 <h3>Directory</h3>
-                <p>The same records as a searchable, filterable list. No 3D required: every record is reachable here, by keyboard and by screen reader.</p>
+                <p>The same records as a searchable list, with no 3D required.</p>
               </li>
             </ul>
           </div>
         </section>
 
-        <section className="section section-alt" id="how" aria-labelledby="how-title">
+        <section className="section" id="network" aria-labelledby="network-title">
           <div className="container">
-            <h2 id="how-title">How the network works</h2>
-            <p className="section-lede">Joining is a short handshake between your map and the Nexus. The framework does most of it for you.</p>
-            <ol className="steps steps-4">
-              <li className="step">
+            <div className="section-head">
+              <h2 id="network-title">The network</h2>
+              {model?.generated ? <p className="section-note">Last checked {formatDate(model.generated)}</p> : null}
+            </div>
+            {net.status === "loading" ? <p className="muted section-body">Loading the network…</p> : null}
+            {net.status === "error" ? <p className="status status-problem section-body">{net.message}</p> : null}
+            {model ? <NetworkList model={model} onSee={gl === "unavailable" ? undefined : (id) => onEnter(id)} joinHref="#how" /> : null}
+          </div>
+        </section>
+
+        <section className="section" id="how" aria-labelledby="how-title">
+          <div className="container">
+            <h2 id="how-title">How a map joins</h2>
+            <ol className="panel-grid panel-grid-4">
+              <li>
                 <span className="step-n" aria-hidden="true">
-                  1
+                  01
                 </span>
                 <h3>Publish</h3>
                 <p>
-                  Your map's build writes <code>{MANIFEST_FILE}</code>: its name, its publisher, its districts and a public index of its companies, from the same data the map
-                  shows.
+                  The build writes <code>{MANIFEST_FILE}</code>, a public index of the map's districts and companies.
                 </p>
               </li>
-              <li className="step">
+              <li>
                 <span className="step-n" aria-hidden="true">
-                  2
+                  02
                 </span>
                 <h3>Link</h3>
-                <p>The portal in the walk world, the Nexus button in the top bar and a meta tag in the page all lead here. The build checks that they are there.</p>
+                <p>The map links to the Nexus from its walk world, top bar and About panel. The build fails without them.</p>
               </li>
-              <li className="step">
+              <li>
                 <span className="step-n" aria-hidden="true">
-                  3
+                  03
                 </span>
                 <h3>Prove</h3>
-                <p>Your organization vouches for the map, automatically: the map lives on your own domain (such as map.yourorg.com), or your homepage links to it, or a DNS TXT record says so.</p>
+                <p>The publisher vouches for the map with its own domain, a link from its homepage or a DNS record.</p>
               </li>
-              <li className="step">
+              <li>
                 <span className="step-n" aria-hidden="true">
-                  4
+                  04
                 </span>
                 <h3>Review</h3>
-                <p>A maintainer approves your registry pull request against the criteria in NETWORK.md: a real organization publishing its own companies, the data contract kept, no impersonation.</p>
+                <p>A maintainer approves a one-file pull request to the registry.</p>
               </li>
             </ol>
-            <div className="how-detail">
-              <div className="how-text">
-                <h3>Shown after all four, and only while they hold</h3>
-                <p>
-                  A map appears as a world only after all four steps. Each time the Nexus is built, it checks every map again. A map that stops linking here, or whose proof goes
-                  away, drops out of the world; it stays in the network list with the reason in plain words. A map that cannot be reached stays, dimmed and marked “Not reachable at
-                  last check”, with its last good manifest.
-                </p>
-                <p>A link to the Nexus from a map that has not joined only opens the Nexus. Manifests carry no email addresses or phone numbers: the checks reject them.</p>
-              </div>
-              <div className="how-code">
-                <p className="code-caption">Check all of this against your live map before you apply:</p>
-                <CodeBlock code="npm run join-check -- https://map.yourorg.com" label="Check your map before you apply" />
-                <p className="code-caption">
-                  The DNS proof, if you use it: a TXT record at <code>{OWNER_DNS_LABEL}.yourorg.com</code>
-                </p>
-                <CodeBlock code={ownerTxtValue("your-map")} label="The TXT record's value" />
-                <p className="code-caption">
-                  Your registry entry, <code>registry/instances/your-map.json</code>:
-                </p>
-                <CodeBlock code={REGISTRY_EXAMPLE} label="registry/instances/your-map.json" lang="json" />
-              </div>
+            <div className="how-check">
+              <p className="caption">
+                <code>join-check</code> runs the first three steps against a live map:
+              </p>
+              <CodeBlock code="npm run join-check -- https://map.example.org" label="Check a map before applying" />
+              <p className="fine">
+                The Nexus checks every map again each time it is built; a map that stops linking or loses its proof drops out.{" "}
+                <a className="text-link" href={JOINING}>
+                  Joining guide <External size={14} />
+                </a>
+              </p>
             </div>
           </div>
         </section>
 
         <section className="section" id="get-started" aria-labelledby="start-title">
-          <div className="container">
-            <h2 id="start-title">Get started</h2>
-            <p className="section-lede">
-              You need Node 22 and somewhere to host static files. To see what you get first, open{" "}
-              <a className="text-link" href={EXAMPLE_MAP}>
-                the example map
-              </a>
-              .
-            </p>
-            <ol className="commands">
-              <li>
-                <h3>Copy the framework</h3>
-                <CodeBlock code={`npx degit ${REPO_PATH} my-map`} label="Copy the framework" />
-              </li>
-              <li>
-                <h3>Install</h3>
-                <CodeBlock code="cd my-map && npm install" label="Install" />
-              </li>
-              <li>
-                <h3>Run it locally</h3>
-                <CodeBlock code="npm run dev" label="Run it locally" />
-              </li>
-              <li>
-                <h3>Make it yours</h3>
-                <p>
-                  Edit <code>site/site.json</code> and the records in <code>site/data/</code>.
-                </p>
-              </li>
-              <li>
-                <h3>Build</h3>
-                <CodeBlock code="npm run build" label="Build" />
-                <p>The build checks your data and writes a static site, with its manifest, to <code>dist/</code>.</p>
-              </li>
-              <li>
-                <h3>Deploy anywhere static</h3>
-                <p>
-                  Upload <code>dist/</code> to any static host. Then join the network: the four steps in{" "}
-                  <span className="nowrap">
-                    <a className="text-link" href="#how">
-                      How the network works
-                    </a>
-                    .
-                  </span>
-                </p>
-              </li>
-            </ol>
+          <div className="container start">
+            <div className="start-text">
+              <h2 id="start-title">Get started</h2>
+              <p>
+                Requires Node 22.18 or later. A map's content lives in <code>site/</code>, where the example is fictional; <code>npm run build</code> writes a static site to{" "}
+                <code>dist/</code> for any host.
+              </p>
+              <p>
+                <a className="text-link" href={DOCS}>
+                  Documentation <External size={14} />
+                </a>
+              </p>
+            </div>
+            <CodeBlock code={START} label="Start a map" />
           </div>
         </section>
 
-        <section className="section section-alt" id="built-for-you" aria-labelledby="built-title">
+        <section className="section" id="built-for-you" aria-labelledby="built-title">
           <div className="container">
-            <h2 id="built-title">Have it built for you</h2>
-            <p className="section-lede">Prefer not to do it yourself? We can set up, launch and maintain your map for you.</p>
-            <p className="provider">{WHITE_GLOVE.provider ? `Offered by ${WHITE_GLOVE.provider}` : `Offered by the maintainers of ${FRAMEWORK}`}</p>
-            <ul className="packages">
+            <h2 id="built-title">Services</h2>
+            <p className="section-lede">Setup, custom walk worlds and ongoing care, by {WHITE_GLOVE.provider ?? `the maintainers of ${FRAMEWORK}`}.</p>
+            <ul className="panel-grid panel-grid-3">
               {[...WHITE_GLOVE.packages.filter((p) => !p.addon), ...WHITE_GLOVE.packages.filter((p) => p.addon)].map((p) => (
                 <li key={p.id} className={p.addon ? "package is-addon" : "package"}>
-                  {p.addon ? <p className="package-kicker">Add-on</p> : null}
+                  {p.addon ? <p className="package-kicker">Add-on to any package</p> : null}
                   <h3>{p.name}</h3>
-                  <p className="package-summary">{p.summary}</p>
+                  <p>{p.summary}</p>
                   <ul className="includes">
                     {p.includes.map((line) => (
                       <li key={line}>
-                        <Check size={18} className="include-icon" />
+                        <Check size={16} className="include-icon" />
                         <span>{line}</span>
                       </li>
                     ))}
@@ -328,7 +297,7 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
                       </a>
                     </p>
                   ) : null}
-                  <p className="package-price">{p.price ?? "Quoted per organization"}</p>
+                  {quoted ? null : <p className="package-price">{p.price ?? "Quoted per organization"}</p>}
                   {p.checkoutUrl ? (
                     <a className="btn btn-outline btn-small" href={p.checkoutUrl}>
                       Book<span className="sr-only">: {p.name}</span>
@@ -337,57 +306,44 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
                 </li>
               ))}
             </ul>
-            {WHITE_GLOVE.note ? <p className="muted wg-note">{WHITE_GLOVE.note}</p> : null}
             <div className="wg-cta">
-              <a className="btn btn-primary btn-large" href={intakeHref(WHITE_GLOVE.intake)}>
-                Request a setup <ArrowRight size={20} />
+              <a className="btn btn-primary btn-large" href={intakeHref(intake)}>
+                Request a setup <ArrowRight size={18} />
               </a>
-              {"email" in WHITE_GLOVE.intake ? (
-                <p className="muted wg-public">
-                  Opens an email to <a href={`mailto:${WHITE_GLOVE.intake.email}`}>{WHITE_GLOVE.intake.email}</a> with a few questions to answer.
-                </p>
-              ) : isPublicGitHubForm(WHITE_GLOVE.intake.url) ? (
-                <p className="muted wg-public">Requests made through GitHub are public: include only what you'd put on your website.</p>
-              ) : null}
+              <p className="fine">
+                {quoted ? "Pricing is quoted per organization. " : null}
+                {"email" in intake ? (
+                  <>
+                    Requests go to <a href={`mailto:${intake.email}`}>{intake.email}</a> by email.
+                  </>
+                ) : isPublicGitHubForm(intake.url) ? (
+                  "Requests made on GitHub are public."
+                ) : null}
+                {WHITE_GLOVE.note ? ` ${WHITE_GLOVE.note}` : null}
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="section" id="network" aria-labelledby="network-title">
-          <div className="container">
-            <div className="section-head">
-              <h2 id="network-title">The network</h2>
-              {route.sample ? <span className="sample-badge">Sample data</span> : null}
-            </div>
-            <p className="section-lede">
-              Every map in the registry{model?.generated ? `, as of the last check on ${formatDate(model.generated)}` : ""}. This list is the network without the 3D: every map is
-              reachable from here.
-            </p>
-            {net.status === "loading" ? <p className="muted">Loading the network…</p> : null}
-            {net.status === "error" ? <p className="status status-problem">{net.message}</p> : null}
-            {model ? <NetworkList model={model} onSee={gl === "unavailable" ? undefined : (id) => onEnter(id)} joinHref="#how" /> : null}
-          </div>
-        </section>
-
-        <section className="section section-alt" id="principles" aria-labelledby="principles-title">
+        <section className="section" id="principles" aria-labelledby="principles-title">
           <div className="container">
             <h2 id="principles-title">Principles</h2>
-            <ul className="principles">
+            <ul className="panel-grid panel-grid-4">
               <li>
                 <h3>Provenance first</h3>
-                <p>Every fact keeps its source in the data. What is unknown stays empty; nothing is invented to fill a gap.</p>
+                <p>Every fact keeps its source, and nothing is invented.</p>
               </li>
               <li>
                 <h3>No personal contact data</h3>
-                <p>The validators reject email addresses and phone numbers, in a map's records and in every manifest that crosses the network.</p>
+                <p>Validators reject email addresses and phone numbers in records and manifests.</p>
               </li>
               <li>
                 <h3>Static and serverless</h3>
-                <p>A map is a static site: no server, no database, no accounts. Host it anywhere. The Nexus is static too, rebuilt from the registry.</p>
+                <p>A map is a static site, with no server, database or accounts.</p>
               </li>
               <li>
                 <h3>Accessible</h3>
-                <p>Every record is reachable without 3D, by keyboard and by screen reader. Focus is always visible, and reduced motion is honored.</p>
+                <p>Every record is reachable without 3D, by keyboard and by screen reader.</p>
               </li>
             </ul>
           </div>
@@ -396,22 +352,24 @@ export function Landing({ route, net, engine, gl, onEnter }: Props) {
 
       <footer className="site-footer">
         <div className="container footer-inner">
-          <div className="footer-brand">
-            <Mark size={24} className="brand-mark" />
-            <span>The Nexus</span>
+          <div className="footer-top">
+            <p className="footer-brand">
+              <Mark size={24} className="brand-mark" />
+              The Nexus
+            </p>
+            <nav className="footer-links" aria-label="Project">
+              <a href={FRAMEWORK_REPO}>GitHub</a>
+              <a href={DOCS}>Documentation</a>
+              <a href={TERMS}>Network terms</a>
+            </nav>
           </div>
-          <p>
-            {FRAMEWORK} is open source under the MIT License.{" "}
-            <a className="text-link" href={FRAMEWORK_REPO}>
-              Source on GitHub <External size={14} />
-            </a>
+          <p className="fine">
+            {FRAMEWORK} and the Nexus are open source under the MIT License. Each map's name, data and logo belong to its publisher.
           </p>
-          <p>
-            The Nexus is itself open source: <code>nexus/</code> in the repo.
-          </p>
-          {route.sample ? <p className="muted">This page is showing fictional sample data (?sample), not the network.</p> : null}
         </div>
       </footer>
+
+      <MusicButton />
     </>
   );
 }

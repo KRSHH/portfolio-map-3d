@@ -83,20 +83,40 @@ address after a move).
 
 ## Configure
 
-`src/config.ts` holds the "Have it built for you" section: the provider, where requests go
-(`intake`: an email address, today jeremy@embarccollective.com, which "Request a setup" opens as an
-email with the request's questions filled in; or an https form, and a GitHub form shows a note that
-requests are public), an optional note, and the packages (a `price` of `null` reads "Quoted per organization"; a `checkoutUrl` adds a "Book"
-button). `config.test.ts` checks it.
+`src/config.ts` holds the landing page's "Services" section (`#built-for-you`): the provider,
+where requests go (`intake`: an email address, today jeremy@embarccollective.com, which "Request a
+setup" opens as an email with the request's questions filled in; or an https form, and a GitHub
+form shows a note that requests are public), an optional note, and the packages (a `price` of
+`null` reads "Quoted per organization", said once when no package has a price; a `checkoutUrl`
+adds a "Book" button). `config.test.ts` checks it.
+
+It also names the promo video under the hero (`PROMO_VIDEO`; the cuts and their cover are served
+from the Embarc Collective map's site, not from this repository) and the track the floating music
+button plays (`MUSIC`: an MP3 in `public/music/`, played on a loop and never on its own). `null`
+takes either one off the page.
+
+## Design
+
+The Nexus follows Vercel's published design system, [Geist](https://vercel.com/geist): the Geist
+Sans and Geist Mono typefaces (from Google Fonts, under the SIL Open Font License), Geist's dark
+gray scale, its type scale and its 6px control radius. The Nexus's cyan takes the place Geist gives
+blue: links, focus and the mark. `src/styles/tokens.css` holds every value. The copy is short,
+factual and in the third person; notes that qualify something sit beside it in one short line.
+
+The mark is the world's core drawn flat: a crystal in a geodesic cage, a ring and a glow
+(`src/lib/mark.ts`). The page (`Mark` in `components/Icons.tsx`), the core's label in the 3D scene
+(`drawMark` in `three/paint.ts`) and `public/favicon.svg` draw it from the same geometry.
 
 ## Link previews
 
 `public/og.png` is the link-preview image (1200 × 630, under 1 MB), named by `og:image` and
 `twitter:image` in `index.html` with the Nexus's absolute address. It is a capture of the landing
-page's hero at 1200 × 630 with the navigation, buttons and counts hidden, the lede shortened and
-the address added; the worlds in it are the network as it was on 10-Oct-2026 (Ambition
-Accelerated, Embarc Collective and Example Collective). Retake it when the hero changes or the
-picture no longer matches the network. `src/og.test.ts` checks its size and the tags.
+page's hero at 1440 × 756 (the desktop layout), scaled to 1200 × 630, with reduced motion so the
+scene holds still, the navigation, buttons and counts hidden, the lede shortened and the address
+added; the worlds in it are the network as it was on 10-Oct-2026 (Ambition Accelerated, Embarc
+Collective, Example Collective, Florida Ecosystem Map and India Ecosystem Map). Retake it when the
+hero changes or the picture no longer matches the network. `src/og.test.ts` checks its size and
+the tags.
 
 ## How it is built
 
@@ -104,16 +124,19 @@ picture no longer matches the network. `src/og.test.ts` checks its size and the 
 src/
   App.tsx            the two pages, one 3D engine shared by both
   components/        Landing, WorldMode (HUD), WorldPanel, NetworkSearch, WorldList,
-                     NetworkList (cards; also the no-3D fallback), CodeBlock, SceneHost, icons
-  hooks/             useRoute (the address is the state), useNetwork, useEngine, useMedia
+                     NetworkList (cards; also the no-3D fallback), CodeBlock, SceneHost,
+                     MusicButton, icons
+  hooks/             useRoute (the address is the state), useNetwork, useEngine, useMedia,
+                     useMusic (one audio element for the visit)
   lib/               pure, unit-tested logic: network (the model), layout (where worlds stand),
                      surface (what a world's surface shows), search, declutter (labels),
-                     route, hud (the HUD's geometry), copy, color
+                     route, hud (the HUD's geometry), copy, color, mark (the logo's geometry)
   three/             engine (the scene), paint (every canvas), fromModel, cpuCanvas,
                      contextWatch, webgl
   styles/            tokens.css (every color; tokens.test.ts checks contrast), base, landing, world
   sample.ts          the fictional sample network (?sample only)
-  config.ts          the white-glove section
+  config.ts          the Services section, the promo video and the music
+  agent.ts           tools for AI agents (WebMCP): list_maps, search_network, open_map (docs/mcp.md)
 ```
 
 - **Layout** (`lib/layout.ts`): a golden-angle spiral on a tilted disc. Slots go in join order, so

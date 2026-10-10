@@ -2,6 +2,7 @@
    serves both: it drifts behind the landing page's headline and becomes the world when the
    visitor enters. */
 import { useCallback, useEffect, useRef, useState } from "react";
+import { webModelContext } from "../../federation/agent.ts";
 import { Landing } from "./components/Landing.tsx";
 import { WorldMode } from "./components/WorldMode.tsx";
 import { useEngine } from "./hooks/useEngine.ts";
@@ -24,6 +25,20 @@ export function App() {
   }, [engine, model]);
 
   const enter = useCallback((world?: string) => navigate({ mode: "world", world: world ?? null, from: null, via: null, sample: route.sample }), [route.sample]);
+
+  // In a browser with WebMCP, AI agents get the Nexus's tools (src/agent.ts) once the network is loaded.
+  useEffect(() => {
+    if (!model || !webModelContext()) return;
+    let alive = true;
+    let off: () => void = () => undefined;
+    void import("./agent.ts").then((m) => {
+      if (alive) off = m.registerNexusTools(model, enter);
+    });
+    return () => {
+      alive = false;
+      off();
+    };
+  }, [model, enter]);
 
   if (route.mode === "world") {
     return <WorldMode route={route} net={net} engine={engine} gl={gl} reduced={reduced} pickRef={pickRef} onRetry={() => setAttempt((n) => n + 1)} />;

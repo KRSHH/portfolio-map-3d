@@ -1,15 +1,16 @@
-/* What the Nexus's operators configure: the "Have it built for you" section on the landing page
-   (a paid setup service) and the network's promo video. Edit the values here; the page renders
-   whatever they say.
+/* What the Nexus's operators configure: the "Services" section on the landing page (a paid
+   setup service, at #built-for-you) and the network's promo video. Edit the values here; the page
+   renders whatever they say, in the third person.
 
-   - provider: who offers it; null renders "Offered by the maintainers of portfolio-map-3d".
+   - provider: who offers it; null names "the maintainers of portfolio-map-3d".
    - intake: where "Request a setup" goes: an email address (the button opens an email with the
      request's questions filled in) or an https form (a GitHub issue form is public, and the page
      says so).
-   - note: one optional line under the packages.
-   - packages: price null renders "Quoted per organization"; a checkoutUrl adds a "Book" button;
-     an add-on (addon: true) comes after the packages, across the row; exampleHref adds a "See an
-     example" link (an https page, or "#video" for the promo video on this page). */
+   - note: one optional sentence, added to the short note beside "Request a setup".
+   - packages: a price of null reads "Quoted per organization" (one line for all of them when no
+     package has a price); a checkoutUrl adds a "Book" button; an add-on (addon: true) comes after
+     the packages, across the row; exampleHref adds a "See an example" link (an https page, or
+     "#video" for the promo video on this page). */
 export interface WhiteGlovePackage {
   /** Lowercase letters, digits and hyphens. */
   id: string;
@@ -44,12 +45,12 @@ export const WHITE_GLOVE: WhiteGlove = {
     {
       id: "setup",
       name: "Setup",
-      summary: "Your map, built and launched.",
+      summary: "A map built and launched.",
       includes: [
-        "Districts, labels and theme set up for your organization",
-        "Your companies imported, each with its description, website and logo from public sources, every source recorded",
-        "Deployed to your domain or a subdomain of it",
-        "Joined to the network: the handshake done and your registry entry filed",
+        "Districts, labels and theme set up",
+        "Companies imported from public sources, every source recorded",
+        "Deployed to the organization's domain",
+        "Joined to the network",
       ],
       price: null,
       checkoutUrl: null,
@@ -59,12 +60,11 @@ export const WHITE_GLOVE: WhiteGlove = {
     {
       id: "custom-world",
       name: "Setup and custom world",
-      summary: "Everything in Setup, with a walk world that looks like you.",
+      summary: "Setup, plus a walk world in the organization's look.",
       includes: [
-        "Everything in Setup",
-        "Your own building modeled at the center of the walk world",
-        "Live explorers turned on, on your own Realtime project",
-        "A link-preview image and favicon from your brand",
+        "The organization's building at the center of the walk world",
+        "Live explorers on the organization's own Realtime project",
+        "Link-preview image and favicon from its brand",
       ],
       price: null,
       checkoutUrl: null,
@@ -74,8 +74,8 @@ export const WHITE_GLOVE: WhiteGlove = {
     {
       id: "care",
       name: "Care",
-      summary: "Your map kept current.",
-      includes: ["New companies added with sources, on your schedule", "Logos and descriptions refreshed", "Framework updates applied and the network check kept green"],
+      summary: "A map kept current.",
+      includes: ["New companies added with sources, on the organization's schedule", "Logos and descriptions refreshed", "Framework updates applied and the network check kept green"],
       price: null,
       checkoutUrl: null,
       addon: false,
@@ -84,11 +84,11 @@ export const WHITE_GLOVE: WhiteGlove = {
     {
       id: "promo-video",
       name: "Promo video",
-      summary: "An add-on to any package: a short video of your map, for your site and your social channels.",
+      summary: "A short video of the map, for the organization's site and social channels.",
       includes: [
-        "Filmed from your live map: its walk world, a company in it and its portal to the Nexus",
-        "A 16:9 cut, and a 9:16 cut for Reels, TikTok and Shorts, each with a cover image",
-        "Captions in your map's own words, with its own counts",
+        "Filmed from the live map: its walk world, a company in it and its portal to the Nexus",
+        "A 16:9 cut and a 9:16 cut for Reels, TikTok and Shorts, each with a cover image",
+        "Captions in the map's own words, with its own counts",
       ],
       price: null,
       checkoutUrl: null,
@@ -111,7 +111,7 @@ export interface PromoVideo {
   poster: string;
   /** Its length, in whole seconds, as the section's title says it. */
   seconds: number;
-  /** One line under the title: what it shows. */
+  /** One line under the player: what it shows. */
   caption: string;
 }
 
@@ -120,8 +120,22 @@ export const PROMO_VIDEO: PromoVideo | null = {
   portrait: "https://community.embarccollective.com/promo/nexus-9x16.mp4",
   poster: "https://community.embarccollective.com/promo/nexus-cover-16x9.jpg",
   seconds: 50,
-  caption: "Filmed from the live sites: Ambition Accelerated's walkable Florida and its portal, the Nexus, and the Florida Ecosystem Map. No sound.",
+  caption: "Filmed from the live sites: Ambition Accelerated's walkable Florida and its portal, the Nexus, and the Florida Ecosystem Map. With music.",
 };
+
+/**
+ * The music behind the floating button (bottom right, on the landing page and in the Nexus), or
+ * null for no button: an MP3 in nexus/public/ (a path from the site's base), played on a loop at
+ * `volume` (0 to 1). It never starts on its own, and nothing is fetched until the visitor presses
+ * play.
+ */
+export interface Music {
+  src: string;
+  volume: number;
+}
+
+// The track is mastered at about -14 LUFS; half volume (-6 dB) keeps it under the page.
+export const MUSIC: Music | null = { src: "music/ai-signal.mp3", volume: 0.5 };
 
 /** Requests through GitHub are public: the page says so when the intake form is on github.com. */
 export function isPublicGitHubForm(url: string): boolean {
@@ -137,12 +151,12 @@ export function isPublicGitHubForm(url: string): boolean {
 export const EMAIL_PATTERN = /^[^\s@<>()"',;:]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$/;
 
 /** The request's subject and questions, as the email opens with them. */
-export const REQUEST_SUBJECT = "Setup request: <your organization>";
+export const REQUEST_SUBJECT = "Setup request: <organization>";
 export const REQUEST_QUESTIONS = [
   "Organization and website:",
-  "What you're interested in (Setup, Setup and custom world, Care, a promo video, or not sure yet):",
-  "Roughly how many companies:",
-  "Your timeline, where your list of companies lives today, and the domain you'd like the map on:",
+  "Package (Setup, Setup and custom world, Care, a promo video, or not sure yet):",
+  "Approximate number of companies:",
+  "Timeline, where the list of companies lives today, and the domain for the map:",
 ];
 
 /** Where "Request a setup" points: a mailto link with the request filled in, or the form's address. */

@@ -1,7 +1,8 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ID_PATTERN } from "../../federation/protocol.ts";
 import { isHttpsUrl } from "../../federation/validate.ts";
-import { EMAIL_PATTERN, PROMO_VIDEO, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
+import { EMAIL_PATTERN, MUSIC, PROMO_VIDEO, REQUEST_QUESTIONS, REQUEST_SUBJECT, WHITE_GLOVE, intakeHref, isPublicGitHubForm } from "./config.ts";
 
 describe("WHITE_GLOVE", () => {
   it("sends requests to an email address or an https form, with an optional provider and note", () => {
@@ -69,5 +70,19 @@ describe("PROMO_VIDEO", () => {
     expect(PROMO_VIDEO.src).toMatch(/\.mp4$/);
     expect(Number.isInteger(PROMO_VIDEO.seconds) && PROMO_VIDEO.seconds > 0).toBe(true);
     expect(PROMO_VIDEO.caption.trim()).not.toBe("");
+  });
+});
+
+describe("MUSIC", () => {
+  it("is off, or an MP3 the site serves from public/, at a volume from 0 to 1", () => {
+    if (!MUSIC) return;
+    expect(MUSIC.src).toMatch(/^[a-z0-9][a-z0-9._/-]*\.mp3$/);
+    expect(MUSIC.src).not.toContain("..");
+    const bytes = readFileSync(new URL(`../public/${MUSIC.src}`, import.meta.url));
+    // An ID3 tag, or an MPEG audio frame, first.
+    expect(bytes.subarray(0, 3).toString("latin1") === "ID3" || (bytes[0] === 0xff && (bytes[1] & 0xe0) === 0xe0)).toBe(true);
+    // Fetched whole by every visitor who presses play.
+    expect(bytes.length).toBeLessThan(8_000_000);
+    expect(MUSIC.volume > 0 && MUSIC.volume <= 1).toBe(true);
   });
 });

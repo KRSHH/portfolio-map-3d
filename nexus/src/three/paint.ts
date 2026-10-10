@@ -5,9 +5,10 @@
    Nexus's own origin. */
 import { inkOn, mix, muted } from "../lib/color.ts";
 import { fnv1a, seeded } from "../lib/hash.ts";
+import { MARK, type Point } from "../lib/mark.ts";
 import { planBands, planDots, type SurfaceCompany, type SurfaceDistrict } from "../lib/surface.ts";
 
-export const FONT_FAMILY = '"Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+export const FONT_FAMILY = '"Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
 const SPACE = "#05060f";
 
@@ -162,32 +163,60 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
   ctx.closePath();
 }
 
-/** The Nexus mark (a hexagon around a triangle), centered at (cx, cy) with radius r. */
-export function drawMark(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, color: string, width: number) {
+/** The Nexus mark (lib/mark.ts, the drawing of Icons.tsx Mark): the core as an icon, centered
+    at (cx, cy), `r` half its width. */
+export function drawMark(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number) {
+  const k = r / 32;
+  const trace = (points: readonly Point[]) => {
+    ctx.beginPath();
+    for (const [x, y] of points) ctx.lineTo(cx + (x - 32) * k, cy + (y - 32) * k);
+    ctx.closePath();
+  };
+  const { rx, ry, tilt } = MARK.ring;
+  // The ring from its right end clockwise: to Math.PI is its near half, to 2 * Math.PI all of it.
+  const ring = (end: number) => {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx * k, ry * k, (tilt * Math.PI) / 180, 0, end);
+    ctx.strokeStyle = "#3be8ff";
+    ctx.lineWidth = 3 * k;
+    ctx.stroke();
+  };
   ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
+  ctx.lineCap = "round";
   ctx.lineJoin = "round";
+
+  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+  glow.addColorStop(0, "rgba(138, 242, 255, 0.6)");
+  glow.addColorStop(0.45, "rgba(59, 232, 255, 0.16)");
+  glow.addColorStop(0.8, "rgba(157, 123, 255, 0.07)");
+  glow.addColorStop(1, "rgba(157, 123, 255, 0)");
   ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const a = -Math.PI / 2 + (i * Math.PI) / 3;
-    const x = cx + r * Math.cos(a);
-    const y = cy + r * Math.sin(a);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.closePath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = glow;
+  ctx.fill();
+
+  // The whole ring, the cage, the crystal over them, then the ring's near half again.
+  ring(Math.PI * 2);
+  ctx.strokeStyle = "rgba(157, 123, 255, 0.85)";
+  ctx.lineWidth = 1.8 * k;
+  trace(MARK.cage);
   ctx.stroke();
-  ctx.beginPath();
-  for (let i = 0; i < 3; i++) {
-    const a = -Math.PI / 2 + (i * 2 * Math.PI) / 3;
-    const x = cx + r * 0.5 * Math.cos(a);
-    const y = cy + r * 0.5 * Math.sin(a) + r * 0.1;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.closePath();
+  trace(MARK.struts);
   ctx.stroke();
+  const crystal = ctx.createLinearGradient(cx, cy - 14 * k, cx, cy + 14 * k);
+  crystal.addColorStop(0, "rgba(127, 243, 255, 0.9)");
+  crystal.addColorStop(1, "rgba(10, 26, 70, 0.95)");
+  trace(MARK.crystal);
+  ctx.fillStyle = crystal;
+  ctx.fill();
+  ctx.strokeStyle = "#3be8ff";
+  ctx.lineWidth = 3 * k;
+  ctx.stroke();
+  trace(MARK.facet);
+  ctx.strokeStyle = "#dcfaff";
+  ctx.lineWidth = 2.2 * k;
+  ctx.stroke();
+  ring(Math.PI);
   ctx.restore();
 }
 
@@ -213,7 +242,7 @@ export function paintLabel(ctx: CanvasRenderingContext2D, w: number, h: number, 
   if (c.mark) {
     ctx.fillStyle = "#0b1636";
     ctx.fill();
-    drawMark(ctx, bx, by, br * 0.62, "#3be8ff", 3 * s);
+    drawMark(ctx, bx, by, br * 0.92);
   } else if (c.logo && c.logo.naturalWidth > 0) {
     ctx.fillStyle = "#ffffff";
     ctx.fill();

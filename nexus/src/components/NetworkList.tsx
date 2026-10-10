@@ -1,6 +1,7 @@
 /* The network as a list: every map in the registry, with what it calls things and how it
    stands. It is also the way to reach every map without 3D. Maps that are not worlds (their
-   manifest fails the checks or does not link back) are listed apart, with the reason. */
+   manifest fails the checks or does not link back) are listed apart, with the reason. A map's
+   districts are left to its panel in the world, so a card stays a few lines long. */
 import type { CSSProperties } from "react";
 import { instanceHref } from "../../../federation/protocol.ts";
 import { capitalize, countLine, formatDate, hostOf, peopleLine, proofLine, publisherLine } from "../lib/copy.ts";
@@ -12,21 +13,6 @@ const sentence = (s: string) => {
   const t = capitalize(s.trim());
   return /[.!?…]$/.test(t) ? t : `${t}.`;
 };
-
-export function DistrictChips({ world, label }: { world: World; label?: string }) {
-  const m = world.manifest;
-  return (
-    <ul className="chips" aria-label={label ?? capitalize(m.labels.districts)}>
-      {m.districts.map((d) => (
-        <li key={d.slug} className="chip">
-          <span className="dot" style={{ background: d.color }} aria-hidden="true" />
-          {d.label}
-          <span className="chip-n">{d.count}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function WorldCard({ item, world, onSee, headingLevel }: { item: Listed; world: World; onSee?: (id: string) => void; headingLevel: 2 | 3 | 4 }) {
   const m = world.manifest;
@@ -64,14 +50,13 @@ function WorldCard({ item, world, onSee, headingLevel }: { item: Listed; world: 
         {countLine(m)}
         {people ? ` · ${people}` : ""}
       </p>
-      <DistrictChips world={world} />
       <div className="net-actions">
-        <a className="btn btn-primary btn-small" href={instanceHref(world.url)}>
+        <a className="btn btn-outline btn-small" href={instanceHref(world.url)}>
           Visit map<span className="sr-only">: {world.name}</span>
           <External size={16} />
         </a>
         {onSee ? (
-          <button type="button" className="btn btn-outline btn-small" onClick={() => onSee(world.id)}>
+          <button type="button" className="btn btn-ghost btn-small" onClick={() => onSee(world.id)}>
             <Orbit size={16} />
             See in the Nexus<span className="sr-only">: {world.name}</span>
           </button>
@@ -103,7 +88,7 @@ function HiddenItem({ item }: { item: Listed }) {
 export function EmptyNetwork({ joinHref }: { joinHref?: string }) {
   return (
     <div className="empty">
-      <p className="empty-title">No maps have joined yet. Yours can be the first.</p>
+      <p className="empty-title">No maps have joined yet.</p>
       {joinHref ? (
         <a className="text-link" href={joinHref}>
           How to join <ArrowRight size={16} />
@@ -131,7 +116,7 @@ export function NetworkList({ model, onSee, headingLevel = 3, joinHref }: { mode
       {hidden.length ? (
         <div className="net-hidden">
           <H className="net-hidden-title">Not shown in the Nexus</H>
-          <p className="muted">These maps are in the registry but are not worlds: their manifest could not be read, does not pass the checks, or does not link back to the Nexus.</p>
+          <p className="muted">These maps are registered but did not pass the checks at the last build.</p>
           <ul className="net-hidden-list">
             {hidden.map((l) => (
               <HiddenItem key={l.id} item={l} />

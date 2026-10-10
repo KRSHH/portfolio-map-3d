@@ -228,7 +228,7 @@ export default defineConfig(({ mode, command, isPreview }) => {
     },
     test: {
       environment: "node",
-      include: ["src/**/*.test.ts", "scripts/**/*.test.mjs", "federation/**/*.test.ts", "nexus/src/**/*.test.ts"],
+      include: ["src/**/*.test.ts", "scripts/**/*.test.mjs", "federation/**/*.test.ts", "nexus/src/**/*.test.ts", "mcp/**/*.test.mjs"],
     },
   };
 });

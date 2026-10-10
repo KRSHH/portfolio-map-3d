@@ -31,8 +31,13 @@ describe("tokens.css contrast", () => {
     ["text-faint", "surface"],
     ["link", "bg"],
     ["link", "surface"],
+    ["primary-ink", "primary"],
+    ["primary-ink", "primary-hover"],
     ["accent-ink", "accent"],
     ["accent-ink", "accent-hover"],
+    // The hero's gradient button: its ink on every stop of the gradient.
+    ["accent-ink", "orb-glow"],
+    ["accent-ink", "violet"],
     ["warn-ink", "warn"],
     ["problem", "surface"],
     ["unreachable", "surface"],
