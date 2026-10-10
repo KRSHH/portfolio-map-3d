@@ -9961,6 +9961,3177 @@
       "logoFile": "instances/florida-ecosystem-map.svg",
       "proof": "domain",
       "problems": []
+    },
+    {
+      "entry": {
+        "id": "india-ecosystem-map",
+        "name": "India Ecosystem Map",
+        "url": "https://fritzhand.github.io/startup-india-guide",
+        "joined": "2026-10-10",
+        "maintainer": "fritzhand"
+      },
+      "status": "verified",
+      "checked": "2026-10-10",
+      "manifest": {
+        "protocol": "portfolio-map/1",
+        "id": "india-ecosystem-map",
+        "name": "India Ecosystem Map",
+        "publisher": {
+          "name": "Jeremy Fritzhand",
+          "website": "https://fritzhand.github.io"
+        },
+        "url": "https://fritzhand.github.io/startup-india-guide",
+        "tagline": "India's startup incubators by state on a walkable 3D map, from the Startup Schemes Playbook, a guide to central and state startup schemes.",
+        "logo": "https://fritzhand.github.io/startup-india-guide/assets/favicon.svg",
+        "accent": "#e2621b",
+        "nexus": "https://wearenexus.xyz",
+        "framework": {
+          "name": "startup-india-guide",
+          "version": "1.0.0"
+        },
+        "labels": {
+          "company": "incubator",
+          "companies": "incubators",
+          "district": "state",
+          "districts": "states and UTs",
+          "people": null
+        },
+        "counts": {
+          "companies": 224,
+          "people": 0,
+          "districts": 36
+        },
+        "districts": [
+          {
+            "slug": "ladakh",
+            "label": "Ladakh",
+            "color": "#3987e5",
+            "count": 0
+          },
+          {
+            "slug": "jammu-and-kashmir",
+            "label": "Jammu and Kashmir",
+            "color": "#3987e5",
+            "count": 6
+          },
+          {
+            "slug": "himachal-pradesh",
+            "label": "Himachal Pradesh",
+            "color": "#a0782e",
+            "count": 4
+          },
+          {
+            "slug": "punjab",
+            "label": "Punjab",
+            "color": "#c45bd1",
+            "count": 8
+          },
+          {
+            "slug": "chandigarh",
+            "label": "Chandigarh",
+            "color": "#6f9a1a",
+            "count": 2
+          },
+          {
+            "slug": "uttarakhand",
+            "label": "Uttarakhand",
+            "color": "#5f7fd0",
+            "count": 6
+          },
+          {
+            "slug": "haryana",
+            "label": "Haryana",
+            "color": "#e66767",
+            "count": 6
+          },
+          {
+            "slug": "delhi",
+            "label": "Delhi",
+            "color": "#2aa5c0",
+            "count": 14
+          },
+          {
+            "slug": "arunachal-pradesh",
+            "label": "Arunachal Pradesh",
+            "color": "#008300",
+            "count": 2
+          },
+          {
+            "slug": "sikkim",
+            "label": "Sikkim",
+            "color": "#d55181",
+            "count": 1
+          },
+          {
+            "slug": "uttar-pradesh",
+            "label": "Uttar Pradesh",
+            "color": "#c98500",
+            "count": 11
+          },
+          {
+            "slug": "rajasthan",
+            "label": "Rajasthan",
+            "color": "#9085e9",
+            "count": 7
+          },
+          {
+            "slug": "assam",
+            "label": "Assam",
+            "color": "#199e70",
+            "count": 5
+          },
+          {
+            "slug": "nagaland",
+            "label": "Nagaland",
+            "color": "#d95926",
+            "count": 1
+          },
+          {
+            "slug": "bihar",
+            "label": "Bihar",
+            "color": "#3987e5",
+            "count": 2
+          },
+          {
+            "slug": "meghalaya",
+            "label": "Meghalaya",
+            "color": "#a0782e",
+            "count": 2
+          },
+          {
+            "slug": "manipur",
+            "label": "Manipur",
+            "color": "#c45bd1",
+            "count": 1
+          },
+          {
+            "slug": "west-bengal",
+            "label": "West Bengal",
+            "color": "#6f9a1a",
+            "count": 3
+          },
+          {
+            "slug": "tripura",
+            "label": "Tripura",
+            "color": "#5f7fd0",
+            "count": 1
+          },
+          {
+            "slug": "jharkhand",
+            "label": "Jharkhand",
+            "color": "#e66767",
+            "count": 2
+          },
+          {
+            "slug": "madhya-pradesh",
+            "label": "Madhya Pradesh",
+            "color": "#2aa5c0",
+            "count": 7
+          },
+          {
+            "slug": "mizoram",
+            "label": "Mizoram",
+            "color": "#008300",
+            "count": 2
+          },
+          {
+            "slug": "gujarat",
+            "label": "Gujarat",
+            "color": "#d55181",
+            "count": 11
+          },
+          {
+            "slug": "chhattisgarh",
+            "label": "Chhattisgarh",
+            "color": "#c98500",
+            "count": 4
+          },
+          {
+            "slug": "odisha",
+            "label": "Odisha",
+            "color": "#9085e9",
+            "count": 5
+          },
+          {
+            "slug": "dadra-and-nagar-haveli-and-daman-and-diu",
+            "label": "Dadra and Nagar Haveli and Daman and Diu",
+            "color": "#199e70",
+            "count": 0
+          },
+          {
+            "slug": "maharashtra",
+            "label": "Maharashtra",
+            "color": "#199e70",
+            "count": 18
+          },
+          {
+            "slug": "telangana",
+            "label": "Telangana",
+            "color": "#d95926",
+            "count": 20
+          },
+          {
+            "slug": "andhra-pradesh",
+            "label": "Andhra Pradesh",
+            "color": "#3987e5",
+            "count": 13
+          },
+          {
+            "slug": "goa",
+            "label": "Goa",
+            "color": "#a0782e",
+            "count": 5
+          },
+          {
+            "slug": "karnataka",
+            "label": "Karnataka",
+            "color": "#c45bd1",
+            "count": 14
+          },
+          {
+            "slug": "puducherry",
+            "label": "Puducherry",
+            "color": "#6f9a1a",
+            "count": 2
+          },
+          {
+            "slug": "andaman-and-nicobar-islands",
+            "label": "Andaman and Nicobar Islands",
+            "color": "#5f7fd0",
+            "count": 0
+          },
+          {
+            "slug": "tamil-nadu",
+            "label": "Tamil Nadu",
+            "color": "#5f7fd0",
+            "count": 28
+          },
+          {
+            "slug": "lakshadweep",
+            "label": "Lakshadweep",
+            "color": "#e66767",
+            "count": 0
+          },
+          {
+            "slug": "kerala",
+            "label": "Kerala",
+            "color": "#e66767",
+            "count": 11
+          }
+        ],
+        "companies": [
+          {
+            "slug": "a-idea-tbi-of-naarm",
+            "name": "a-IDEA (TBI of NAARM)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://aidea.naarm.org.in",
+            "keywords": [
+              "Sector-specific incubator",
+              "Hyderabad",
+              "Agriculture",
+              "Agritech"
+            ]
+          },
+          {
+            "slug": "acic-iit-ism-foundation-dhanbad",
+            "name": "ACIC IIT (ISM) Foundation Dhanbad",
+            "district": "jharkhand",
+            "description": null,
+            "website": "https://www.aciciitism.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "IIT (ISM) Dhanbad",
+              "Dhanbad"
+            ]
+          },
+          {
+            "slug": "acic-cbit-research-and-entrepreneurship",
+            "name": "ACIC-CBIT Research and Entrepreneurship Foundation",
+            "district": "telangana",
+            "description": null,
+            "website": "https://www.cbit.ac.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Hyderabad"
+            ]
+          },
+          {
+            "slug": "acic-kl-startups-foundation",
+            "name": "ACIC-KL Startups Foundation",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://www.acickl.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "KL Deemed to be University",
+              "Vaddeswaram"
+            ]
+          },
+          {
+            "slug": "acic-push",
+            "name": "ACIC-PUSH",
+            "district": "puducherry",
+            "description": null,
+            "website": "https://www.pondiuni.edu.in/incubation-facility/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Pondicherry University",
+              "Puducherry"
+            ]
+          },
+          {
+            "slug": "agri-business-incubator-of-icrisat-abi-icrisat",
+            "name": "Agri-Business Incubator of ICRISAT (ABI-ICRISAT)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://aip.icrisat.org",
+            "keywords": [
+              "Sector-specific incubator",
+              "ICRISAT",
+              "Sangareddy",
+              "Agriculture",
+              "Agritech"
+            ]
+          },
+          {
+            "slug": "aic-adt-baramati-foundation",
+            "name": "AIC - ADT Baramati Foundation",
+            "district": "maharashtra",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "Agricultural Development Trust Baramati",
+              "Baramati",
+              "Agritech"
+            ]
+          },
+          {
+            "slug": "aic-bihar-vidyapith-foundation-aic-bvf",
+            "name": "AIC - Bihar Vidyapith Foundation (AIC-BVF)",
+            "district": "bihar",
+            "description": null,
+            "website": "https://www.aicbvf.edu.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Bihar Vidyapith",
+              "Patna"
+            ]
+          },
+          {
+            "slug": "aic-c-v-raman-global-university-foundation",
+            "name": "AIC - C.V. Raman Global University Foundation",
+            "district": "odisha",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "C.V. Raman Global University",
+              "Bhubaneswar"
+            ]
+          },
+          {
+            "slug": "aic-gim-foundation",
+            "name": "AIC - GIM Foundation",
+            "district": "goa",
+            "description": null,
+            "website": "https://www.aicgim.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Goa Institute of Management",
+              "Sanquelim"
+            ]
+          },
+          {
+            "slug": "aic-iiit-kottayam-foundation",
+            "name": "AIC - IIIT Kottayam Foundation",
+            "district": "kerala",
+            "description": null,
+            "website": "https://icentre.iiitkottayam.ac.in/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Kottayam"
+            ]
+          },
+          {
+            "slug": "aic-jyothy-institute-of-technology-foundation",
+            "name": "AIC - Jyothy Institute of Technology Foundation (AIC-JITF)",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.aicjitf.org/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Jyothy Institute of Technology",
+              "Bengaluru"
+            ]
+          },
+          {
+            "slug": "aic-niper-guwahati-foundation",
+            "name": "AIC - NIPER Guwahati Foundation",
+            "district": "assam",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "NIPER Guwahati",
+              "Guwahati",
+              "Pharma",
+              "HealthTech"
+            ]
+          },
+          {
+            "slug": "aic-nitte-incubation-centre",
+            "name": "AIC - NITTE Incubation Centre",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://aicnitte.com/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "NMAM Institute of Technology, Nitte",
+              "Udupi"
+            ]
+          },
+          {
+            "slug": "aic-nmims-incubation-centre",
+            "name": "AIC - NMIMS Incubation Centre",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://aic.nmims.edu",
+            "keywords": [
+              "Atal Incubation Centre",
+              "NMIMS",
+              "Mumbai"
+            ]
+          },
+          {
+            "slug": "aic-smu-technology-business-incubation",
+            "name": "AIC - SMU Technology Business Incubation Foundation (AIC-SMUTBI)",
+            "district": "sikkim",
+            "description": null,
+            "website": "https://www.smutbi.com",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Sikkim Manipal University",
+              "Rangpo (Majitar)"
+            ]
+          },
+          {
+            "slug": "aic-soa-foundation",
+            "name": "AIC - SOA Foundation",
+            "district": "odisha",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "Siksha 'O' Anusandhan University",
+              "Bhubaneswar"
+            ]
+          },
+          {
+            "slug": "aic-aleap-we-hub",
+            "name": "AIC ALEAP WE Hub",
+            "district": "telangana",
+            "description": null,
+            "website": "https://www.aleap.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Hyderabad",
+              "Women entrepreneurship"
+            ]
+          },
+          {
+            "slug": "aic-banasthali-vidyapith-foundation",
+            "name": "AIC Banasthali Vidyapith Foundation",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://www.aicbanasthali.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Banasthali Vidyapith",
+              "Tonk",
+              "Women-led startups",
+              "DeepTech"
+            ]
+          },
+          {
+            "slug": "aic-iim-nagpur",
+            "name": "AIC IIM Nagpur",
+            "district": "maharashtra",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "IIM Nagpur",
+              "Nagpur"
+            ]
+          },
+          {
+            "slug": "aic-iiser-pune-seed-foundation",
+            "name": "AIC IISER Pune SEED Foundation",
+            "district": "maharashtra",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "IISER Pune",
+              "Pune",
+              "Deeptech",
+              "Life Sciences"
+            ]
+          },
+          {
+            "slug": "aic-mit-adt",
+            "name": "AIC MIT ADT",
+            "district": "maharashtra",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "MIT ADT University",
+              "Pune"
+            ]
+          },
+          {
+            "slug": "aic-rru-incubation-foundation",
+            "name": "AIC RRU Incubation Foundation",
+            "district": "gujarat",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "Rashtriya Raksha University",
+              "Gandhinagar",
+              "Defence",
+              "Security tech"
+            ]
+          },
+          {
+            "slug": "aic-stpinext-initiatives-gurugram",
+            "name": "AIC STPINEXT Initiatives Gurugram",
+            "district": "haryana",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Government incubator",
+              "Software Technology Parks of India",
+              "Gurugram"
+            ]
+          },
+          {
+            "slug": "aic-aartech",
+            "name": "AIC-Aartech",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "Aartech Solonics Limited",
+              "Mandideep"
+            ]
+          },
+          {
+            "slug": "aic-aau-incubator-neatehub",
+            "name": "AIC-AAU Incubator (NEATEHUB)",
+            "district": "assam",
+            "description": null,
+            "website": "https://neatehub.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Assam Agricultural University",
+              "Jorhat",
+              "Agritech"
+            ]
+          },
+          {
+            "slug": "aic-amtz-medivalley-incubation-council",
+            "name": "AIC-AMTZ MediValley Incubation Council",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://www.medivalley-aic.in",
+            "keywords": [
+              "Sector-specific incubator",
+              "Andhra Pradesh MedTech Zone (AMTZ)",
+              "Visakhapatnam",
+              "MedTech",
+              "HealthTech",
+              "Medical devices"
+            ]
+          },
+          {
+            "slug": "aic-au-incubation-foundation",
+            "name": "AIC-AU Incubation Foundation",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://annaincubator.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Anna University",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "aic-chitkara-incubation-foundation-aic-cif",
+            "name": "AIC-Chitkara Incubation Foundation (AIC-CIF)",
+            "district": "punjab",
+            "description": null,
+            "website": "https://www.chitkara.edu.in/ciif/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Chitkara University",
+              "Rajpura",
+              "Drone tech",
+              "Agritech",
+              "Renewable energy"
+            ]
+          },
+          {
+            "slug": "aic-gbu-incubation-centre",
+            "name": "AIC-GBU Incubation Centre",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://gburif.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Gautam Buddha University",
+              "Greater Noida"
+            ]
+          },
+          {
+            "slug": "aic-iiith-foundation",
+            "name": "AIC-IIITH Foundation",
+            "district": "telangana",
+            "description": null,
+            "website": "https://aic.iiit.ac.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "IIIT Hyderabad",
+              "Hyderabad",
+              "Social impact",
+              "Technology"
+            ]
+          },
+          {
+            "slug": "aic-nift-tea-incubation-centre",
+            "name": "AIC-NIFT TEA Incubation Centre",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.aicnifttea.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "NIFT-TEA Knitwear Fashion Institute",
+              "Tiruppur",
+              "Textile",
+              "Apparel"
+            ]
+          },
+          {
+            "slug": "aic-pecf",
+            "name": "AIC-PECF",
+            "district": "puducherry",
+            "description": null,
+            "website": "https://aicpecf.org",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Puducherry Technological University",
+              "Puducherry",
+              "Electronics Design & Manufacturing",
+              "IoT",
+              "Drones/UAV"
+            ]
+          },
+          {
+            "slug": "aic-raise-business-incubator",
+            "name": "AIC-RAISE Business Incubator",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://aicraise.com",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Rathinam Group of Institutions",
+              "Coimbatore"
+            ]
+          },
+          {
+            "slug": "aic-rntu-foundation",
+            "name": "AIC-RNTU Foundation",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": "https://www.aicrntu.com",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Rabindranath Tagore University",
+              "Bhopal"
+            ]
+          },
+          {
+            "slug": "aic-sku-confederation",
+            "name": "AIC-SKU Confederation",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://aic-sku.com",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Sri Krishnadevaraya University",
+              "Anantapur",
+              "Agri-tech",
+              "Food processing",
+              "Clean energy",
+              "Circular economy"
+            ]
+          },
+          {
+            "slug": "aic-36inc",
+            "name": "AIC@36INC",
+            "district": "chhattisgarh",
+            "description": null,
+            "website": "https://36inc.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Government of Chhattisgarh",
+              "Raipur"
+            ]
+          },
+          {
+            "slug": "amity-innovation-incubator-raipur",
+            "name": "Amity Innovation Incubator Raipur",
+            "district": "chhattisgarh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Amity University Chhattisgarh",
+              "Raipur"
+            ]
+          },
+          {
+            "slug": "amity-technology-incubator",
+            "name": "Amity Technology Incubator",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://noida.amity.edu/incubator",
+            "keywords": [
+              "Academic incubator",
+              "Amity University",
+              "Noida",
+              "ICT"
+            ]
+          },
+          {
+            "slug": "amrita-technology-business-incubator-amrita-tb-2",
+            "name": "Amrita Technology Business Incubator (Amrita TBI Coimbatore)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.amritatbi.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Amrita Vishwa Vidyapeetham",
+              "Coimbatore"
+            ]
+          },
+          {
+            "slug": "amrita-technology-business-incubator-amrita-tbi",
+            "name": "Amrita Technology Business Incubator (Amrita TBI)",
+            "district": "kerala",
+            "description": null,
+            "website": "https://www.amritatbi.com/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Amrita Vishwa Vidyapeetham",
+              "Kollam"
+            ]
+          },
+          {
+            "slug": "andhra-university-inclusive-technology-business",
+            "name": "Andhra University Inclusive Technology Business Incubator (AU i-TBI)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "Andhra University",
+              "Visakhapatnam"
+            ]
+          },
+          {
+            "slug": "arunachal-pradesh-innovation-and-investment-park",
+            "name": "Arunachal Pradesh Innovation and Investment Park (APIIP)",
+            "district": "arunachal-pradesh",
+            "description": null,
+            "website": "https://www.startup.arunachal.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Arunachal Pradesh",
+              "Itanagar"
+            ]
+          },
+          {
+            "slug": "aspire-tbi-university-of-hyderabad",
+            "name": "ASPIRE TBI - University of Hyderabad",
+            "district": "telangana",
+            "description": null,
+            "website": "https://tbi.uohyd.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "University of Hyderabad",
+              "Hyderabad",
+              "Life Sciences",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "assam-startup-the-nest",
+            "name": "Assam Startup - The Nest",
+            "district": "assam",
+            "description": null,
+            "website": "https://startup.assam.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Assam (AEDC)",
+              "Guwahati"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-barc",
+            "name": "Atal Incubation Centre - BARC",
+            "district": "maharashtra",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Atal Incubation Centre",
+              "Bhabha Atomic Research Centre",
+              "Mumbai",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-ccmb-aic-ccmb",
+            "name": "Atal Incubation Centre - CCMB (AIC-CCMB)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://aic.ccmb.res.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Hyderabad",
+              "Life Sciences",
+              "Biotech",
+              "Healthcare"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-empi-incubation",
+            "name": "Atal Incubation Centre - EMPI Incubation Foundation",
+            "district": "delhi",
+            "description": null,
+            "website": "https://aic-empi.org/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "EMPI Business School",
+              "New Delhi",
+              "Mobility",
+              "Energy",
+              "Health",
+              "Agri",
+              "EdTech"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-ggsipu-foundation-delhi",
+            "name": "Atal Incubation Centre - GGSIPU Foundation Delhi",
+            "district": "delhi",
+            "description": null,
+            "website": "https://aic-ggsipu.org/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "New Delhi"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-jnu-foundation-for",
+            "name": "Atal Incubation Centre - JNU Foundation for Innovation (AIC-JNUFI)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://www.jnu.ac.in/aic-jnufi",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Jawaharlal Nehru University",
+              "New Delhi",
+              "Deep-tech",
+              "Life Sciences",
+              "Biotech",
+              "Health-tech"
+            ]
+          },
+          {
+            "slug": "atal-incubation-centre-at-indian-school-of",
+            "name": "Atal Incubation Centre at Indian School of Business (AIC ISB Mohali)",
+            "district": "punjab",
+            "description": null,
+            "website": "https://aicisb.org/",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Indian School of Business",
+              "Mohali"
+            ]
+          },
+          {
+            "slug": "atal-greatlakes-balachandran-incubator-agbi",
+            "name": "Atal-GreatLakes Balachandran Incubator (AGBI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.agbinc.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Great Lakes Institute of Management",
+              "Chengalpattu",
+              "Fintech",
+              "Edtech",
+              "Healthtech",
+              "Agritech",
+              "Energy"
+            ]
+          },
+          {
+            "slug": "avishkaran-bionest-of-niper-hyderabad",
+            "name": "Avishkaran (BioNEST of NIPER-Hyderabad)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://avishkaran.org",
+            "keywords": [
+              "Sector-specific incubator",
+              "NIPER Hyderabad",
+              "Hyderabad",
+              "Pharma",
+              "Life Sciences"
+            ]
+          },
+          {
+            "slug": "b-nest-incubation-centre",
+            "name": "B-Nest Incubation Centre",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Government incubator",
+              "Bhopal"
+            ]
+          },
+          {
+            "slug": "b-incube-bilaspur-incubation-centre",
+            "name": "B.incube Bilaspur Incubation Centre",
+            "district": "chhattisgarh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Government incubator",
+              "Bilaspur Smart City / AIILSG",
+              "Bilaspur"
+            ]
+          },
+          {
+            "slug": "bennett-hatchery",
+            "name": "Bennett Hatchery",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Bennett University",
+              "Greater Noida"
+            ]
+          },
+          {
+            "slug": "bits-birac-bionest",
+            "name": "BITS BIRAC BioNEST",
+            "district": "goa",
+            "description": null,
+            "website": "https://www.bionestgoa.com",
+            "keywords": [
+              "Sector-specific incubator",
+              "BITS Pilani K K Birla Goa Campus",
+              "Zuarinagar",
+              "Biotech",
+              "Health",
+              "Environment"
+            ]
+          },
+          {
+            "slug": "c-camp-bioincubator",
+            "name": "C-CAMP BioIncubator",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.ccamp.res.in/",
+            "keywords": [
+              "Sector-specific incubator",
+              "Bengaluru",
+              "Biotech",
+              "Life Sciences",
+              "Healthtech"
+            ]
+          },
+          {
+            "slug": "centre-for-entrepreneurship-development-and",
+            "name": "Centre for Entrepreneurship Development and Incubation (CEDI), NIT Trichy",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.nitt.edu/home/rc/cedi/",
+            "keywords": [
+              "Academic incubator",
+              "NIT Tiruchirappalli",
+              "Tiruchirappalli"
+            ]
+          },
+          {
+            "slug": "centre-for-incubation-and-business-acceleration",
+            "name": "Centre for Incubation and Business Acceleration (CIBA) Goa",
+            "district": "goa",
+            "description": null,
+            "website": "https://ciba.org.in",
+            "keywords": [
+              "Private incubator",
+              "Agnel Technical Education Complex",
+              "Verna"
+            ]
+          },
+          {
+            "slug": "centre-for-incubation-and-business-acceleratio-2",
+            "name": "Centre for Incubation and Business Acceleration (CIBA) Mumbai",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://cibamumbai.org.in",
+            "keywords": [
+              "Private incubator",
+              "Agnel Technical Education Complex",
+              "Navi Mumbai"
+            ]
+          },
+          {
+            "slug": "centre-for-innovation-and-entrepreneurship-cie",
+            "name": "Centre for Innovation and Entrepreneurship (CIE)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://www.jmi.ac.in/cie",
+            "keywords": [
+              "Academic incubator",
+              "Jamia Millia Islamia",
+              "New Delhi"
+            ]
+          },
+          {
+            "slug": "centre-for-innovation-and-entrepreneurship-cie-2",
+            "name": "Centre for Innovation and Entrepreneurship (CIE), IIIT Hyderabad",
+            "district": "telangana",
+            "description": null,
+            "website": "https://cie.iiit.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "IIIT Hyderabad",
+              "Hyderabad",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "centre-for-innovation-incubation-and",
+            "name": "Centre for Innovation, Incubation and Entrepreneurship (CIIE)",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://ciie.uok.edu.in",
+            "keywords": [
+              "Academic incubator",
+              "University of Kashmir",
+              "Srinagar",
+              "AgriTech",
+              "Handicrafts",
+              "Tourism"
+            ]
+          },
+          {
+            "slug": "centre-for-medical-innovation-and",
+            "name": "Centre for Medical Innovation & Entrepreneurship (CMIE)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://cmie-aiims.in/",
+            "keywords": [
+              "Sector-specific incubator",
+              "New Delhi",
+              "MedTech",
+              "HealthTech",
+              "BioTech"
+            ]
+          },
+          {
+            "slug": "centre-of-innovation-incubation-entrepreneurship",
+            "name": "Centre of Innovation, Incubation, Entrepreneurship & Start Up (CIIES)",
+            "district": "uttarakhand",
+            "description": null,
+            "website": "https://www.dituniversity.edu.in/ciies",
+            "keywords": [
+              "Academic incubator",
+              "DIT University",
+              "Dehradun"
+            ]
+          },
+          {
+            "slug": "cet-tbi",
+            "name": "CET-TBI",
+            "district": "kerala",
+            "description": null,
+            "website": "https://tbi.cet.ac.in/",
+            "keywords": [
+              "Technology Business Incubator",
+              "College of Engineering Trivandrum",
+              "Thiruvananthapuram"
+            ]
+          },
+          {
+            "slug": "codissia-defence-innovation-and-atal-incubation",
+            "name": "CODISSIA Defence Innovation and Atal Incubation Centre (CDIIC)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.cdiic.in",
+            "keywords": [
+              "Atal Incubation Centre",
+              "CODISSIA",
+              "Coimbatore",
+              "Defence",
+              "Aerospace"
+            ]
+          },
+          {
+            "slug": "coep-s-bhau-institute-of-innovation",
+            "name": "COEP's Bhau Institute of Innovation, Entrepreneurship and Leadership",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://bhau.org",
+            "keywords": [
+              "Academic incubator",
+              "COEP Technological University",
+              "Pune"
+            ]
+          },
+          {
+            "slug": "cradle",
+            "name": "CrAdLE",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://cradle-edii.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Gandhinagar",
+              "Manufacturing",
+              "Healthcare",
+              "Renewable Energy",
+              "Agri"
+            ]
+          },
+          {
+            "slug": "crescent-innovation-and-incubation-council-aic",
+            "name": "Crescent Innovation and Incubation Council (AIC Crescent)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.ciic.ventures",
+            "keywords": [
+              "Atal Incubation Centre",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "csir-iiim-technology-business-incubator-bionest",
+            "name": "CSIR-IIIM Technology Business Incubator (BioNEST)",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://www.iiimtbi.com",
+            "keywords": [
+              "Sector-specific incubator",
+              "Jammu",
+              "BioTech",
+              "Pharmaceuticals",
+              "Nutraceuticals"
+            ]
+          },
+          {
+            "slug": "cultiv8-ciet-tbi",
+            "name": "Cultiv8 (CIET-TBI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.thecultiv8.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Coimbatore"
+            ]
+          },
+          {
+            "slug": "cusat-tbi-cittic",
+            "name": "CUSAT TBI / CITTIC",
+            "district": "kerala",
+            "description": null,
+            "website": "https://tbi.cusat.ac.in/",
+            "keywords": [
+              "Academic incubator",
+              "Kochi"
+            ]
+          },
+          {
+            "slug": "delhi-technological-university-incubation-and",
+            "name": "Delhi Technological University Incubation and Innovation Foundation (DTU-IIF)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://dtuiif.co.in/",
+            "keywords": [
+              "Academic incubator",
+              "Delhi Technological University",
+              "New Delhi"
+            ]
+          },
+          {
+            "slug": "deshpande-startups",
+            "name": "Deshpande Startups",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://deshpandestartups.org/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Deshpande Foundation",
+              "Hubballi"
+            ]
+          },
+          {
+            "slug": "dkte-technology-business-incubation-centre",
+            "name": "DKTE Technology Business Incubation Centre",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://www.dkte.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Ichalkaranji",
+              "Textiles"
+            ]
+          },
+          {
+            "slug": "dream-hatcher-incubation-centre",
+            "name": "Dream Hatcher Incubation Centre",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Government incubator",
+              "Gwalior"
+            ]
+          },
+          {
+            "slug": "dst-i-tbi-national-engineering-college-nec-itbi",
+            "name": "DST i-TBI, National Engineering College (NEC-iTBI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.necitbi.org",
+            "keywords": [
+              "Technology Business Incubator",
+              "National Engineering College, Kovilpatti",
+              "Kovilpatti",
+              "Waste-to-wealth",
+              "IoT"
+            ]
+          },
+          {
+            "slug": "edventure-park",
+            "name": "EdVenture Park",
+            "district": "telangana",
+            "description": null,
+            "website": "https://edventurepark.com",
+            "keywords": [
+              "Private incubator",
+              "Hyderabad",
+              "Student startups"
+            ]
+          },
+          {
+            "slug": "electropreneur-park-delhi",
+            "name": "Electropreneur Park, Delhi",
+            "district": "delhi",
+            "description": null,
+            "website": "https://stpi.in/en/centre-of-entrepreneurship/ep-del",
+            "keywords": [
+              "Sector-specific incubator",
+              "New Delhi",
+              "Electronics",
+              "ESDM",
+              "IoT",
+              "Hardware"
+            ]
+          },
+          {
+            "slug": "entrepreneurship-and-incubation-cell-tbi-pec",
+            "name": "Entrepreneurship and Incubation Cell / TBI, PEC",
+            "district": "chandigarh",
+            "description": null,
+            "website": "https://pec.ac.in/eic",
+            "keywords": [
+              "Academic incubator",
+              "Chandigarh"
+            ]
+          },
+          {
+            "slug": "fiire-forum-for-innovation-incubation-research",
+            "name": "FiiRE (Forum for Innovation Incubation Research and Entrepreneurship)",
+            "district": "goa",
+            "description": null,
+            "website": "https://fiire.org.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Don Bosco College of Engineering",
+              "Margao",
+              "TourismTech",
+              "Tech"
+            ]
+          },
+          {
+            "slug": "first-foundation-for-innovation-and-research-at",
+            "name": "FIRST - Foundation for Innovation & Research at SASTRA",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://sastratbi.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "SASTRA Deemed University",
+              "Thanjavur",
+              "IoT",
+              "3D Printing"
+            ]
+          },
+          {
+            "slug": "forge-coimbatore-innovation-and-business",
+            "name": "FORGE (Coimbatore Innovation & Business Incubator)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.forgeforward.org",
+            "keywords": [
+              "Private incubator",
+              "Coimbatore",
+              "Hardware",
+              "IoT",
+              "Manufacturing"
+            ]
+          },
+          {
+            "slug": "foundation-for-innovation-and-technology",
+            "name": "Foundation for Innovation and Technology Transfer (FITT)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://fitt-iitd.in/",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Technology Delhi",
+              "New Delhi"
+            ]
+          },
+          {
+            "slug": "foundation-for-technology-and-business",
+            "name": "Foundation for Technology & Business Incubation (FTBI)",
+            "district": "odisha",
+            "description": null,
+            "website": "https://www.ftbi-nitrkl.org",
+            "keywords": [
+              "Technology Business Incubator",
+              "NIT Rourkela",
+              "Rourkela",
+              "Agritech",
+              "Robotics",
+              "Cleantech",
+              "IT"
+            ]
+          },
+          {
+            "slug": "g-h-raisoni-technology-business-incubator",
+            "name": "G H Raisoni Technology Business Incubator Foundation",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://ghrtbi.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "G H Raisoni College of Engineering",
+              "Nagpur",
+              "Agritech",
+              "Healthcare",
+              "ICT"
+            ]
+          },
+          {
+            "slug": "gitam-centre-for-incubation-and-entrepreneurship",
+            "name": "GITAM Centre for Incubation and Entrepreneurship Development (GCIED)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://gcied.gitam.edu",
+            "keywords": [
+              "Academic incubator",
+              "GITAM University",
+              "Visakhapatnam"
+            ]
+          },
+          {
+            "slug": "greenovator-incubation-foundation-gif-nit",
+            "name": "Greenovator Incubation Foundation (GIF), NIT Srinagar",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://www.greenovator.org.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Srinagar",
+              "GreenTech",
+              "AI",
+              "AgriTech",
+              "HealthTech",
+              "IoT"
+            ]
+          },
+          {
+            "slug": "gtu-ventures",
+            "name": "GTU Ventures",
+            "district": "gujarat",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Gujarat Technological University",
+              "Ahmedabad"
+            ]
+          },
+          {
+            "slug": "gujarat-university-startup-and-entrepreneurship",
+            "name": "Gujarat University Startup and Entrepreneurship Council (GUSEC)",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://gusec.edu.in",
+            "keywords": [
+              "Academic incubator",
+              "Gujarat University",
+              "Ahmedabad"
+            ]
+          },
+          {
+            "slug": "gyan-circle-ventures-tbi-iiit-sri-city",
+            "name": "Gyan Circle Ventures (TBI-IIIT Sri City)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://iiits.ac.in/innovation-tbi/",
+            "keywords": [
+              "Technology Business Incubator",
+              "IIIT Sri City",
+              "Sri City"
+            ]
+          },
+          {
+            "slug": "hatchlab-research-centre",
+            "name": "Hatchlab Research Centre",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://www.srmap.edu.in/entrepreneurship/hatchlab-research-centre/",
+            "keywords": [
+              "Academic incubator",
+              "SRM University-AP",
+              "Amaravati"
+            ]
+          },
+          {
+            "slug": "i-hub-gujarat",
+            "name": "i-Hub Gujarat",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://ihubgujarat.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Gujarat",
+              "Ahmedabad"
+            ]
+          },
+          {
+            "slug": "i-tic-foundation-tbi-iit-hyderabad",
+            "name": "i-TIC Foundation (TBI, IIT Hyderabad)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://itic.iith.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "IIT Hyderabad",
+              "Hyderabad",
+              "Deeptech",
+              "Healthcare",
+              "AI/ML",
+              "Robotics"
+            ]
+          },
+          {
+            "slug": "icreate",
+            "name": "iCreate",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://icreate.org.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Ahmedabad",
+              "AI",
+              "Cleantech",
+              "Deeptech",
+              "Agritech"
+            ]
+          },
+          {
+            "slug": "igdtuw-anveshan-foundation",
+            "name": "IGDTUW - Anveshan Foundation",
+            "district": "delhi",
+            "description": null,
+            "website": "https://www.anveshanfoundation.org/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Delhi"
+            ]
+          },
+          {
+            "slug": "ignite-edc-innovation-hub",
+            "name": "IGNITE - EDC Innovation Hub",
+            "district": "goa",
+            "description": null,
+            "website": "https://edcignite.com",
+            "keywords": [
+              "Government incubator",
+              "Economic Development Corporation of Goa",
+              "Panaji"
+            ]
+          },
+          {
+            "slug": "iiitd-innovation-and-incubation-center",
+            "name": "IIITD Innovation & Incubation Center",
+            "district": "delhi",
+            "description": null,
+            "website": "https://iiitdic.in/",
+            "keywords": [
+              "Academic incubator",
+              "New Delhi",
+              "AI",
+              "Cybersecurity",
+              "Data Science",
+              "Robotics",
+              "Drones"
+            ]
+          },
+          {
+            "slug": "iim-calcutta-innovation-park-iimcip",
+            "name": "IIM Calcutta Innovation Park (IIMCIP)",
+            "district": "west-bengal",
+            "description": null,
+            "website": "https://iimcip.org",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Management Calcutta",
+              "Kolkata"
+            ]
+          },
+          {
+            "slug": "iim-indore-incubation-centre",
+            "name": "IIM Indore Incubation Centre",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "IIM Indore",
+              "Indore"
+            ]
+          },
+          {
+            "slug": "iim-kashipur-foundation-for-innovation-and",
+            "name": "IIM Kashipur Foundation for Innovation and Entrepreneurship Development (FIED)",
+            "district": "uttarakhand",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Management Kashipur",
+              "Kashipur"
+            ]
+          },
+          {
+            "slug": "iim-lucknow-enterprise-incubation-centre-iiml",
+            "name": "IIM Lucknow Enterprise Incubation Centre (IIML-EIC)",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://www.iimlincubator.com",
+            "keywords": [
+              "Academic incubator",
+              "IIM Lucknow",
+              "Noida"
+            ]
+          },
+          {
+            "slug": "iim-shillong-foundation-for-incubation-and",
+            "name": "IIM Shillong Foundation for Incubation and Enterprises (IIMSFIE)",
+            "district": "meghalaya",
+            "description": null,
+            "website": "https://www.iimshillong.ac.in/iimsfie",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Management Shillong",
+              "Shillong"
+            ]
+          },
+          {
+            "slug": "iim-sirmaur-incubation-centre",
+            "name": "IIM Sirmaur Incubation Centre",
+            "district": "himachal-pradesh",
+            "description": null,
+            "website": "https://www.iimsirmaur.ac.in/entrepreneurship",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Management Sirmaur",
+              "Dhaula Kuan"
+            ]
+          },
+          {
+            "slug": "iim-udaipur-incubation-centre",
+            "name": "IIM Udaipur Incubation Centre",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://iimuic.org",
+            "keywords": [
+              "Academic incubator",
+              "IIM Udaipur",
+              "Udaipur"
+            ]
+          },
+          {
+            "slug": "iima-ventures-ciie-co",
+            "name": "IIMA Ventures (CIIE.CO)",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://iimaventures.com",
+            "keywords": [
+              "Academic incubator",
+              "IIM Ahmedabad",
+              "Ahmedabad"
+            ]
+          },
+          {
+            "slug": "iimk-live",
+            "name": "IIMK LIVE",
+            "district": "kerala",
+            "description": null,
+            "website": "https://www.iimklive.org/",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Management Kozhikode",
+              "Kozhikode",
+              "Deep Tech",
+              "AI",
+              "Sustainability",
+              "Social Innovation"
+            ]
+          },
+          {
+            "slug": "iimv-field",
+            "name": "IIMV FIELD",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://iimvfield.com",
+            "keywords": [
+              "Academic incubator",
+              "IIM Visakhapatnam",
+              "Visakhapatnam"
+            ]
+          },
+          {
+            "slug": "iit-guwahati-technology-incubation-centre-iitg",
+            "name": "IIT Guwahati Technology Incubation Centre (IITG-TIC)",
+            "district": "assam",
+            "description": null,
+            "website": "https://iitgtic.com",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Technology Guwahati",
+              "Guwahati",
+              "AI",
+              "Robotics",
+              "Clean energy",
+              "HealthTech",
+              "AgriTech"
+            ]
+          },
+          {
+            "slug": "iit-madras-incubation-cell-iitmic",
+            "name": "IIT Madras Incubation Cell (IITMIC)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://incubation.iitm.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "IIT Madras",
+              "Chennai",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "iit-madras-research-park-iitmrp",
+            "name": "IIT Madras Research Park (IITMRP)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://respark.iitm.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "IIT Madras",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "iit-mandi-catalyst",
+            "name": "IIT Mandi Catalyst",
+            "district": "himachal-pradesh",
+            "description": null,
+            "website": "https://www.iitmandicatalyst.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Indian Institute of Technology Mandi",
+              "Mandi",
+              "HealthTech",
+              "EdTech",
+              "AgriTech",
+              "CleanTech",
+              "BioTech"
+            ]
+          },
+          {
+            "slug": "iit-ropar-technology-business-incubator",
+            "name": "IIT Ropar Technology Business Incubator Foundation (TBIF)",
+            "district": "punjab",
+            "description": null,
+            "website": "https://www.iitrpr.ac.in/tbif/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Indian Institute of Technology Ropar",
+              "Rupnagar",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "iitgn-innovation-and-entrepreneurship-centre",
+            "name": "IITGN Innovation and Entrepreneurship Centre (IIEC)",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://iieciitgn.com",
+            "keywords": [
+              "Academic incubator",
+              "IIT Gandhinagar",
+              "Gandhinagar",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "iiti-advanced-centre-for-entrepreneurship-ace",
+            "name": "IITI Advanced Centre for Entrepreneurship (ACE) Foundation",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "IIT Indore",
+              "Indore"
+            ]
+          },
+          {
+            "slug": "ikp-eden",
+            "name": "IKP EDEN",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://ikpeden.com/",
+            "keywords": [
+              "Sector-specific incubator",
+              "IKP Knowledge Park",
+              "Bengaluru",
+              "Hardware",
+              "IoT",
+              "Deep Science",
+              "Robotics"
+            ]
+          },
+          {
+            "slug": "ikp-knowledge-park-life-science-incubator",
+            "name": "IKP Knowledge Park - Life Science Incubator",
+            "district": "telangana",
+            "description": null,
+            "website": "https://ikpknowledgepark.com",
+            "keywords": [
+              "Sector-specific incubator",
+              "Hyderabad",
+              "Life Sciences",
+              "Biotech",
+              "Healthtech"
+            ]
+          },
+          {
+            "slug": "incubation-centre-iit-patna-ic-iitp",
+            "name": "Incubation Centre IIT Patna (IC IITP)",
+            "district": "bihar",
+            "description": null,
+            "website": "https://iciitp.com",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Technology Patna",
+              "Bihta",
+              "ESDM",
+              "Medical electronics"
+            ]
+          },
+          {
+            "slug": "indian-institute-of-entrepreneurship-iie",
+            "name": "Indian Institute of Entrepreneurship (IIE)",
+            "district": "assam",
+            "description": null,
+            "website": "https://iie.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Guwahati"
+            ]
+          },
+          {
+            "slug": "infoedge-centre-for-entrepreneurship",
+            "name": "InfoEdge Centre for Entrepreneurship",
+            "district": "haryana",
+            "description": null,
+            "website": "https://www.ashoka.edu.in/page/cfe/",
+            "keywords": [
+              "Academic incubator",
+              "Ashoka University",
+              "Sonipat"
+            ]
+          },
+          {
+            "slug": "innovation-and-incubation-hub-mnnit-foundation",
+            "name": "Innovation and Incubation Hub MNNIT Foundation (IIHMF)",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://www.mnnit.ac.in/tbi/",
+            "keywords": [
+              "Academic incubator",
+              "MNNIT Allahabad",
+              "Prayagraj"
+            ]
+          },
+          {
+            "slug": "institute-innovation-and-incubation-council-i3c",
+            "name": "Institute Innovation & Incubation Council (I3C), IIT Jammu",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://iitjammu.ac.in/i3c",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Technology Jammu",
+              "Jammu"
+            ]
+          },
+          {
+            "slug": "isb-dlabs",
+            "name": "ISB DLabs",
+            "district": "telangana",
+            "description": null,
+            "website": "https://isbdlabs.org",
+            "keywords": [
+              "Academic incubator",
+              "Indian School of Business",
+              "Hyderabad"
+            ]
+          },
+          {
+            "slug": "itnt-hub-tamil-nadu-technology-hub",
+            "name": "iTNT Hub (Tamil Nadu Technology Hub)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://itnthub.tn.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Tamil Nadu",
+              "Chennai",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "j-c-bose-ymca-incubation-foundation-jcb-tbi",
+            "name": "J.C. Bose YMCA Incubation Foundation (JCB-TBI)",
+            "district": "haryana",
+            "description": null,
+            "website": "https://jcboseust.ac.in/incubation-foundation",
+            "keywords": [
+              "Technology Business Incubator",
+              "Faridabad",
+              "AI",
+              "IoT"
+            ]
+          },
+          {
+            "slug": "jammu-and-kashmir-entrepreneurship-development",
+            "name": "Jammu & Kashmir Entrepreneurship Development Institute (JKEDI)",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://www.jkedi.org",
+            "keywords": [
+              "Government incubator",
+              "Government of Jammu and Kashmir",
+              "Pampore"
+            ]
+          },
+          {
+            "slug": "jecrc-incubation-centre-jic",
+            "name": "JECRC Incubation Centre (JIC)",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://jecrcincubation.com",
+            "keywords": [
+              "Academic incubator",
+              "JECRC Foundation",
+              "Jaipur"
+            ]
+          },
+          {
+            "slug": "jindal-centre-for-social-innovation",
+            "name": "Jindal Centre for Social Innovation + Entrepreneurship (JSiE)",
+            "district": "haryana",
+            "description": null,
+            "website": "https://jgu.edu.in/jsie/",
+            "keywords": [
+              "Academic incubator",
+              "O.P. Jindal Global University",
+              "Sonipat",
+              "Social innovation"
+            ]
+          },
+          {
+            "slug": "jntuh-tbi-jntuh-innovation-foundation",
+            "name": "JNTUH TBI (JNTUH Innovation Foundation)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://jntuhtbi.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "JNTU Hyderabad",
+              "Hyderabad",
+              "IoT",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "jss-ate-step",
+            "name": "JSS ATE STEP",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "JSS Academy of Technical Education",
+              "Noida",
+              "IT",
+              "IoT",
+              "Artificial Intelligence"
+            ]
+          },
+          {
+            "slug": "kalam-centre-for-innovation-and-incubation",
+            "name": "Kalam Centre for Innovation and Incubation",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Lucknow"
+            ]
+          },
+          {
+            "slug": "karunya-technology-business-incubation-park-k",
+            "name": "Karunya Technology Business Incubation Park (K-TBIP)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.karunya.edu/ktbip",
+            "keywords": [
+              "Technology Business Incubator",
+              "Coimbatore",
+              "Food",
+              "Water",
+              "Healthcare",
+              "Energy"
+            ]
+          },
+          {
+            "slug": "kerala-startup-mission-ksum",
+            "name": "Kerala Startup Mission (KSUM)",
+            "district": "kerala",
+            "description": null,
+            "website": "https://startupmission.kerala.gov.in/",
+            "keywords": [
+              "Government incubator",
+              "Government of Kerala",
+              "Thiruvananthapuram"
+            ]
+          },
+          {
+            "slug": "kerala-technology-innovation-zone-ktiz",
+            "name": "Kerala Technology Innovation Zone (KTIZ)",
+            "district": "kerala",
+            "description": null,
+            "website": "https://www.innovationzone.in/",
+            "keywords": [
+              "Government incubator",
+              "Kerala Startup Mission",
+              "Kochi"
+            ]
+          },
+          {
+            "slug": "kiit-technology-business-incubator-kiit-tbi",
+            "name": "KIIT Technology Business Incubator (KIIT-TBI)",
+            "district": "odisha",
+            "description": null,
+            "website": "https://kiitincubator.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Bhubaneswar",
+              "Biotech",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "kl-technology-incubators-foundation-kltif",
+            "name": "KL Technology Incubators Foundation (KLTIF)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://www.kltif.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "KL Deemed to be University",
+              "Vaddeswaram"
+            ]
+          },
+          {
+            "slug": "kle-ctie",
+            "name": "KLE CTIE",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://klectie.com/",
+            "keywords": [
+              "Technology Business Incubator",
+              "KLE Technological University",
+              "Hubballi",
+              "ESDM",
+              "Electronics",
+              "Engineering"
+            ]
+          },
+          {
+            "slug": "krishna-path-incubation-society-tbi-kiet",
+            "name": "Krishna Path Incubation Society - TBI KIET",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "KIET Group of Institutions",
+              "Ghaziabad",
+              "DeepTech",
+              "ICT",
+              "Healthcare",
+              "Cleantech",
+              "Electronics"
+            ]
+          },
+          {
+            "slug": "lpu-nidhi-technology-business-incubator",
+            "name": "LPU NIDHI Technology Business Incubator",
+            "district": "punjab",
+            "description": null,
+            "website": "https://www.lpu.in/campus-life/entrepreneurship.php",
+            "keywords": [
+              "Technology Business Incubator",
+              "Lovely Professional University",
+              "Phagwara"
+            ]
+          },
+          {
+            "slug": "madeit-innovation-foundation",
+            "name": "MaDeIT Innovation Foundation",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.madeit.iiitdm.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "IIITDM Kancheepuram",
+              "Chennai",
+              "Manufacturing",
+              "Healthcare",
+              "Transportation"
+            ]
+          },
+          {
+            "slug": "maharashtra-state-innovation-society-msins",
+            "name": "Maharashtra State Innovation Society (MSInS)",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://msins.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Maharashtra",
+              "Mumbai"
+            ]
+          },
+          {
+            "slug": "maker-village",
+            "name": "Maker Village",
+            "district": "kerala",
+            "description": null,
+            "website": "https://makervillage.in/",
+            "keywords": [
+              "Sector-specific incubator",
+              "IIITM-K / Kerala Startup Mission",
+              "Kochi",
+              "Hardware",
+              "Electronics",
+              "ESDM",
+              "IoT"
+            ]
+          },
+          {
+            "slug": "malaviya-centre-for-innovation-incubation-and",
+            "name": "Malaviya Centre for Innovation, Incubation and Entrepreneurship (MCIIE)",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://mciieiitbhu.org",
+            "keywords": [
+              "Academic incubator",
+              "IIT (BHU) Varanasi",
+              "Varanasi",
+              "Biotechnology",
+              "ICT",
+              "Agriculture"
+            ]
+          },
+          {
+            "slug": "manav-rachna-innovation-and-incubation-centre",
+            "name": "Manav Rachna Innovation and Incubation Centre (MRIIC)",
+            "district": "haryana",
+            "description": null,
+            "website": "https://mriic.tech/",
+            "keywords": [
+              "Academic incubator",
+              "Faridabad"
+            ]
+          },
+          {
+            "slug": "manipal-universal-technology-business-incubator",
+            "name": "Manipal Universal Technology Business Incubator (MUTBI)",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.mutbimanipal.org/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Manipal",
+              "IT",
+              "Healthcare",
+              "Medical Devices",
+              "Agritech",
+              "Renewable Energy"
+            ]
+          },
+          {
+            "slug": "manipur-university-incubation-centre",
+            "name": "Manipur University Incubation Centre",
+            "district": "manipur",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Manipur University",
+              "Imphal"
+            ]
+          },
+          {
+            "slug": "manit-rolta-innovation-and-incubation-foundation",
+            "name": "MANIT Rolta Innovation and Incubation Foundation (MRIIF)",
+            "district": "madhya-pradesh",
+            "description": null,
+            "website": "https://www.manit.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "Bhopal"
+            ]
+          },
+          {
+            "slug": "marwadi-university-centre-for-innovation",
+            "name": "Marwadi University Centre for Innovation, Incubation & Research (MUIIR)",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://www.marwadiuniversity.ac.in/muiir/",
+            "keywords": [
+              "Academic incubator",
+              "Marwadi University",
+              "Rajkot"
+            ]
+          },
+          {
+            "slug": "mit-wpu-technology-business-incubator",
+            "name": "MIT WPU Technology Business Incubator",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://mittbi.org",
+            "keywords": [
+              "Technology Business Incubator",
+              "MIT World Peace University",
+              "Pune"
+            ]
+          },
+          {
+            "slug": "mizoram-university-incubation-centre",
+            "name": "Mizoram University Incubation Centre",
+            "district": "mizoram",
+            "description": null,
+            "website": "https://incubemzu.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Mizoram University",
+              "Aizawl",
+              "Manufacturing",
+              "Energy",
+              "Agriculture",
+              "ICT"
+            ]
+          },
+          {
+            "slug": "mnit-innovation-and-incubation-centre-miic",
+            "name": "MNIT Innovation and Incubation Centre (MIIC)",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://miic.mnit.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "Jaipur"
+            ]
+          },
+          {
+            "slug": "mzu-bionest",
+            "name": "MZU BioNEST",
+            "district": "mizoram",
+            "description": null,
+            "website": "https://mzu.edu.in/bionest-incubator/",
+            "keywords": [
+              "Sector-specific incubator",
+              "Mizoram University",
+              "Aizawl",
+              "Biotechnology"
+            ]
+          },
+          {
+            "slug": "nagaland-university-incubation-centre",
+            "name": "Nagaland University Incubation Centre",
+            "district": "nagaland",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Nagaland University",
+              "Kohima"
+            ]
+          },
+          {
+            "slug": "nasscom-10-000-startups-warehouse",
+            "name": "NASSCOM 10,000 Startups Warehouse",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://10000startups.com/",
+            "keywords": [
+              "Private incubator",
+              "NASSCOM",
+              "Bengaluru",
+              "IT",
+              "Software"
+            ]
+          },
+          {
+            "slug": "new-age-incubation-network-nain-k-tech",
+            "name": "New Age Incubation Network (NAIN) / K-tech",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.missionstartupkarnataka.org/",
+            "keywords": [
+              "Government incubator",
+              "Bengaluru"
+            ]
+          },
+          {
+            "slug": "niet-technology-business-incubator",
+            "name": "NIET Technology Business Incubator",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "Greater Noida"
+            ]
+          },
+          {
+            "slug": "nit-agartala-foundation-for-innovation",
+            "name": "NIT Agartala Foundation for Innovation, Incubation and Entrepreneurship (IICES)",
+            "district": "tripura",
+            "description": null,
+            "website": "https://nita.ac.in/iices/",
+            "keywords": [
+              "Academic incubator",
+              "NIT Agartala",
+              "Agartala"
+            ]
+          },
+          {
+            "slug": "nitj-technology-business-incubator",
+            "name": "NITJ Technology Business Incubator",
+            "district": "punjab",
+            "description": null,
+            "website": "https://v1.nitj.ac.in/tbi/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Jalandhar"
+            ]
+          },
+          {
+            "slug": "nitk-step",
+            "name": "NITK-STEP",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://step.nitk.ac.in/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Surathkal",
+              "IT",
+              "Electronics",
+              "Robotics",
+              "Engineering Design"
+            ]
+          },
+          {
+            "slug": "nsrcel",
+            "name": "NSRCEL",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://nsrcel.org/",
+            "keywords": [
+              "Academic incubator",
+              "Bengaluru"
+            ]
+          },
+          {
+            "slug": "nsut-incubation-and-innovation-foundation-nsut",
+            "name": "NSUT Incubation and Innovation Foundation (NSUT-IIF)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://nsutiif.in/",
+            "keywords": [
+              "Academic incubator",
+              "Netaji Subhas University of Technology",
+              "New Delhi"
+            ]
+          },
+          {
+            "slug": "o-hub-odisha-startup-hub",
+            "name": "O-Hub (Odisha Startup Hub)",
+            "district": "odisha",
+            "description": null,
+            "website": "https://ohub.odisha.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Odisha",
+              "Bhubaneswar"
+            ]
+          },
+          {
+            "slug": "pandit-deendayal-upadhyaya-innovation-and",
+            "name": "Pandit Deendayal Upadhyaya Innovation and Incubation Centre",
+            "district": "haryana",
+            "description": null,
+            "website": "https://www.gjust.ac.in/",
+            "keywords": [
+              "Academic incubator",
+              "Hisar"
+            ]
+          },
+          {
+            "slug": "panjab-university-incubation-centre-pu-ic",
+            "name": "Panjab University Incubation Centre (PU-IC)",
+            "district": "chandigarh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Panjab University",
+              "Chandigarh"
+            ]
+          },
+          {
+            "slug": "pdeu-innovation-and-incubation-centre",
+            "name": "PDEU Innovation and Incubation Centre",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://iic.pdeu.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "Pandit Deendayal Energy University",
+              "Gandhinagar",
+              "Energy",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "pesu-venture-labs",
+            "name": "PESU Venture Labs",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.pesuventurelabs.com/",
+            "keywords": [
+              "Academic incubator",
+              "PES University",
+              "Bengaluru",
+              "Deep Tech"
+            ]
+          },
+          {
+            "slug": "prime-startup-hub-meghalaya",
+            "name": "Prime Startup Hub, Meghalaya",
+            "district": "meghalaya",
+            "description": null,
+            "website": "https://iimcip.org/prime-startup-hub-meghalaya-shillong/",
+            "keywords": [
+              "Government incubator",
+              "Shillong"
+            ]
+          },
+          {
+            "slug": "psg-step",
+            "name": "PSG-STEP",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.psgstep.org",
+            "keywords": [
+              "Technology Business Incubator",
+              "PSG College of Technology",
+              "Coimbatore",
+              "Software",
+              "Electronics",
+              "Biotech"
+            ]
+          },
+          {
+            "slug": "punjab-agri-business-incubator-pabi",
+            "name": "Punjab Agri Business Incubator (PABI)",
+            "district": "punjab",
+            "description": null,
+            "website": "https://paupabiraftaar.co.in/",
+            "keywords": [
+              "Sector-specific incubator",
+              "Punjab Agricultural University",
+              "Ludhiana",
+              "Agriculture",
+              "Agri-tech"
+            ]
+          },
+          {
+            "slug": "pusa-krishi-ztm-and-bpd-unit-icar-iari",
+            "name": "Pusa Krishi - ZTM & BPD Unit, ICAR-IARI",
+            "district": "delhi",
+            "description": null,
+            "website": "https://pusakrishi.in/",
+            "keywords": [
+              "Sector-specific incubator",
+              "New Delhi",
+              "Agriculture",
+              "AgriTech"
+            ]
+          },
+          {
+            "slug": "ratan-tata-innovation-hub-rtih",
+            "name": "Ratan Tata Innovation Hub (RTIH)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://rtih.co.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Andhra Pradesh",
+              "Amaravati"
+            ]
+          },
+          {
+            "slug": "research-and-innovation-circle-of-hyderabad-rich",
+            "name": "Research and Innovation Circle of Hyderabad (RICH)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://rich.telangana.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Telangana",
+              "Hyderabad"
+            ]
+          },
+          {
+            "slug": "research-innovation-incubation-design-laboratory",
+            "name": "Research Innovation Incubation Design Laboratory (riidl)",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://riidl.org",
+            "keywords": [
+              "Academic incubator",
+              "Somaiya Vidyavihar",
+              "Mumbai"
+            ]
+          },
+          {
+            "slug": "rubic-rural-business-incubation-centre-rgu",
+            "name": "RuBIC - Rural Business Incubation Centre, RGU",
+            "district": "arunachal-pradesh",
+            "description": null,
+            "website": "https://rubic.rgu.ac.in",
+            "keywords": [
+              "Sector-specific incubator",
+              "Rajiv Gandhi University",
+              "Doimukh",
+              "Rural business",
+              "Agriculture"
+            ]
+          },
+          {
+            "slug": "sathyabama-technology-business-incubator",
+            "name": "Sathyabama Technology Business Incubator",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.sathyabama.ac.in/Centre_for_Innovation_and_Technology_Transfer",
+            "keywords": [
+              "Technology Business Incubator",
+              "Chennai",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "science-and-technology-entrepreneurs-park-step",
+            "name": "Science & Technology Entrepreneurs Park (STEP), Thapar",
+            "district": "punjab",
+            "description": null,
+            "website": "https://www.thapar.edu/academics/centers/science-technology-entrepreneurs-park-step",
+            "keywords": [
+              "Technology Business Incubator",
+              "Patiala",
+              "Agri-biotech",
+              "Food processing"
+            ]
+          },
+          {
+            "slug": "science-and-technology-park-growth-lab",
+            "name": "Science and Technology Park (Growth Lab)",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://scitechpark.org.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Savitribai Phule Pune University",
+              "Pune"
+            ]
+          },
+          {
+            "slug": "shoolini-university-startup-research-centre",
+            "name": "Shoolini University Startup Research Centre (SHINE)",
+            "district": "himachal-pradesh",
+            "description": null,
+            "website": "https://shooliniuniversity.com/startups",
+            "keywords": [
+              "Academic incubator",
+              "Shoolini University",
+              "Solan",
+              "DeepTech",
+              "BioTech",
+              "FoodTech"
+            ]
+          },
+          {
+            "slug": "sidbi-innovation-and-incubation-centre-siic",
+            "name": "SIDBI Innovation and Incubation Centre (SIIC)",
+            "district": "uttar-pradesh",
+            "description": null,
+            "website": "https://www.siicincubator.com",
+            "keywords": [
+              "Academic incubator",
+              "IIT Kanpur",
+              "Kanpur",
+              "HealthTech",
+              "MedTech",
+              "Agritech",
+              "AI"
+            ]
+          },
+          {
+            "slug": "smvdu-technology-business-incubation-centre",
+            "name": "SMVDU Technology Business Incubation Centre (SMVDU TBIC)",
+            "district": "jammu-and-kashmir",
+            "description": null,
+            "website": "https://tbic.smvdu.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Shri Mata Vaishno Devi University",
+              "Katra"
+            ]
+          },
+          {
+            "slug": "social-alpha",
+            "name": "Social Alpha",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://www.socialalpha.org/",
+            "keywords": [
+              "Sector-specific incubator",
+              "Tata Trusts",
+              "Bengaluru",
+              "Deep Science",
+              "Social Impact",
+              "Healthtech",
+              "Climate"
+            ]
+          },
+          {
+            "slug": "society-for-innovation-and-development-sid",
+            "name": "Society for Innovation and Development (SID)",
+            "district": "karnataka",
+            "description": null,
+            "website": "https://sid.iisc.ac.in/",
+            "keywords": [
+              "Academic incubator",
+              "Indian Institute of Science (IISc)",
+              "Bengaluru",
+              "Deep Tech",
+              "Deep Science"
+            ]
+          },
+          {
+            "slug": "society-for-innovation-and-entrepreneurship-sine",
+            "name": "Society for Innovation and Entrepreneurship (SINE)",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://www.sineiitb.org",
+            "keywords": [
+              "Academic incubator",
+              "IIT Bombay",
+              "Mumbai"
+            ]
+          },
+          {
+            "slug": "society-for-siddharth-international-incubation",
+            "name": "Society for Siddharth International Incubation Centre (SIIC-SIETK)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "Puttur"
+            ]
+          },
+          {
+            "slug": "sona-incubation-foundation-sif",
+            "name": "Sona Incubation Foundation (SIF)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.sonaincubations.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Sona College of Technology",
+              "Salem",
+              "Wearables",
+              "Industry 4.0",
+              "Deep tech"
+            ]
+          },
+          {
+            "slug": "sr-innovation-exchange-srix-tbi",
+            "name": "SR Innovation Exchange (SRiX) TBI",
+            "district": "telangana",
+            "description": null,
+            "website": "https://srix.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "SR University",
+              "Warangal",
+              "IoT",
+              "AI/ML"
+            ]
+          },
+          {
+            "slug": "srm-directorate-of-entrepreneurship-and",
+            "name": "SRM Directorate of Entrepreneurship and Innovation (DEI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.srmdei.com",
+            "keywords": [
+              "Academic incubator",
+              "SRM Institute of Science and Technology",
+              "Kattankulathur"
+            ]
+          },
+          {
+            "slug": "sscbs-innovation-and-incubation-foundation-siif",
+            "name": "SSCBS Innovation & Incubation Foundation (SIIF)",
+            "district": "delhi",
+            "description": null,
+            "website": "https://www.siif.in/",
+            "keywords": [
+              "Academic incubator",
+              "Delhi"
+            ]
+          },
+          {
+            "slug": "sstc-startup-incubation-centre",
+            "name": "SSTC Startup Incubation Centre",
+            "district": "chhattisgarh",
+            "description": null,
+            "website": "https://sstc.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "Shri Shankaracharya Technical Campus",
+              "Bhilai"
+            ]
+          },
+          {
+            "slug": "startup-incubator-and-entrepreneurship",
+            "name": "Startup Incubator and Entrepreneurship Development Society",
+            "district": "uttarakhand",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Academic incubator",
+              "Pantnagar",
+              "AgriTech"
+            ]
+          },
+          {
+            "slug": "startup-oasis",
+            "name": "Startup Oasis",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://startupoasis.in",
+            "keywords": [
+              "Private incubator",
+              "RIICO / CIIE (IIM Ahmedabad)",
+              "Jaipur"
+            ]
+          },
+          {
+            "slug": "startuptn-tamil-nadu-startup-and-innovation",
+            "name": "StartupTN (Tamil Nadu Startup and Innovation Mission)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://startuptn.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Tamil Nadu",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "step-iit-kharagpur",
+            "name": "STEP, IIT Kharagpur",
+            "district": "west-bengal",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Technology Business Incubator",
+              "Indian Institute of Technology Kharagpur",
+              "Kharagpur"
+            ]
+          },
+          {
+            "slug": "sunrise-startup-village",
+            "name": "Sunrise Startup Village",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Government incubator",
+              "AP Innovation Society / NASSCOM",
+              "Visakhapatnam"
+            ]
+          },
+          {
+            "slug": "symbiosis-centre-for-entrepreneurship-and",
+            "name": "Symbiosis Centre for Entrepreneurship & Innovation (SCEI)",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://scei.org.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Symbiosis International University",
+              "Pune",
+              "Healthtech",
+              "AI/ML",
+              "Nanotech"
+            ]
+          },
+          {
+            "slug": "t-hub-foundation",
+            "name": "T-Hub Foundation",
+            "district": "telangana",
+            "description": null,
+            "website": "https://t-hub.co",
+            "keywords": [
+              "Government incubator",
+              "Government of Telangana",
+              "Hyderabad"
+            ]
+          },
+          {
+            "slug": "t-works",
+            "name": "T-Works",
+            "district": "telangana",
+            "description": null,
+            "website": "https://tworks.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Telangana",
+              "Hyderabad",
+              "Hardware",
+              "Prototyping"
+            ]
+          },
+          {
+            "slug": "tagore-centre-for-green-technology-business",
+            "name": "Tagore Centre for Green Technology Business Incubation (TCGTBI)",
+            "district": "west-bengal",
+            "description": null,
+            "website": "https://tcgtbi.iiests.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "IIEST Shibpur",
+              "Howrah",
+              "Clean energy",
+              "Green technology"
+            ]
+          },
+          {
+            "slug": "tbi-bits-pilani-hyderabad-campus-tbi-bphc",
+            "name": "TBI, BITS Pilani Hyderabad Campus (TBI-BPHC)",
+            "district": "telangana",
+            "description": null,
+            "website": "https://tbi.bits-hyderabad.ac.in",
+            "keywords": [
+              "Academic incubator",
+              "BITS Pilani, Hyderabad Campus",
+              "Medchal-Malkajgiri",
+              "Deeptech"
+            ]
+          },
+          {
+            "slug": "tce-technology-business-incubator-tce-tbi",
+            "name": "TCE Technology Business Incubator (TCE-TBI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://tce-tbi.org",
+            "keywords": [
+              "Technology Business Incubator",
+              "Thiagarajar College of Engineering",
+              "Madurai"
+            ]
+          },
+          {
+            "slug": "technohub-istart-rajasthan",
+            "name": "Technohub (iStart Rajasthan)",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://istart.rajasthan.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Rajasthan, DoIT&C",
+              "Jaipur"
+            ]
+          },
+          {
+            "slug": "technology-business-incubator-chandigarh",
+            "name": "Technology Business Incubator, Chandigarh University",
+            "district": "punjab",
+            "description": null,
+            "website": "https://www.cuchd.in/technology-business-incubator/",
+            "keywords": [
+              "Academic incubator",
+              "Chandigarh University",
+              "Mohali (Gharuan)"
+            ]
+          },
+          {
+            "slug": "technology-business-incubator-graphic-era",
+            "name": "Technology Business Incubator, Graphic Era University",
+            "district": "uttarakhand",
+            "description": null,
+            "website": "https://tbi.geu.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Graphic Era (Deemed to be University)",
+              "Dehradun"
+            ]
+          },
+          {
+            "slug": "technology-business-incubator-nit-calicut",
+            "name": "Technology Business Incubator, NIT Calicut",
+            "district": "kerala",
+            "description": null,
+            "website": "https://tbi.nitc.ac.in/",
+            "keywords": [
+              "Technology Business Incubator",
+              "National Institute of Technology Calicut",
+              "Kozhikode",
+              "IT",
+              "Electronics",
+              "Biotech",
+              "Nanotech",
+              "Agritech",
+              "Renewable Energy"
+            ]
+          },
+          {
+            "slug": "technology-innovation-and-start-up-centre-iitj",
+            "name": "Technology Innovation and Start-up Centre (IITJ-TISC)",
+            "district": "rajasthan",
+            "description": null,
+            "website": "https://www.iitj.ac.in/tisc",
+            "keywords": [
+              "Academic incubator",
+              "IIT Jodhpur",
+              "Jodhpur"
+            ]
+          },
+          {
+            "slug": "technopark-technology-business-incubator-t-tbi",
+            "name": "Technopark Technology Business Incubator (T-TBI)",
+            "district": "kerala",
+            "description": null,
+            "website": "https://www.technoparktbi.org/",
+            "keywords": [
+              "Technology Business Incubator",
+              "Technopark Trivandrum",
+              "Thiruvananthapuram",
+              "IT",
+              "Software"
+            ]
+          },
+          {
+            "slug": "tides-business-incubator-iit-roorkee",
+            "name": "TIDES Business Incubator, IIT Roorkee",
+            "district": "uttarakhand",
+            "description": null,
+            "website": "https://tides.iitr.ac.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "Indian Institute of Technology Roorkee",
+              "Roorkee",
+              "IoT",
+              "AI",
+              "Blockchain",
+              "Robotics",
+              "BioTech"
+            ]
+          },
+          {
+            "slug": "trec-step",
+            "name": "TREC-STEP",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://www.trecstep.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Tiruchirappalli"
+            ]
+          },
+          {
+            "slug": "trest-research-park",
+            "name": "TrEST Research Park",
+            "district": "kerala",
+            "description": null,
+            "website": "https://trestpark.org/",
+            "keywords": [
+              "Sector-specific incubator",
+              "Thiruvananthapuram",
+              "Semiconductors",
+              "Electronics",
+              "EV",
+              "Deep Tech"
+            ]
+          },
+          {
+            "slug": "udhmodya-foundation",
+            "name": "Udhmodya Foundation",
+            "district": "delhi",
+            "description": null,
+            "website": "https://udhmodyadu.in/",
+            "keywords": [
+              "Academic incubator",
+              "University of Delhi",
+              "Delhi"
+            ]
+          },
+          {
+            "slug": "upes-council-for-innovation-and-entrepreneurship",
+            "name": "UPES Council for Innovation and Entrepreneurship (UCIE)",
+            "district": "uttarakhand",
+            "description": null,
+            "website": "https://www.upes.ac.in/ucie",
+            "keywords": [
+              "Academic incubator",
+              "Dehradun"
+            ]
+          },
+          {
+            "slug": "uttishthati-foundation-dst-i-tbi-nit-hamirpur",
+            "name": "Uttishthati Foundation (DST i-TBI, NIT Hamirpur)",
+            "district": "himachal-pradesh",
+            "description": null,
+            "website": "https://nith.ac.in/ITBI/index.html",
+            "keywords": [
+              "Technology Business Incubator",
+              "Hamirpur",
+              "AI",
+              "Renewable Energy",
+              "AgriTech",
+              "Disaster Management",
+              "Food Processing"
+            ]
+          },
+          {
+            "slug": "v-nest-vit-chennai-startup-and-incubation-centre",
+            "name": "V-NEST (VIT Chennai Startup and Incubation Centre)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://vnest.org",
+            "keywords": [
+              "Academic incubator",
+              "VIT Chennai",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "vel-tech-technology-business-incubator",
+            "name": "Vel Tech Technology Business Incubator",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://veltechtbi.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "Chennai"
+            ]
+          },
+          {
+            "slug": "venture-center",
+            "name": "Venture Center",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://www.venturecenter.co.in",
+            "keywords": [
+              "Technology Business Incubator",
+              "CSIR-National Chemical Laboratory",
+              "Pune",
+              "Biotech",
+              "Chemicals",
+              "Materials",
+              "Healthcare"
+            ]
+          },
+          {
+            "slug": "venturestudio",
+            "name": "VentureStudio",
+            "district": "gujarat",
+            "description": null,
+            "website": "https://ahduni.edu.in/academics/schools-centres/venturestudio/",
+            "keywords": [
+              "Academic incubator",
+              "Ahmedabad University",
+              "Ahmedabad"
+            ]
+          },
+          {
+            "slug": "vignan-technology-business-incubator-vignan-tbi",
+            "name": "Vignan Technology Business Incubator (Vignan TBI)",
+            "district": "andhra-pradesh",
+            "description": null,
+            "website": "https://vignan.ac.in/vignantbi",
+            "keywords": [
+              "Technology Business Incubator",
+              "Vadlamudi",
+              "Agritech",
+              "Biotech",
+              "Renewable energy",
+              "Waste management"
+            ]
+          },
+          {
+            "slug": "villgro-innovations-foundation",
+            "name": "Villgro Innovations Foundation",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://villgro.org",
+            "keywords": [
+              "Private incubator",
+              "Chennai",
+              "Healthcare",
+              "Agriculture",
+              "Climate"
+            ]
+          },
+          {
+            "slug": "vit-technology-business-incubator-vit-tbi",
+            "name": "VIT Technology Business Incubator (VIT-TBI)",
+            "district": "tamil-nadu",
+            "description": null,
+            "website": "https://vittbi.com",
+            "keywords": [
+              "Technology Business Incubator",
+              "VIT University, Vellore",
+              "Vellore",
+              "IoT",
+              "AI",
+              "Blockchain"
+            ]
+          },
+          {
+            "slug": "we-hub-foundation",
+            "name": "WE Hub Foundation",
+            "district": "telangana",
+            "description": null,
+            "website": "https://wehub.telangana.gov.in",
+            "keywords": [
+              "Government incubator",
+              "Government of Telangana",
+              "Hyderabad",
+              "Women entrepreneurship"
+            ]
+          },
+          {
+            "slug": "xcite-xlri-centre-for-innovation-technology-and",
+            "name": "XCITE - XLRI Centre for Innovation, Technology and Entrepreneurship",
+            "district": "jharkhand",
+            "description": null,
+            "website": null,
+            "keywords": [
+              "Sector-specific incubator",
+              "XLRI Jamshedpur",
+              "Jamshedpur",
+              "Rural business"
+            ]
+          },
+          {
+            "slug": "zone-startups-india",
+            "name": "Zone Startups India",
+            "district": "maharashtra",
+            "description": null,
+            "website": "https://india.zonestartups.com",
+            "keywords": [
+              "Private incubator",
+              "BSE Institute Ltd",
+              "Mumbai"
+            ]
+          }
+        ],
+        "updated": "2026-10-10"
+      },
+      "logoFile": "instances/india-ecosystem-map.svg",
+      "proof": "domain",
+      "problems": []
     }
   ]
 }
