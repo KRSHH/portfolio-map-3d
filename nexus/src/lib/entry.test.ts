@@ -12,14 +12,8 @@ describe("entering a planet", () => {
     expect(planetEntryHref({ id: "florida-ecosystem-map", url: "https://map.embarccollective.com/" }))
       .toBe("https://map.embarccollective.com/walkable-map.html?from=nexus");
   });
-  it("uses the same device hostname for local companion servers", () => {
-    expect(planetEntryHref({ id: "example-collective", url: "https://wearenexus.xyz/example" }, "http://100.91.157.43:5173"))
-      .toBe("http://100.91.157.43:5174/?from=nexus&view=walk");
-    expect(planetEntryHref({ id: "india-ecosystem-map", url: "https://fritzhand.github.io/startup-india-guide" }, "http://2.3.4.1:5173"))
-      .toBe("http://2.3.4.1:5175/walkable-map.html?from=nexus");
-  });
-  it("keeps other maps on their published server in development", () => {
-    expect(planetEntryHref({ id: "embarc-collective", url: "https://community.embarccollective.com" }, "http://localhost:5173"))
+  it("opens every other map on its published server", () => {
+    expect(planetEntryHref({ id: "embarc-collective", url: "https://community.embarccollective.com" }))
       .toBe("https://community.embarccollective.com/?from=nexus&view=walk");
   });
 });

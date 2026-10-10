@@ -745,6 +745,11 @@ export class GlobeController<N extends GlobeNodeBase = GlobeNode> {
     this.emphDirty = true;
   }
 
+  /** The selection glow takes its color again on the next frame (after a palette change). */
+  repaintGlow(): void {
+    this.glowFor = -1;
+  }
+
   resize(w: number, h: number): void {
     if (w === this.size.w && h === this.size.h) return;
     this.size = { w, h };

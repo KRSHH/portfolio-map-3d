@@ -334,7 +334,7 @@ export function WorldMode({ route, net, engine, gl, reduced, pickRef, onRetry }:
         {model ? <WorldList model={model} current={selected} onSelect={(id) => openWorld(id)} /> : null}
       </nav>
 
-      {iw ? <WorldPanel key={`${iw.world.id}:${panelNonce}`} iw={iw} highlight={highlight} initialFilter={panelFilter} initialDistrict={panelDistrict} enterHref={planetEntryHref(iw.world, import.meta.env.DEV ? window.location.origin : undefined)} onDistrictChange={(district) => setPanelDistrict(district ?? undefined)} onClose={closePanel} /> : null}
+      {iw ? <WorldPanel key={`${iw.world.id}:${panelNonce}`} iw={iw} highlight={highlight} initialFilter={panelFilter} initialDistrict={panelDistrict} enterHref={planetEntryHref(iw.world)} onDistrictChange={(district) => setPanelDistrict(district ?? undefined)} onClose={closePanel} /> : null}
 
       {toastRegion}
       <MusicButton />

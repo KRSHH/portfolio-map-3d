@@ -177,6 +177,7 @@ export default function GlobeScene<N extends GlobeNodeBase>({ ctl, reduced, intr
       o.textures[1] = texture;
       previous?.dispose();
     }
+    ctl.repaintGlow();
     ctl.buildStaticLines();
     invalidate();
   }), [ctl, o, invalidate]);
