@@ -4,6 +4,7 @@
 import * as THREE from "three";
 import { SITE, initials, siteFile } from "../../data/catalog";
 import { cpuCanvas } from "../../three/cpuCanvas";
+import { drawLogoInk } from "../../three/logoInk";
 
 /** CPU-backed (see src/three/cpuCanvas.ts): a GPU loss would otherwise blank the core and atmosphere. */
 const canvas = cpuCanvas;
@@ -106,13 +107,9 @@ export function coreTexture(colors: CoreColors): THREE.CanvasTexture {
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.fill();
     if (logo && logo.naturalWidth > 0) {
-      // The logo, contained in the disc's inscribed box (a wordmark gets the width, a mark the height).
-      const boxW = R * 1.5;
-      const boxH = R * 0.95;
-      const k = Math.min(boxW / logo.naturalWidth, boxH / logo.naturalHeight);
-      const w = logo.naturalWidth * k;
-      const h = logo.naturalHeight * k;
-      ctx.drawImage(logo, cx - w / 2, cy - h / 2, w, h);
+      // The logo by its ink (src/three/logoInk.ts), centered in the disc's inscribed box (a wordmark
+      // gets the width, a mark the height).
+      drawLogoInk(ctx, logo, cx, cy, R * 1.5, R * 0.95);
     } else {
       const m = R * 0.82;
       const my = cy - R * 0.26;

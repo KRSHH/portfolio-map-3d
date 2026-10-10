@@ -10,13 +10,22 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { registerScene } from "../../debug/registry";
+import { AdaptiveDpr, budgetDpr } from "../../three/adaptiveDpr";
 import { watchContext } from "../../three/contextWatch";
 import { onBadgeBaked } from "../../three/logoTexture";
+import { cloudShadowTexture } from "../../three/toon";
 import type { BadgeSprite, GlobeController } from "./controller";
 import type { GlobeNodeBase } from "./globeLayout";
 import { FatLines, SurfaceDots, applyGlassPalette, createGlassMaterial } from "./materials";
 import { watchGlobePalette } from "./palette";
 import { atmosphereTexture, coreTexture, glowTexture } from "./sceneTextures";
+
+/** The pixel ratio's ceiling and the drawing buffer's pixel budget: retina detail, bounded cost. */
+export const DPR_CAP = 2.5;
+export const PIXEL_BUDGET = 8_000_000;
+
+/** The atmosphere's strength: a clear sky-blue halo by day, a fainter one in the dark theme. */
+const atmosphereOpacity = (dark: boolean) => (dark ? 0.24 : 0.32);
 
 interface SceneObjects {
   glass: THREE.Mesh<THREE.SphereGeometry, THREE.ShaderMaterial>;
@@ -56,12 +65,13 @@ function buildObjects<N extends GlobeNodeBase>(ctl: GlobeController<N>, reduced:
   const R = ctl.R;
   const P = ctl.palette;
 
-  const glass = new THREE.Mesh(new THREE.SphereGeometry(R, 128, 96), createGlassMaterial(ctl.content.glass));
+  const cloudTex = cloudShadowTexture(256, 11);
+  const glass = new THREE.Mesh(new THREE.SphereGeometry(R, 128, 96), createGlassMaterial(ctl.content.glass, cloudTex));
   glass.renderOrder = 1;
   glass.raycast = () => {};
 
   const atmoTex = atmosphereTexture();
-  const atmosphere = new THREE.Sprite(new THREE.SpriteMaterial({ map: atmoTex, color: P.atmosphere, transparent: true, depthWrite: false, depthTest: false, opacity: P.dark ? 0.22 : 0.08 }));
+  const atmosphere = new THREE.Sprite(new THREE.SpriteMaterial({ map: atmoTex, color: P.atmosphere, transparent: true, depthWrite: false, depthTest: false, opacity: atmosphereOpacity(P.dark) }));
   atmosphere.renderOrder = -1;
   atmosphere.raycast = () => {};
 
@@ -101,7 +111,7 @@ function buildObjects<N extends GlobeNodeBase>(ctl: GlobeController<N>, reduced:
   fits.mesh.renderOrder = 2.3;
   dots.points.renderOrder = 1.5;
 
-  return { glass, atmosphere, core, selGlow, sprites, spokes, cross, documented, fits, dots, textures: [atmoTex, coreTex, glowTex] };
+  return { glass, atmosphere, core, selGlow, sprites, spokes, cross, documented, fits, dots, textures: [atmoTex, coreTex, glowTex, cloudTex] };
 }
 
 function disposeObjects(o: SceneObjects): void {
@@ -124,13 +134,25 @@ function disposeObjects(o: SceneObjects): void {
   for (const t of o.textures) t.dispose();
 }
 
-export default function GlobeScene<N extends GlobeNodeBase>({ ctl, reduced, intro, onContextGiveUp }: { ctl: GlobeController<N>; reduced: boolean; intro: boolean; onContextGiveUp: () => void }) {
+export default function GlobeScene<N extends GlobeNodeBase>({
+  ctl,
+  reduced,
+  intro,
+  onContextGiveUp,
+  onDpr,
+}: {
+  ctl: GlobeController<N>;
+  reduced: boolean;
+  intro: boolean;
+  onContextGiveUp: () => void;
+  /** The pixel ratio to draw at changed (the Canvas's dpr prop holds it: R3F re-applies that prop on every render). */
+  onDpr: (dpr: number) => void;
+}) {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
   const size = useThree((s) => s.size);
   const dpr = useThree((s) => s.viewport.dpr);
-  const setDpr = useThree((s) => s.setDpr);
   const invalidate = useThree((s) => s.invalidate);
   const globeRef = useRef<THREE.Group>(null);
   const controlsRef = useRef<OrbitControlsImpl>(null);
@@ -169,7 +191,7 @@ export default function GlobeScene<N extends GlobeNodeBase>({ ctl, reduced, intr
     applyGlassPalette(o.glass.material, palette);
     if (ctl.content.roster === "people") o.glass.material.uniforms.uColor.value[0].set(palette.personGlass);
     o.atmosphere.material.color.set(palette.atmosphere);
-    o.atmosphere.material.opacity = palette.dark ? 0.22 : 0.08;
+    o.atmosphere.material.opacity = atmosphereOpacity(palette.dark);
     if (repaintCore) {
       const previous = o.core.material.map;
       const texture = coreTexture({ ink: palette.ink, teal: palette.teal, paper: palette.paper });
@@ -182,11 +204,16 @@ export default function GlobeScene<N extends GlobeNodeBase>({ ctl, reduced, intr
     invalidate();
   }), [ctl, o, invalidate]);
 
+  // The pixel ratio: the device's within the budget, lowered while frames run slow (the globe turns
+  // continuously, so its frame rate means something; under reduced motion it renders on demand and
+  // keeps the budgeted ratio).
+  const adaptive = useRef<AdaptiveDpr | null>(null);
+  adaptive.current ??= new AdaptiveDpr();
+  const baseDpr = useRef(1);
   useEffect(() => {
-    // Retain native resolution, then spend up to eight million pixels on retina detail.
-    const desired = Math.max(1, Math.min(window.devicePixelRatio || 1, 2.5, Math.sqrt(8_000_000 / Math.max(1, size.width * size.height))));
-    if (Math.abs(dpr - desired) > 0.001) setDpr(desired);
-  }, [setDpr, size.width, size.height, dpr]);
+    baseDpr.current = budgetDpr(window.devicePixelRatio, size.width, size.height, DPR_CAP, PIXEL_BUDGET);
+    onDpr(baseDpr.current * (reduced ? 1 : adaptive.current!.value));
+  }, [size.width, size.height, onDpr, reduced]);
 
   // ?debug: show the live scene to the diagnostic probe (does nothing otherwise).
   useEffect(() => registerScene({ view: "mindmap", renderer: gl, scene, camera, badges: o.sprites, controller: ctl }), [gl, scene, camera, o, ctl]);
@@ -264,7 +291,13 @@ export default function GlobeScene<N extends GlobeNodeBase>({ ctl, reduced, intr
     };
   }, [ctl]);
 
-  useFrame((state, dt) => ctl.frame(state.camera as THREE.PerspectiveCamera, state.pointer, dt));
+  useFrame((state, dt) => {
+    ctl.frame(state.camera as THREE.PerspectiveCamera, state.pointer, dt);
+    if (reduced) return;
+    // A step at most every few seconds, so this state update is never per frame.
+    const k = adaptive.current!.sample(dt);
+    if (k !== null) onDpr(baseDpr.current * k);
+  });
 
   const idxOf = (e: ThreeEvent<PointerEvent | MouseEvent>): number => {
     const i = (e.object.userData as { idx?: number }).idx;

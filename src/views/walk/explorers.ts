@@ -46,6 +46,8 @@ export class Explorers {
   constructor(
     private readonly tagLayer: HTMLElement,
     private readonly heightAt: (x: number, z: number) => number,
+    /** Called on every avatar built here (the walk world gives them its toon lighting). */
+    private readonly decorate: (root: THREE.Object3D) => void = () => {},
   ) {
     this.root.name = "explorers";
   }
@@ -66,6 +68,7 @@ export class Explorers {
           this.root.remove(e.avatar.root);
           e.avatar.dispose();
           e.avatar = buildAvatar(r.avatar);
+          this.decorate(e.avatar.root);
           e.key = key;
           e.avatar.root.position.set(e.x, this.heightAt(e.x, e.z), e.z);
           e.avatar.root.rotation.y = e.heading;
@@ -85,6 +88,7 @@ export class Explorers {
 
   private create(r: RemoteExplorer, key: string): Entry {
     const avatar = buildAvatar(r.avatar);
+    this.decorate(avatar.root);
     avatar.root.visible = false;
     this.root.add(avatar.root);
     const tag = document.createElement("div");

@@ -12,7 +12,10 @@
    frees this renderer's copy and the next mount uploads it again). Pins drop in with a staggered bounce on load, the
    selected pin bobs over a glowing ground ring, and pins outside the
    current highlight fade back (to FADED, never so far that the logo stops
-   reading as a logo). */
+   reading as a logo). On the bright afternoon ground every badge sits on a
+   thin ink keyline with a soft shadow (one instanced draw for all of them),
+   which keeps it apart from sand, paving, grass and sky alike
+   (pins.test.ts). */
 import * as THREE from "three";
 import { districtOf } from "../../data/catalog";
 import type { WorldLayout } from "../../data/layout";
@@ -42,6 +45,9 @@ const DROP_TIME = 0.8;
  *  finder). An ink logo on a white plate at this opacity keeps about 3:1 contrast over the
  *  ground, so a dimmed badge still reads as a logo while the matches stand out. */
 export const FADED = 0.6;
+
+/** The ink keyline around every badge: its color and width in world units. */
+export const KEYLINE = { color: "#1d1f24", width: 0.075 } as const;
 
 /** Badges right in front of the lens fade back so they don't wall off the view: 1 from 10 units
  *  away, down to 0.22 within 4 units. */
@@ -127,12 +133,13 @@ function pinHeadGeometry(): THREE.BufferGeometry {
   const alpha = Math.asin(R / (cy - tipY));
   const theta = Math.PI / 2 - alpha;
   const pts = [new THREE.Vector2(0.001, tipY)];
-  const steps = 10;
+  // Faceted, like the rest of the world's props.
+  const steps = 5;
   for (let i = 0; i <= steps; i++) {
     const phi = theta + ((Math.PI - theta) * i) / steps;
     pts.push(new THREE.Vector2(Math.max(0.001, R * Math.sin(phi)), cy - R * Math.cos(phi)));
   }
-  return new THREE.LatheGeometry(pts, 14);
+  return new THREE.LatheGeometry(pts, 9);
 }
 
 /** Lambert material with a per-instance opacity attribute. */
@@ -148,6 +155,52 @@ function fadingMaterial(): THREE.MeshLambertMaterial {
   };
   m.customProgramCacheKey = () => "walk-pin-fade";
   return m;
+}
+
+/**
+ * The keylines: one camera-facing quad per badge, instanced, each drawing a rounded rectangle (a
+ * logo plate) or a circle (a headshot) a keyline wider than its badge, in ink, with a soft shadow
+ * around it, antialiased from its distance field. Per instance: half width, half height and corner
+ * radius (aBack.xyz) and opacity (aBack.w, the badge's own).
+ */
+function keylineMaterial(): THREE.ShaderMaterial {
+  return new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    fog: true,
+    uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { uInk: { value: new THREE.Color(KEYLINE.color) } }]),
+    vertexShader: /* glsl */ `
+      #include <fog_pars_vertex>
+      attribute vec4 aBack;
+      varying vec2 vP;
+      varying vec4 vBack;
+      void main() {
+        vBack = aBack;
+        // The quad reaches past the keyline by the shadow's width.
+        vec2 reach = aBack.xy + 0.22;
+        vP = position.xy * 2.0 * reach;
+        vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(position.xy * 2.0 * reach, 0.0, 1.0);
+        gl_Position = projectionMatrix * mvPosition;
+        #include <fog_vertex>
+      }`,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uInk;
+      varying vec2 vP;
+      varying vec4 vBack;
+      #include <fog_pars_fragment>
+      void main() {
+        vec2 q = abs(vP) - (vBack.xy - vBack.z);
+        float d = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - vBack.z;
+        float aa = max(fwidth(d), 1e-4);
+        float line = 1.0 - smoothstep(-aa, aa, d);
+        float shadow = (1.0 - smoothstep(0.0, 0.2, d)) * 0.28;
+        float a = max(line, shadow) * vBack.w;
+        if (a < 0.004) discard;
+        gl_FragColor = vec4(uInk, a);
+        #include <colorspace_fragment>
+        #include <fog_fragment>
+      }`,
+  });
 }
 
 function glowTexture(): THREE.CanvasTexture {
@@ -219,6 +272,8 @@ export function buildPins(layout: WorldLayout, companies: readonly Company[], pe
   }
   feet.castShadow = false;
   feet.receiveShadow = true;
+  // The heads' shadows carry the pin; a post a few pixels wide adds nothing but shadow-pass work.
+  posts.castShadow = false;
   list.forEach((_, i) => {
     posts.setColorAt(i, mix(colors[i], ink, 0.35));
     feet.setColorAt(i, mix(colors[i], ink, 0.15));
@@ -240,6 +295,29 @@ export function buildPins(layout: WorldLayout, companies: readonly Company[], pe
     root.add(mesh);
     return mesh;
   });
+
+  // Keylines: one instanced draw behind every badge.
+  const backGeo = new THREE.PlaneGeometry(1, 1);
+  const backAttr = new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1, n) * 4), 4).setUsage(THREE.DynamicDrawUsage);
+  list.forEach((m, i) => {
+    const k = KEYLINE.width;
+    if (m.person) backAttr.setXYZW(i, PERSON_BADGE_W / 2 + k, PERSON_BADGE_W / 2 + k, PERSON_BADGE_W / 2 + k, 1);
+    // The plate's corner radius is 44/256 of its height (src/three/logoTexture.ts).
+    else backAttr.setXYZW(i, BADGE_W / 2 + k, BADGE_W / 4 + k, (BADGE_W / 2) * (44 / 256) + k, 1);
+  });
+  backGeo.setAttribute("aBack", backAttr);
+  const backMat = keylineMaterial();
+  const backs = new THREE.InstancedMesh(backGeo, backMat, Math.max(1, n));
+  backs.count = n;
+  backs.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  backs.frustumCulled = false;
+  backs.renderOrder = 2.9;
+  backs.raycast = () => {};
+  root.add(backs);
+  const toCam = new THREE.Vector3();
+  const backPos = new THREE.Vector3();
+  const one = new THREE.Vector3(1, 1, 1);
+  const zero = new THREE.Vector3(0, 0, 0);
 
   // Selection: a glowing ground ring.
   const glowTex = glowTexture();
@@ -334,7 +412,15 @@ export function buildPins(layout: WorldLayout, companies: readonly Company[], pe
       // Capped, not multiplied (see badgeOpacity): a dimmed pin near the lens is no fainter than any other close pin.
       badgeMats[i].opacity = Math.min(opacity[i], lensFade(camera.position.distanceTo(b.position), !!list[i].person && i !== selected, focus));
       b.visible = !waiting;
+      // Its keyline, a hair behind it, at its opacity.
+      toCam.copy(camera.position).sub(b.position).normalize();
+      backPos.copy(b.position).addScaledVector(toCam, -0.03);
+      m4.compose(backPos, camera.quaternion, b.visible ? one : zero);
+      backs.setMatrixAt(i, m4);
+      backAttr.setW(i, badgeMats[i].opacity);
     }
+    backs.instanceMatrix.needsUpdate = true;
+    backAttr.needsUpdate = true;
     if (dropping && allLanded) dropping = false;
     posts.instanceMatrix.needsUpdate = feet.instanceMatrix.needsUpdate = heads.instanceMatrix.needsUpdate = true;
     if (fadeChanged) {
@@ -360,7 +446,9 @@ export function buildPins(layout: WorldLayout, companies: readonly Company[], pe
   }
 
   function dispose() {
-    for (const g of [postGeo, footGeo, headGeo, badgeGeo, personGeo, ringGeo]) g.dispose();
+    for (const g of [postGeo, footGeo, headGeo, badgeGeo, personGeo, ringGeo, backGeo]) g.dispose();
+    backMat.dispose();
+    backs.dispose();
     // Disposing the cached badge textures too releases this renderer: three.js keeps a 'dispose'
     // listener on every texture it uploads, which would otherwise hold the dead view alive.
     for (const m of badgeMats) m.map?.dispose();

@@ -1,23 +1,48 @@
 /* The walk world's current theme, read from --scene-* and brand tokens.
-   District colors keep their meaning in both themes. */
+
+   The light theme is a warm afternoon: a blue sky with cream cumulus, a low sun, toon-lit land and
+   props (src/three/toon.ts), a turquoise coast, and unlit badges and signs that keep their colors.
+   The dark theme is the same island by moonlight. District colors keep their meaning in both. */
 import * as THREE from "three";
 import "./scene-theme.css";
 
 export interface ScenePalette {
   dark: boolean;
   skyTop: THREE.Color;
+  /** Between the zenith and the horizon. */
+  skyMid: THREE.Color;
+  /** The horizon. */
   skyBottom: THREE.Color;
+  /** The glow around the sun (or the moon). */
+  glow: THREE.Color;
+  /** The haze distant land fades into. */
+  fog: THREE.Color;
+  /** Sunlit cumulus, and their undersides. */
+  cloud: THREE.Color;
+  cloudShade: THREE.Color;
   sea: THREE.Color;
+  /** Water over the sand just off the beach. */
+  seaShallow: THREE.Color;
   seaDeep: THREE.Color;
   sand: THREE.Color;
   grass: THREE.Color;
   grassDark: THREE.Color;
+  /** The tips of the grass tufts around the walker, and sun-dried patches of the land. */
+  grassTip: THREE.Color;
   road: THREE.Color;
+  /** The roads' edge and center lines. */
+  roadLine: THREE.Color;
   plaza: THREE.Color;
   tree: THREE.Color;
   treeDark: THREE.Color;
   trunk: THREE.Color;
   rock: THREE.Color;
+  palm: THREE.Color;
+  palmTrunk: THREE.Color;
+  /** Blossoms on the flowering shrubs. */
+  bloom: THREE.Color;
+  /** The street lamps' globes. */
+  lampGlass: THREE.Color;
   /* The hub building (src/views/walk/hub.ts) and the plaza around it. */
   paint: THREE.Color;
   coping: THREE.Color;
@@ -30,26 +55,38 @@ export interface ScenePalette {
   signPanel: THREE.Color;
   navy: THREE.Color;
   ink: THREE.Color;
-  /** Daylight or neutral moonlight. */
+  /** The low afternoon sun, or the moon. */
   sun: THREE.Color;
   /** The same colors as CSS strings, for the 2D minimap. */
   css: Record<string, string>;
 }
 
 const TOKENS: Record<string, [string, string]> = {
-  skyTop: ["--scene-sky-top", "#9fd3ea"],
-  skyBottom: ["--scene-sky-bottom", "#eaf6f8"],
-  sea: ["--scene-sea", "#3f9fbf"],
-  seaDeep: ["--scene-sea-deep", "#2a7fa3"],
-  sand: ["--scene-sand", "#ecdcb0"],
-  grass: ["--scene-grass", "#a9cf8a"],
-  grassDark: ["--scene-grass-dark", "#8fbd72"],
-  road: ["--scene-road", "#efe6d2"],
-  plaza: ["--scene-plaza", "#f3eee4"],
-  tree: ["--scene-tree", "#5f9f5a"],
-  treeDark: ["--scene-tree-dark", "#3f7d46"],
-  trunk: ["--scene-trunk", "#8a6a4a"],
-  rock: ["--scene-rock", "#b9b2a6"],
+  skyTop: ["--scene-sky-top", "#2a83cf"],
+  skyMid: ["--scene-sky-mid", "#6db6e6"],
+  skyBottom: ["--scene-sky-bottom", "#cdeefb"],
+  glow: ["--scene-sky-glow", "#fff1d2"],
+  fog: ["--scene-fog", "#d3ebf5"],
+  cloud: ["--scene-cloud", "#fff6e8"],
+  cloudShade: ["--scene-cloud-shade", "#e8cfc3"],
+  sea: ["--scene-sea", "#2b8cb8"],
+  seaShallow: ["--scene-sea-shallow", "#46c4c3"],
+  seaDeep: ["--scene-sea-deep", "#1a5a8e"],
+  sand: ["--scene-sand", "#efdcb0"],
+  grass: ["--scene-grass", "#7cb26c"],
+  grassDark: ["--scene-grass-dark", "#5c975c"],
+  grassTip: ["--scene-grass-tip", "#b9d98a"],
+  road: ["--scene-road", "#a6abb1"],
+  roadLine: ["--scene-road-line", "#f6edd5"],
+  plaza: ["--scene-plaza", "#e2d8c5"],
+  tree: ["--scene-tree", "#3e8d6b"],
+  treeDark: ["--scene-tree-dark", "#286c58"],
+  trunk: ["--scene-trunk", "#8a6a51"],
+  rock: ["--scene-rock", "#b8ad9f"],
+  palm: ["--scene-palm", "#6e8a34"],
+  palmTrunk: ["--scene-palm-trunk", "#9a9278"],
+  bloom: ["--scene-bloom", "#d9573f"],
+  lampGlass: ["--scene-lamp-glass", "#f5f0e3"],
   paint: ["--scene-paint", "#ece8df"],
   coping: ["--scene-coping", "#c8ccce"],
   membrane: ["--scene-membrane", "#a3aab0"],
@@ -67,19 +104,20 @@ export function readScenePalette(): ScenePalette {
   const cs = typeof document !== "undefined" ? getComputedStyle(document.documentElement) : null;
   const css: Record<string, string> = {};
   const colors: Record<string, THREE.Color> = {};
-  for (const [key, [name, fallback]] of Object.entries(TOKENS)) {
-    const raw = cs?.getPropertyValue(name).trim() || fallback;
-    let c: THREE.Color;
+  const parse = (raw: string, fallback: string) => {
     try {
-      c = new THREE.Color(raw);
+      return new THREE.Color(raw || fallback);
     } catch {
-      c = new THREE.Color(fallback);
+      return new THREE.Color(fallback);
     }
+  };
+  for (const [key, [name, fallback]] of Object.entries(TOKENS)) {
+    const c = parse(cs?.getPropertyValue(name).trim() ?? "", fallback);
     colors[key] = c;
     css[key] = `#${c.getHexString()}`;
   }
   const dark = cs?.colorScheme.includes("dark") ?? false;
-  const sun = dark ? new THREE.Color("#d4d4d8") : new THREE.Color(1, 1, 1).lerp(colors.sand, 0.32);
+  const sun = parse(cs?.getPropertyValue("--scene-sun").trim() ?? "", dark ? "#d4d4d8" : "#fff0d6");
   css.sun = `#${sun.getHexString()}`;
   return { ...(colors as Omit<ScenePalette, "dark" | "sun" | "css">), dark, sun, css } as ScenePalette;
 }

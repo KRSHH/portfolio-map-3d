@@ -1,10 +1,12 @@
 /* The hub as plain data: the publisher's building at the center of the walk world's plaza, and
    the Nexus portal beside it.
 
-   The hub is a generic pavilion (not a model of any real building): a long glass hall on a low
+   The hub is a generic pavilion (not a model of any real building), symmetric about its front's
+   center line, which runs through the plaza's center to the spawn: a long glass hall on a low
    plinth, a smaller upper volume set back on its roof, a thin canopy over the entrance, two
    planters, and a pole on the upper roof carrying a sign with the publisher's logo (site.json
-   org.logo), which turns to face the camera. A map that wants its own building replaces
+   org.logo), which turns to face the camera. The entrance, the hub's name on the canopy and the
+   sign all stand on that center line, straight ahead of an arrival. A map that wants its own building replaces
    src/views/walk/hub.ts and this file together, keeping the exports.
 
    Pure (no three.js, no DOM), so the world builder, collisions, the follow camera, the minimap and
@@ -31,21 +33,21 @@ export const HUB = {
   plinth: { x0: -14, x1: 14, z0: -8.4, z1: 8.6, h: 0.35 },
   /** The glass hall: a flat roof inside a parapet. */
   hall: { x0: -13, x1: 13, z0: -7.5, z1: 7.5, deck: 7.0, parapet: 7.6 },
-  /** The upper volume, set back toward the north-west corner of the hall's roof. */
-  upper: { x0: -12.2, x1: 2.5, z0: -6.8, z1: 1.6, deck: 10.6, parapet: 11.1 },
-  /** The entrance canopy over the front, on two slim posts. */
-  canopy: { x0: -3.5, x1: 8.5, z0: 7.5, z1: 11.2, y: 4.0, top: 4.3, posts: [{ x: -2.9, z: 10.6 }, { x: 7.9, z: 10.6 }], r: 0.14 },
+  /** The upper volume, centered on the hall's roof and set back toward its rear. */
+  upper: { x0: -7.4, x1: 7.4, z0: -6.8, z1: 1.6, deck: 10.6, parapet: 11.1 },
+  /** The entrance canopy over the middle of the front, on two slim posts. */
+  canopy: { x0: -6, x1: 6, z0: 7.5, z1: 11.2, y: 4.0, top: 4.3, posts: [{ x: -5.4, z: 10.6 }, { x: 5.4, z: 10.6 }], r: 0.14 },
   /** The glazed band of the front face, between its corner piers. */
   glass: { x0: -11.6, x1: 11.6, y0: 0.6, y1: 6.2 },
-  /** The doors in the glass, under the canopy. */
-  doors: { x0: 0.8, x1: 4.2, h: 3.2 },
+  /** The doors in the glass, centered under the canopy. */
+  doors: { x0: -1.7, x1: 1.7, h: 3.2 },
   /** Planters flanking the entrance, a walker's width and more off the plinth (no slot a walker could wedge into). */
   planters: [
-    { x0: -10.5, x1: -6.0, z0: 9.7, z1: 11.2, h: 0.75 },
-    { x0: 10.0, x1: 13.0, z0: 9.7, z1: 11.2, h: 0.75 },
+    { x0: -12.5, x1: -8.0, z0: 9.7, z1: 11.2, h: 0.75 },
+    { x0: 8.0, x1: 12.5, z0: 9.7, z1: 11.2, h: 0.75 },
   ],
-  /** The pole on the upper roof carrying the logo sign (its head turns to face the camera). */
-  beacon: { x: -6.5, z: -2.6, w: 12, h: 3.9, bottom: 13.4, top: 17.3 },
+  /** The pole in the middle of the upper roof carrying the logo sign (its head turns to face the camera). */
+  beacon: { x: 0, z: -2.6, w: 12, h: 3.9, bottom: 13.4, top: 17.3 },
 } as const;
 
 /** The sign's top: the hub's highest point, for label placement. */
@@ -142,8 +144,11 @@ export function hubBlockers(): HubCircle[] {
   const step = (h.x1 - h.x0) / n;
   const r = Math.hypot(step / 2, (h.z1 - h.z0) / 2);
   for (let i = 0; i < n; i++) {
-    const c = hubToWorld(h.x0 + step * (i + 0.5), 0);
-    out.push({ x: c.x, z: c.z, r, h: i < 2 ? HUB.upper.parapet : h.parapet });
+    const x0 = h.x0 + step * i;
+    const c = hubToWorld(x0 + step / 2, 0);
+    // A third under the upper volume is as tall as it.
+    const under = x0 < HUB.upper.x1 && x0 + step > HUB.upper.x0;
+    out.push({ x: c.x, z: c.z, r, h: under ? HUB.upper.parapet : h.parapet });
   }
   out.push({ x: PORTAL.x, z: PORTAL.z, r: PORTAL.r, h: PORTAL.r * 2 + 0.6 });
   return out;

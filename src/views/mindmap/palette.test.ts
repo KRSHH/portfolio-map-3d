@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { applyGlassPalette, createGlassMaterial } from "./materials";
 import { globePalette } from "./palette";
@@ -18,7 +19,9 @@ describe("mounted globe theme", () => {
     expect(dark.dark).toBe(true);
     expect(dark.surface).not.toBe(light.surface);
     expect(surface.uniforms.uBase.value.getHexString()).toBe("18181b");
-    expect(surface.uniforms.uDark.value).toBe(1);
+    // The night side's cool light and the tint follow the theme too.
+    expect(surface.uniforms.uNight.value.getHexString()).toBe(new THREE.Color(dark.nightLight).getHexString());
+    expect(surface.uniforms.uTintScale.value).toBe(dark.tint);
     // Logo plates retain their artwork contrast while the scene changes around them.
     expect(dark.paper).toBe(light.paper);
     expect(surface.transparent).toBe(false);

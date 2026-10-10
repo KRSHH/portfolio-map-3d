@@ -3,7 +3,10 @@
    - Glass: the solid globe surface. Each fragment finds the region
      that owns it with the same additively weighted rule as territoryOf()
      in globeLayout.ts, tints itself in that district's color, and draws a
-     thin seam where two territories meet.
+     thin seam where two territories meet. It is lit the way the walk world
+     is (src/three/toon.ts): a soft two-tone terminator, warm on the day
+     side and cool on the night side, with cloud shadows drifting over the
+     day side.
    - FatLines: every arc in one instanced draw call per batch. Screen-space
      width, per-vertex RGBA, a per-line emphasis value (for dimming), and an
      optional dash or traveling pulse. The globe hides far-side connections.
@@ -34,7 +37,11 @@ export interface GlassRegion {
   color: string;
 }
 
-export function createGlassMaterial(regions: GlassRegion[]): THREE.ShaderMaterial {
+/**
+ * `clouds`: the cloud-shadow map (src/three/toon.ts cloudShadowTexture), or null for none. Its
+ * drift follows uTime (the controller's clock, still under reduced motion).
+ */
+export function createGlassMaterial(regions: GlassRegion[], clouds: THREE.Texture | null = null): THREE.ShaderMaterial {
   const palette = globePalette();
   const list = regions.length ? regions : [{ center: [0, 1, 0] as Vec3, radius: 0, color: "#ffffff" }];
   const n = list.length;
@@ -50,11 +57,17 @@ export function createGlassMaterial(regions: GlassRegion[]): THREE.ShaderMateria
       uColor: { value: list.map((r) => new THREE.Color(r.color)) },
       uFocus: { value: -1 },
       uFocusAmt: { value: 0 },
-      uLight: { value: new THREE.Vector3(-0.45, 0.75, 0.5).normalize() },
+      // From the upper left and a little in front, so the terminator crosses the visible disc.
+      uLight: { value: new THREE.Vector3(-0.85, 0.42, 0.32).normalize() },
       uOpacity: { value: 1 },
       uBase: { value: new THREE.Color(palette.surface) },
       uRim: { value: new THREE.Color(palette.rim) },
-      uDark: { value: palette.dark ? 1 : 0 },
+      uDay: { value: new THREE.Color(palette.dayLight) },
+      uNight: { value: new THREE.Color(palette.nightLight) },
+      uTintScale: { value: palette.tint },
+      uClouds: { value: clouds },
+      uCloudAmt: { value: clouds ? palette.cloudShadow : 0 },
+      uTime: { value: 0 },
     },
     vertexShader: /* glsl */ `
       varying vec3 vLocal;
@@ -78,7 +91,12 @@ export function createGlassMaterial(regions: GlassRegion[]): THREE.ShaderMateria
       uniform float uOpacity;
       uniform vec3 uBase;
       uniform vec3 uRim;
-      uniform float uDark;
+      uniform vec3 uDay;
+      uniform vec3 uNight;
+      uniform float uTintScale;
+      uniform sampler2D uClouds;
+      uniform float uCloudAmt;
+      uniform float uTime;
       varying vec3 vLocal;
       varying vec3 vN;
       varying vec3 vV;
@@ -99,20 +117,27 @@ export function createGlassMaterial(regions: GlassRegion[]): THREE.ShaderMateria
         // Inside a region's cap reads as "land"; between caps the tint thins out.
         float land = 1.0 - smoothstep(-0.015, 0.07, best);
         float isFocus = (uFocus > -0.5 && abs(bestIdx - uFocus) < 0.5) ? 1.0 : 0.0;
-        float tint = mix(0.045, 0.16, land);
-        tint *= mix(1.0, mix(0.6, 1.32, isFocus), uFocusAmt);
+        float tint = mix(0.24, 0.36, land);
+        tint *= mix(1.0, mix(0.6, 1.32, isFocus), uFocusAmt) * uTintScale;
         vec3 n = normalize(vN);
         vec3 v = normalize(vV);
         float ndl = dot(n, uLight);
-        vec3 base = mix(uBase, col, clamp(tint, 0.0, 0.32));
-        vec3 c = base * (mix(0.58, 0.28, uDark) + max(ndl, 0.0) * 0.56);
+        // Tints mix the way paints do, in display (gamma) space, so a dark hue such as a blue still
+        // reads as itself at a pastel strength instead of graying out on the light surface.
+        vec3 base = pow(mix(pow(uBase, vec3(0.4545)), pow(col, vec3(0.4545)), clamp(tint, 0.0, 0.42)), vec3(2.2));
+        // The two-tone terminator: a warm day side, a cool night side, a short soft band between.
+        float lit = smoothstep(-0.08, 0.16, ndl);
+        vec3 light = mix(uNight, uDay, lit);
+        // Cloud shadows drifting over the day side (the map wraps around the sphere).
+        vec2 cuv = vec2(atan(p.z, p.x) * 0.15915494 + 0.5 + uTime * 0.0035, acos(clamp(p.y, -1.0, 1.0)) * 0.31830989);
+        float cloud = texture2D(uClouds, cuv * vec2(2.0, 1.0)).r;
+        light *= 1.0 - uCloudAmt * smoothstep(0.52, 0.8, cloud) * lit;
+        vec3 c = base * light;
         // Clamped: dot(n, v) of two normalized interpolants can round above 1, and pow() of a
         // negative base is undefined (NaN on GPUs that compute it as exp2(y * log2(x))).
         float fres = pow(clamp(1.0 - dot(n, v), 0.0, 1.0), 2.2);
-        c = mix(c, uRim, seam * 0.38);
-        c = mix(c, uRim, fres * 0.12);
-        float spec = pow(max(dot(reflect(-uLight, n), v), 0.0), 24.0);
-        c += spec * 0.045;
+        c = mix(c, uRim, seam * 0.45);
+        c = mix(c, uRim, fres * 0.22);
         gl_FragColor = vec4(c, uOpacity);
         #include <colorspace_fragment>
       }
@@ -123,7 +148,10 @@ export function createGlassMaterial(regions: GlassRegion[]): THREE.ShaderMateria
 export function applyGlassPalette(material: THREE.ShaderMaterial, palette: GlobePalette): void {
   material.uniforms.uBase.value.set(palette.surface);
   material.uniforms.uRim.value.set(palette.rim);
-  material.uniforms.uDark.value = palette.dark ? 1 : 0;
+  material.uniforms.uDay.value.set(palette.dayLight);
+  material.uniforms.uNight.value.set(palette.nightLight);
+  material.uniforms.uTintScale.value = palette.tint;
+  if (material.uniforms.uClouds.value) material.uniforms.uCloudAmt.value = palette.cloudShadow;
 }
 
 /* ------------------------------------------------------------ fat lines */

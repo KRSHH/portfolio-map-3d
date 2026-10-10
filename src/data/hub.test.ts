@@ -78,6 +78,21 @@ describe("the hub's frame", () => {
     expect(HUB.doors.x1).toBeLessThanOrEqual(canopy.x1);
     expect(HUB_TOP).toBe(HUB.beacon.top);
   });
+
+  it("centers the front on the building's axis: the entrance, the hub's name, the upper volume and the logo sign", () => {
+    const mid = (r: { x0: number; x1: number }) => (r.x0 + r.x1) / 2;
+    for (const part of [HUB.plinth, HUB.hall, HUB.upper, HUB.canopy, HUB.doors, HUB.glass]) expect(mid(part)).toBeCloseTo(0, 6);
+    expect(HUB.beacon.x).toBe(0);
+    // The canopy's posts and the planters mirror each other across the axis.
+    const [a, b] = HUB.canopy.posts;
+    expect(a.x).toBeCloseTo(-b.x, 6);
+    expect(a.z).toBe(b.z);
+    const [left, right] = HUB.planters;
+    expect(left.x0).toBeCloseTo(-right.x1, 6);
+    expect(left.x1).toBeCloseTo(-right.x0, 6);
+    // The axis runs from the building through the spawn: an arrival faces the entrance.
+    expect(hubToWorld(0, 0).x).toBeCloseTo(world.spawn.x, 6);
+  });
 });
 
 describe("the hub on the plaza", () => {

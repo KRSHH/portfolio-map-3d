@@ -154,21 +154,35 @@
   --danger: #ff8b7f;
 }
 
-/* ---- 3D scene palette (both scenes are daylight; see README) ---- */
+/* ---- 3D scene palette: the walk world on a warm afternoon (its moonlit night is in
+   src/views/walk/scene-theme.css; see README) ---- */
 :root {
-  --scene-sky-top: #9fd3ea;
-  --scene-sky-bottom: #eaf6f8;
-  --scene-sea: #3f9fbf;
-  --scene-sea-deep: #2a7fa3;
-  --scene-sand: #ecdcb0;
-  --scene-grass: #a9cf8a;
-  --scene-grass-dark: #8fbd72;
-  --scene-road: #efe6d2;
-  --scene-plaza: #f3eee4;
-  --scene-tree: #5f9f5a;
-  --scene-tree-dark: #3f7d46;
-  --scene-trunk: #8a6a4a;
-  --scene-rock: #b9b2a6;
+  --scene-sky-top: #2a83cf;
+  --scene-sky-mid: #6db6e6;
+  --scene-sky-bottom: #cdeefb;
+  --scene-sky-glow: #fff1d2;     /* around the low sun */
+  --scene-fog: #d3ebf5;          /* the haze distant land fades into */
+  --scene-sun: #fff0d6;
+  --scene-cloud: #fff6e8;        /* sunlit cumulus */
+  --scene-cloud-shade: #e8cfc3;  /* their peach undersides */
+  --scene-sea: #2b8cb8;
+  --scene-sea-shallow: #46c4c3;
+  --scene-sea-deep: #1a5a8e;
+  --scene-sand: #efdcb0;
+  --scene-grass: #7cb26c;
+  --scene-grass-dark: #5c975c;
+  --scene-grass-tip: #b9d98a;    /* grass tips and sun-dried patches */
+  --scene-road: #a6abb1;
+  --scene-road-line: #f6edd5;
+  --scene-plaza: #e2d8c5;
+  --scene-tree: #3e8d6b;
+  --scene-tree-dark: #286c58;
+  --scene-trunk: #8a6a51;
+  --scene-rock: #b8ad9f;
+  --scene-palm: #6e8a34;
+  --scene-palm-trunk: #9a9278;
+  --scene-bloom: #d9573f;        /* blossoms on the flowering shrubs */
+  --scene-lamp-glass: #f5f0e3;
   /* The hub building (src/views/walk/hub.ts): light walls, a pale roof, dark frames, glass. */
   --scene-paint: #ece8df;        /* walls and piers */
   --scene-coping: #c8ccce;       /* parapet coping */

@@ -15,6 +15,8 @@ export interface Terrain {
   shoreAt(a: number): number;
   /** 0..1: how "beachy" the ground is at radius r and angle a. */
   sandAt(r: number, a: number): number;
+  /** Where the ground meets the sea at angle a (radians): the radius of the waterline. */
+  waterlineAt(a: number): number;
 }
 
 export function createTerrain(layout: WorldLayout): Terrain {
@@ -53,5 +55,20 @@ export function createTerrain(layout: WorldLayout): Terrain {
 
   const sandAt = (r: number, a: number) => smoothstep(-12, -8, r - shoreAt(a));
 
-  return { heightAt, shoreAt, sandAt };
+  // The ground falls through sea level once, a few units inside the shoreline: bisect for it.
+  const waterlineAt = (a: number) => {
+    const c = Math.cos(a);
+    const s = Math.sin(a);
+    const shore = shoreAt(a);
+    let lo = shore - 14;
+    let hi = shore + 6;
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2;
+      if (heightAt(c * mid, s * mid) > SEA_LEVEL) lo = mid;
+      else hi = mid;
+    }
+    return (lo + hi) / 2;
+  };
+
+  return { heightAt, shoreAt, sandAt, waterlineAt };
 }

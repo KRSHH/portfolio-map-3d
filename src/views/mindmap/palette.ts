@@ -5,8 +5,17 @@
 
 export interface GlobePalette {
   dark: boolean;
+  /** The globe surface's own tone, under the district tints. */
   surface: string;
+  /** The seams between territories and the rim's light. */
   rim: string;
+  /** The light on the globe's day side (warm) and night side (cool): materials.ts's terminator. */
+  dayLight: string;
+  nightLight: string;
+  /** How strongly the territories tint the surface (1 = full). */
+  tint: number;
+  /** How much of the day side's light a drifting cloud takes, 0..1. */
+  cloudShadow: number;
   /** Documented connections (sourced facts). */
   documented: string;
   /** Potential providers of the selected company (derived suggestions). */
@@ -29,8 +38,12 @@ export interface GlobePalette {
 
 const FALLBACK: GlobePalette = {
   dark: false,
-  surface: "#e4e4e7",
-  rim: "#a1a1aa",
+  surface: "#ebe6dc",
+  rim: "#ffffff",
+  dayLight: "#fffcf6",
+  nightLight: "#c0c9d8",
+  tint: 1,
+  cloudShadow: 0.08,
   documented: "#0c7a8c",
   provider: "#eda100",
   client: "#2a78d6",
@@ -38,8 +51,8 @@ const FALLBACK: GlobePalette = {
   teal: "#0c7a8c",
   ink: "#1d1f24",
   paper: "#ffffff",
-  atmosphere: "#a1a1aa",
-  personGlass: "#a1a1aa",
+  atmosphere: "#6db6e6",
+  personGlass: "#6db6e6",
   personStem: "#71717a",
 };
 
@@ -50,8 +63,12 @@ export function globePalette(): GlobePalette {
   const v = (name: string, fallback: string) => cs.getPropertyValue(name).trim() || fallback;
   return {
     dark,
-    surface: dark ? "#18181b" : "#e4e4e7",
-    rim: dark ? "#52525b" : "#a1a1aa",
+    surface: dark ? "#18181b" : FALLBACK.surface,
+    rim: dark ? "#52525b" : FALLBACK.rim,
+    dayLight: dark ? "#f5ede0" : FALLBACK.dayLight,
+    nightLight: dark ? "#4d5470" : FALLBACK.nightLight,
+    tint: dark ? 0.58 : FALLBACK.tint,
+    cloudShadow: dark ? 0.22 : FALLBACK.cloudShadow,
     documented: v("--mindmap-documented", v("--brand-accent", FALLBACK.documented)),
     provider: v("--mindmap-provider", FALLBACK.provider),
     client: v("--mindmap-client", FALLBACK.client),
@@ -60,8 +77,10 @@ export function globePalette(): GlobePalette {
     ink: v("--brand-ink", FALLBACK.ink),
     // Publisher artwork and badge dimming use a light plate in either interface theme.
     paper: "#ffffff",
-    atmosphere: dark ? "#71717a" : "#a1a1aa",
-    personGlass: dark ? "#3f3f46" : "#a1a1aa",
+    // A sky-blue halo by day; a cool moonlit one in the dark theme.
+    atmosphere: dark ? "#5b7398" : FALLBACK.atmosphere,
+    // The people globe: one even sky-blue tint (a moonlit blue in the dark theme).
+    personGlass: dark ? "#5f80ad" : FALLBACK.personGlass,
     personStem: v("--text-muted", FALLBACK.personStem),
   };
 }

@@ -17,13 +17,14 @@ import type { AvatarSpec } from "../../live/identity";
 import type { LiveSession, LiveState } from "../../live/presence";
 import type { FlyRequest } from "../../state/store";
 import { useStore } from "../../state/store";
+import { toonify } from "../../three/toon";
 import { buildCar, CAR_SPEED, CAR_SPRINT_SPEED, CAR_COLLISION_RADIUS, canEnterCar, findCarSpawn, findCarExit } from "./car";
 import { LEAP_DURATION, LEAP_SPEED, LEAP_RUN_SPEED, leapHeight } from "./leap";
 import { buildAvatar, type Avatar } from "./avatar";
 import { Explorers, type ExplorerDot } from "./explorers";
 import { Minimap } from "./minimap";
 import { AVATAR_RADIUS, ZOOM_DEFAULT, ZOOM_MAX, ZOOM_MIN, cameraRelative, clearPitch, districtEntrance, lookLift, pitchFor, resolveCollisions, standNear, type Circle } from "./nav";
-import { mix, readScenePalette, watchScenePalette, type ScenePalette } from "./palette";
+import { readScenePalette, watchScenePalette, type ScenePalette } from "./palette";
 import { walkAreas } from "./areas";
 import { FADED, buildPins, type PinSystem } from "./pins";
 import { createTerrain, type Terrain } from "./terrain";
@@ -241,8 +242,13 @@ export class WalkEngine {
     this.flyBlockers = [...this.world.blockers, ...this.world.arches, ...this.pins.blockers];
     this.tagLayer = document.createElement("div");
     this.tagLayer.className = "walk-tags";
-    this.explorers = new Explorers(this.tagLayer, (x, z) => this.groundAt(x, z));
+    // The pins' posts and heads, every explorer and the car take the world's toon light too.
+    const toon = this.world.toon;
+    toonify(this.pins.root, toon);
+    this.explorers = new Explorers(this.tagLayer, (x, z) => this.groundAt(x, z), (root) => toonify(root, toon));
     this.avatar = buildAvatar(avatarSpec);
+    toonify(this.avatar.root, toon);
+    toonify(this.car.root, toon);
     this.car.root.visible = false;
     const base = this.layout.spawn;
     const side = visitorId ? ((hashString(visitorId) % 1001) / 1000 - 0.5) * 5 : 0;
@@ -264,7 +270,7 @@ export class WalkEngine {
     if (this.scene) {
       this.scene.background = palette.skyBottom.clone();
       const fog = this.scene.fog;
-      if (fog instanceof THREE.Fog) fog.color.copy(mix(palette.skyBottom, palette.skyTop, 0.25));
+      if (fog instanceof THREE.Fog) fog.color.copy(palette.fog);
     }
     this.minimap?.setPalette(palette);
     this.drawMinimap();
@@ -276,7 +282,8 @@ export class WalkEngine {
     this.camera = camera;
     const p = this.palette;
     scene.background = p.skyBottom.clone();
-    scene.fog = new THREE.Fog(mix(p.skyBottom, p.skyTop, 0.25), 90, 420);
+    // Aerial perspective: distant land fades into the horizon's haze.
+    scene.fog = new THREE.Fog(p.fog.clone(), 100, 480);
     scene.add(this.world.root, this.pins.root, this.avatar.root, this.explorers.root, this.car.root);
     this.placeAvatar();
     this.setSize(this.width, this.height);
@@ -326,6 +333,7 @@ export class WalkEngine {
   setAvatar(spec: AvatarSpec): void {
     const old = this.avatar;
     this.avatar = buildAvatar(spec);
+    toonify(this.avatar.root, this.world.toon);
     this.avatar.root.visible = !this.driving;
     if (this.scene) {
       this.scene.remove(old.root);
@@ -789,11 +797,12 @@ export class WalkEngine {
       this.hooks.onPortal(portal);
     }
     this.updateCamera(dt, false);
-    this.world.update(this.time, dt, this.reduced, this.yaw);
+    this.world.update(this.time, dt, this.reduced, this.yaw, this.camera.position);
     this.pins.update(now / 1000, dt, this.time, this.reduced, this.camera, this.camera.position.distanceTo(this.camTarget));
     this.avatar.animate(dt, this.time, this.leap ? 0 : this.speed01, this.reduced);
     this.car.animate(dt, this.carMoving);
     this.syncCarAction();
+    this.world.grass.update(this.x, this.z, this.reduced ? 0 : this.time);
     this.explorers.update(now, dt, this.time, this.reduced, this.camera, this.width, this.height, this);
     this.followSun();
     this.updateLabels();
@@ -991,8 +1000,8 @@ export class WalkEngine {
     this.world.nearFade.value.set(fadeEnd * 0.4, fadeEnd);
     const fog = this.scene?.fog as THREE.Fog | null;
     if (fog) {
-      fog.near = 70 + this.dist * 1.6;
-      fog.far = 300 + this.dist * 4.5;
+      fog.near = 100 + this.dist * 1.8;
+      fog.far = 440 + this.dist * 5;
     }
   }
 

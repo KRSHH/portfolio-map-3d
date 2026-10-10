@@ -104,7 +104,7 @@ export function layoutWorld(districtOrder: DistrictSlug[], companies: Company[],
   }
 
   const islandRadius = ringRadius + maxR + 30;
-  // Spawn on the plaza's south side, facing north: the hub's pavilion corner straight ahead
+  // Spawn on the plaza's south side, facing north: the hub's entrance straight ahead
   // (src/data/hub.ts places the building so), the first district beyond it.
   const spawn = { x: 0, z: PLAZA_RADIUS - 8, facing: Math.PI };
   return { discs, pins, ringRadius, islandRadius, spawn };

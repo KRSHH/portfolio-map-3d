@@ -1,18 +1,33 @@
-/* Neutral night materials follow the interface's explicit or system theme. */
+/* The walk world by moonlight: the dark theme's scene colors, for the interface's explicit or
+   system dark theme. The same island and toon light as the afternoon (src/styles/tokens.css), under
+   a deep blue sky with dim clouds, a cool moon, lit lamps and a dark sea. */
 :root[data-theme="dark"] {
-  --scene-sky-top: #141416;
-  --scene-sky-bottom: #424247;
-  --scene-sea: #41484a;
-  --scene-sea-deep: #18181b;
-  --scene-sand: #78716c;
-  --scene-grass: #657365;
-  --scene-grass-dark: #4f5d51;
-  --scene-road: #71717a;
-  --scene-plaza: #52525b;
-  --scene-tree: #738b77;
-  --scene-tree-dark: #526c57;
-  --scene-trunk: #78716c;
-  --scene-rock: #71717a;
+  --scene-sky-top: #0b1222;
+  --scene-sky-mid: #18233a;
+  --scene-sky-bottom: #36425a;
+  --scene-sky-glow: #8f9cb6;
+  --scene-fog: #283246;
+  --scene-sun: #c4cee6;
+  --scene-cloud: #707c99;
+  --scene-cloud-shade: #4b5673;
+  --scene-sea: #23405a;
+  --scene-sea-shallow: #2f5866;
+  --scene-sea-deep: #0f1a2b;
+  --scene-sand: #77716a;
+  --scene-grass: #4c6553;
+  --scene-grass-dark: #3a5244;
+  --scene-grass-tip: #6d8466;
+  --scene-road: #5d636c;
+  --scene-road-line: #a9a39a;
+  --scene-plaza: #5b5c63;
+  --scene-tree: #48685a;
+  --scene-tree-dark: #34503f;
+  --scene-trunk: #5e5048;
+  --scene-rock: #6f6e6c;
+  --scene-palm: #4f6640;
+  --scene-palm-trunk: #6a675b;
+  --scene-bloom: #a8584a;
+  --scene-lamp-glass: #ffe3a6;
   --scene-paint: #71717a;
   --scene-coping: #a1a1aa;
   --scene-membrane: #52525b;
@@ -26,19 +41,32 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --scene-sky-top: #141416;
-    --scene-sky-bottom: #424247;
-    --scene-sea: #41484a;
-    --scene-sea-deep: #18181b;
-    --scene-sand: #78716c;
-    --scene-grass: #657365;
-    --scene-grass-dark: #4f5d51;
-    --scene-road: #71717a;
-    --scene-plaza: #52525b;
-    --scene-tree: #738b77;
-    --scene-tree-dark: #526c57;
-    --scene-trunk: #78716c;
-    --scene-rock: #71717a;
+    --scene-sky-top: #0b1222;
+    --scene-sky-mid: #18233a;
+    --scene-sky-bottom: #36425a;
+    --scene-sky-glow: #8f9cb6;
+    --scene-fog: #283246;
+    --scene-sun: #c4cee6;
+    --scene-cloud: #707c99;
+    --scene-cloud-shade: #4b5673;
+    --scene-sea: #23405a;
+    --scene-sea-shallow: #2f5866;
+    --scene-sea-deep: #0f1a2b;
+    --scene-sand: #77716a;
+    --scene-grass: #4c6553;
+    --scene-grass-dark: #3a5244;
+    --scene-grass-tip: #6d8466;
+    --scene-road: #5d636c;
+    --scene-road-line: #a9a39a;
+    --scene-plaza: #5b5c63;
+    --scene-tree: #48685a;
+    --scene-tree-dark: #34503f;
+    --scene-trunk: #5e5048;
+    --scene-rock: #6f6e6c;
+    --scene-palm: #4f6640;
+    --scene-palm-trunk: #6a675b;
+    --scene-bloom: #a8584a;
+    --scene-lamp-glass: #ffe3a6;
     --scene-paint: #71717a;
     --scene-coping: #a1a1aa;
     --scene-membrane: #52525b;

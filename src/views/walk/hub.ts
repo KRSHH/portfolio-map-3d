@@ -2,7 +2,10 @@
    footprint). A glass hall on a low plinth with an upper volume set back on its roof, an accent
    band in the site's accent color (site.json theme.accent), a canopy over the entrance with the
    hub's name on its fascia (site.json labels.hub), planters, and a pole carrying a sign with the
-   publisher's logo (site.json org.logo, or its name in type), whose head turns to the camera.
+   publisher's logo (site.json org.logo, or its name in type), whose head turns to the camera. The
+   entrance, the name and the sign stand on the building's center line (src/data/hub.ts), and the
+   logo is drawn by its ink (src/three/logoInk.ts), so it is centered on the sign whatever empty
+   space its file carries.
 
    Everything static is one merged, vertex-colored, flat-shaded mesh in the hub's local frame. Its
    material dissolves near the lens like the other props, and cuts a dithered window toward the
@@ -13,6 +16,7 @@ import { siteFile } from "../../data/catalog";
 import { HUB, HUB_CENTER, HUB_ROT, HUB_TOP, hubBeacon, hubBlockers, hubBoxes, hubColliders, type HubBox, type HubCircle } from "../../data/hub";
 import { L, SITE } from "../../site";
 import { cpuCanvas } from "../../three/cpuCanvas";
+import { drawLogoInk } from "../../three/logoInk";
 import { mix, type ScenePalette } from "./palette";
 import { canvasTexture, merge, paint, withNearFade } from "./util";
 
@@ -220,11 +224,7 @@ export function buildHub(p: ScenePalette, own: Own, nearFade: { value: THREE.Vec
     const boxW = FACE.w * 0.8;
     const boxH = FACE.h * 0.62;
     if (logo && logo.naturalWidth > 0) {
-      const k = Math.min(boxW / logo.naturalWidth, boxH / logo.naturalHeight);
-      const w = logo.naturalWidth * k;
-      const h = logo.naturalHeight * k;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(logo, FACE.x + (FACE.w - w) / 2, FACE.y + (FACE.h - h) / 2, w, h);
+      drawLogoInk(ctx, logo, FACE.x + FACE.w / 2, FACE.y + FACE.h / 2, boxW, boxH);
     } else {
       ctx.fillStyle = css(p.ink);
       ctx.textAlign = "center";

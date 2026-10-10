@@ -13,7 +13,10 @@
 
    The scene is imperative (engine.ts, built once per mount, driven from
    useFrame). React renders only the HUD and the projected label buttons;
-   the engine positions those buttons itself every frame. */
+   the engine positions those buttons itself every frame. The canvas draws
+   without tone mapping (the toon light sets the colors), at a pixel ratio
+   held to a budget and lowered while the device cannot keep up
+   (src/three/adaptiveDpr.ts). */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ChevronDown, ChevronUp, Car, CircleHelp, LocateFixed, Map as MapIcon, Minus, Orbit, Plus, Shuffle, UserRound, Users, X } from "lucide-react";
 import { Component, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode, type RefObject } from "react";
@@ -29,6 +32,7 @@ import { registerScene } from "../../debug/registry";
 import { finderActive, usePersonHighlight, useHighlight, useStore } from "../../state/store";
 import { PersonThumb, DistrictIcon } from "../../components/bits";
 import SearchChip from "../../components/SearchChip";
+import { AdaptiveDpr, budgetDpr } from "../../three/adaptiveDpr";
 import { watchContext } from "../../three/contextWatch";
 import { areaBySlug, countLabel, isPeopleArea, walkAreas } from "./areas";
 import { WalkEngine, isTextField, type Overlay, type PortalState } from "./engine";
@@ -40,6 +44,9 @@ const INTRO_KEY = "portfolio-map-walk-intro";
 const SHOW_OTHERS_KEY = "portfolio-map-walk-show-others";
 /** How long the portal's departure shows before the Nexus opens (time to cancel). */
 const PORTAL_DELAY_MS = 1600;
+/** The pixel ratio's ceiling and the drawing buffer's pixel budget (src/three/adaptiveDpr.ts budgetDpr). */
+const DPR_CAP = 2;
+const PIXEL_BUDGET = 4_200_000;
 
 function hasWebGL(): boolean {
   try {
@@ -138,15 +145,41 @@ function WalkFallback() {
 
 /* ---------------- the scene bridge (inside <Canvas>) ---------------- */
 
-function SceneBridge({ engine, viewRef, onContextGiveUp }: { engine: WalkEngine; viewRef: RefObject<HTMLDivElement | null>; onContextGiveUp: () => void }) {
+function SceneBridge({
+  engine,
+  viewRef,
+  onContextGiveUp,
+  onDpr,
+}: {
+  engine: WalkEngine;
+  viewRef: RefObject<HTMLDivElement | null>;
+  onContextGiveUp: () => void;
+  /** The pixel ratio to draw at changed (the Canvas's dpr prop holds it: R3F re-applies that prop on every render). */
+  onDpr: (dpr: number) => void;
+}) {
   const scene = useThree((s) => s.scene);
   const camera = useThree((s) => s.camera);
   const gl = useThree((s) => s.gl);
+  const size = useThree((s) => s.size);
+  // The pixel ratio: the device's within the budget, times what the adaptive controller allows.
+  const adaptive = useRef<AdaptiveDpr | null>(null);
+  adaptive.current ??= new AdaptiveDpr();
+  const base = useRef(1);
+  useEffect(() => {
+    base.current = budgetDpr(window.devicePixelRatio, size.width, size.height, DPR_CAP, PIXEL_BUDGET);
+    onDpr(base.current * adaptive.current!.value);
+  }, [size.width, size.height, onDpr]);
   // A lost WebGL context that the browser never restores: start over with a fresh one. (A restore
   // needs nothing here: this canvas draws every frame, and three.js re-uploads what it needs.)
   useEffect(() => watchContext(gl.domElement, { restored: () => {}, giveUp: onContextGiveUp }), [gl, onContextGiveUp]);
   useEffect(() => {
     engine.attach(scene, camera as PerspectiveCamera);
+    // Compile every program now, so walking into a new area or summoning the car never stalls a
+    // frame on a shader compile.
+    const carShown = engine.car.root.visible;
+    engine.car.root.visible = true;
+    gl.compile(scene, camera);
+    engine.car.root.visible = carShown;
     const view = viewRef.current;
     const detach = view ? engine.attachInput(gl.domElement, view) : () => {};
     // Development only: the renderer, for QA scripts that read renderer.info. Stripped from production builds.
@@ -161,7 +194,12 @@ function SceneBridge({ engine, viewRef, onContextGiveUp }: { engine: WalkEngine;
     () => registerScene({ view: "walk", renderer: gl, scene, camera: camera as PerspectiveCamera, badges: engine.pins.badges, controller: engine }),
     [engine, scene, camera, gl],
   );
-  useFrame((_, dt) => engine.frame(dt));
+  useFrame((_, dt) => {
+    engine.frame(dt);
+    // A step at most every few seconds, so this state update is never per frame.
+    const k = adaptive.current!.sample(dt);
+    if (k !== null) onDpr(base.current * k);
+  });
   return null;
 }
 
@@ -239,6 +277,7 @@ function WalkWorld({ onContextGiveUp }: { onContextGiveUp: () => void }) {
   const reduced = useReducedMotion();
   const viewRef = useRef<HTMLDivElement>(null);
   const [engine, setEngine] = useState<WalkEngine | null>(null);
+  const [dpr, setDpr] = useState(() => budgetDpr(window.devicePixelRatio, window.innerWidth, window.innerHeight, DPR_CAP, PIXEL_BUDGET));
   const [carAction, setCarAction] = useState<"summon" | "enter" | "exit">("summon");
   const [travelMessage, setTravelMessage] = useState<string | null>(null);
   const [near, setNear] = useState<string | null>(null);
@@ -451,12 +490,13 @@ function WalkWorld({ onContextGiveUp }: { onContextGiveUp: () => void }) {
         <Canvas
           className="walk-canvas"
           shadows="soft"
-          dpr={[1, 2]}
+          flat
+          dpr={dpr}
           camera={{ fov: 50, near: 0.3, far: 2600, position: [0, 20, 40] }}
           gl={{ antialias: true, powerPreference: "high-performance" }}
           aria-hidden="true"
         >
-          <SceneBridge engine={engine} viewRef={viewRef} onContextGiveUp={onContextGiveUp} />
+          <SceneBridge engine={engine} viewRef={viewRef} onContextGiveUp={onContextGiveUp} onDpr={setDpr} />
         </Canvas>
       )}
 

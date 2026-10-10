@@ -59,6 +59,11 @@ Optional features follow the data: no people → no people globe, list tab or wa
 - Badge and label textures are baked into byte arrays (`DataTexture`); every other canvas that
   backs a texture comes from `cpuCanvas()`. Views dispose what they make and watch their WebGL
   context.
+- One look for both views: lit surfaces take the toon light (`src/three/toon.ts`: `toonMaterial()`
+  or `toonify()`, never a plain Lambert or standard material), the canvases draw without tone
+  mapping (`flat`), and their pixel ratio comes from `src/three/adaptiveDpr.ts` (a budget, lowered
+  while frames run slow). Scene colors are the `--scene-*` tokens: an afternoon in the light theme,
+  moonlight in the dark one.
 - Dimming never hides a badge (about 3:1 contrast kept); an active highlight always shows a chip.
 - Honor `prefers-reduced-motion`. No per-frame React state updates in scenes.
 - Districts are groupings, never addresses: nothing claims to show where a company is.

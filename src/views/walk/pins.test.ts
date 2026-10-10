@@ -1,10 +1,42 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { DISTRICTS } from "../../data/catalog";
 import { luminance } from "../mindmap/dimming";
-import { FADED, badgeOpacity, lensFade, nearFade } from "./pins";
+import { FADED, KEYLINE, badgeOpacity, lensFade, nearFade } from "./pins";
 
 const INK = luminance("#1d1f24");
-const GRASS = luminance("#a9cf8a"); // --scene-grass
-const PLAZA = luminance("#f3eee4"); // --scene-plaza
+
+/** A walk-world color token, as src/styles/tokens.css sets it (the light theme). */
+const TOKENS = readFileSync(new URL("../../styles/tokens.css", import.meta.url), "utf8");
+function token(name: string): string {
+  const m = TOKENS.match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{6})`));
+  if (!m) throw new Error(`no --${name} in tokens.css`);
+  return m[1];
+}
+/** sRGB mix of two #rrggbb colors (as the world mixes palette colors), as a luminance. */
+function mixLum(a: string, b: string, t: number): number {
+  const pa = parseInt(a.slice(1), 16);
+  const pb = parseInt(b.slice(1), 16);
+  const ch = (s: number) => Math.round(((pa >> s) & 255) * (1 - t) + ((pb >> s) & 255) * t);
+  return luminance(`#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`);
+}
+
+const GRASS = luminance(token("scene-grass"));
+const PLAZA = luminance(token("scene-plaza"));
+/** The afternoon ground and sky a badge is seen against: grass, the districts' lawns, the plaza, roads, sand, the sky. */
+const BACKDROPS: Record<string, number> = {
+  grass: GRASS,
+  "grass, dark": luminance(token("scene-grass-dark")),
+  "sun-dried grass": luminance(token("scene-grass-tip")),
+  plaza: PLAZA,
+  road: luminance(token("scene-road")),
+  sand: luminance(token("scene-sand")),
+  "sky at the horizon": luminance(token("scene-sky-bottom")),
+  "sky overhead": luminance(token("scene-sky-top")),
+  ...Object.fromEntries(DISTRICTS.map((d) => [`${d.slug} lawn`, mixLum(token("scene-grass"), d.color, 0.2)])),
+};
+/** Contrast between two luminances. */
+const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 
 /** Contrast of an ink logo against its white plate, both drawn at opacity a over a background. */
 function contrastOver(a: number, bg: number): number {
@@ -34,6 +66,12 @@ describe("walk badge opacity", () => {
     expect(contrastOver(FADED, GRASS)).toBeGreaterThanOrEqual(3);
     expect(contrastOver(FADED, PLAZA)).toBeGreaterThanOrEqual(2.4);
     expect(contrastOver(1, GRASS) / contrastOver(FADED, GRASS)).toBeGreaterThan(4);
+  });
+
+  it("sets every badge apart from the bright ground and sky by its ink keyline", () => {
+    const keyline = luminance(KEYLINE.color);
+    for (const [where, lum] of Object.entries(BACKDROPS)) expect(ratio(keyline, lum), where).toBeGreaterThanOrEqual(3);
+    expect(KEYLINE.width).toBeGreaterThan(0.04);
   });
 });
 

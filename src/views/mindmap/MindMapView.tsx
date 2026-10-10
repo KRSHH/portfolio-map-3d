@@ -29,12 +29,13 @@ import { L, article } from "../../site";
 import { DistrictIcon } from "../../components/bits";
 import SearchChip from "../../components/SearchChip";
 import { usePersonHighlight, useHighlight, useStore, type Roster } from "../../state/store";
+import { budgetDpr } from "../../three/adaptiveDpr";
 import type { PersonNode } from "./personLayout";
 import { FOV, GlobeController } from "./controller";
 import { personGlobeContent, companyGlobeContent } from "./globeContent";
 import { firstFly, flyInput, missedFly, ownsFly } from "./globeFlies";
 import type { GlobeNode, GlobeNodeBase } from "./globeLayout";
-import GlobeScene from "./GlobeScene";
+import GlobeScene, { DPR_CAP, PIXEL_BUDGET } from "./GlobeScene";
 import { regionButtonName } from "./labels";
 import { selectionLinks } from "./selection";
 import "./mindmap.css";
@@ -128,6 +129,8 @@ type AnyController = GlobeController<GlobeNode> | GlobeController<PersonNode>;
 function GlobeView({ onContextGiveUp }: { onContextGiveUp: () => void }) {
   const reduced = useReducedMotion();
   const [playing, setPlaying] = useState(() => !prefersReducedMotion());
+  // The pixel ratio the globe draws at: GlobeScene budgets and adapts it (src/three/adaptiveDpr.ts).
+  const [dpr, setDpr] = useState(() => budgetDpr(window.devicePixelRatio, window.innerWidth, window.innerHeight, DPR_CAP, PIXEL_BUDGET));
   const roster = useStore((s) => s.roster);
   const live = useRef({ reduced, playing });
   live.current = { reduced, playing };
@@ -258,7 +261,7 @@ function GlobeView({ onContextGiveUp }: { onContextGiveUp: () => void }) {
           className="mm-canvas"
           frameloop={reduced ? "demand" : "always"}
           flat
-          dpr={[1, 2.5]}
+          dpr={dpr}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
           camera={{ fov: FOV, near: 1, far: 4000, position: [0, 40, 260] }}
           // The stage scales a little while the globes switch; never measure the canvas mid-switch on a scroll.
@@ -278,7 +281,11 @@ function GlobeView({ onContextGiveUp }: { onContextGiveUp: () => void }) {
           aria-label={people ? `${L.People} globe: every one of ${SITE.org.name}'s ${L.people} as a headshot, evenly spread` : `${L.Company} globe: every ${L.company} as a logo, grouped into ${L.district} regions`}
           role="img"
         >
-          {people ? <SceneFor key="people" ctl={peopleCtl()} reduced={reduced} onContextGiveUp={onContextGiveUp} /> : <SceneFor key="companies" ctl={companiesCtl()} reduced={reduced} onContextGiveUp={onContextGiveUp} />}
+          {people ? (
+            <SceneFor key="people" ctl={peopleCtl()} reduced={reduced} onContextGiveUp={onContextGiveUp} onDpr={setDpr} />
+          ) : (
+            <SceneFor key="companies" ctl={companiesCtl()} reduced={reduced} onContextGiveUp={onContextGiveUp} onDpr={setDpr} />
+          )}
         </Canvas>
         {people ? <PersonOverlay key="people" ctl={peopleCtl()} active={roster === "people"} /> : <CompanyOverlay key="companies" ctl={companiesCtl()} active={roster === "companies"} />}
       </div>
@@ -294,12 +301,22 @@ function GlobeView({ onContextGiveUp }: { onContextGiveUp: () => void }) {
 }
 
 /** A globe's scene. The intro (a short dolly in) plays when the globe first appears with nothing selected on it. */
-function SceneFor<N extends GlobeNodeBase>({ ctl, reduced, onContextGiveUp }: { ctl: GlobeController<N>; reduced: boolean; onContextGiveUp: () => void }) {
+function SceneFor<N extends GlobeNodeBase>({
+  ctl,
+  reduced,
+  onContextGiveUp,
+  onDpr,
+}: {
+  ctl: GlobeController<N>;
+  reduced: boolean;
+  onContextGiveUp: () => void;
+  onDpr: (dpr: number) => void;
+}) {
   const [intro] = useState(() => {
     const s = useStore.getState();
     return ctl.content.roster === "people" ? !s.person : !s.selected && !s.focusDistrict;
   });
-  return <GlobeScene ctl={ctl} reduced={reduced} intro={intro} onContextGiveUp={onContextGiveUp} />;
+  return <GlobeScene ctl={ctl} reduced={reduced} intro={intro} onContextGiveUp={onContextGiveUp} onDpr={onDpr} />;
 }
 
 /**

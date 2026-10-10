@@ -979,6 +979,8 @@ export class GlobeController<N extends GlobeNodeBase = GlobeNode> {
       if (this.focusRegion >= 0) this.glass.uniforms.uFocus.value = this.focusRegion;
       else if (this.focusAmt < 0.01) this.glass.uniforms.uFocus.value = -1;
       this.glass.uniforms.uFocusAmt.value = this.focusAmt;
+      // The cloud shadows drift with the globe's own clock (still under reduced motion).
+      this.glass.uniforms.uTime.value = this.time;
     }
     if (this.core) {
       // The core is a quiet anchor: it steps back when something is selected or the camera is close.

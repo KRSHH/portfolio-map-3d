@@ -58,6 +58,13 @@ file name (`import.meta.glob`), so adding one is dropping a file. `publicData()`
   uploads blank in the next view; bytes in ordinary memory cannot be wiped. Every other canvas that
   backs a texture is CPU-backed (`cpuCanvas`), because a GPU process loss wipes GPU-backed
   canvases. Each view redraws after a context restore and starts over if none comes.
+- **A painted look, drawn cheaply.** Both views light their surfaces with a soft two-tone
+  terminator and cloud shadows that drift over the day side (`src/three/toon.ts`), drawn without
+  tone mapping, so the colors are the theme's tokens. The walk world's sky, sea, plants and grass
+  are procedural, with nothing fetched: the plants are instanced per tile with lighter far versions,
+  the grass is placed in the vertex shader around the walker, and each badge sits on an ink keyline
+  that keeps it apart from bright ground and sky. Each view draws at a pixel ratio held to a pixel
+  budget and lowered while frames run slow (`src/three/adaptiveDpr.ts`).
 - **Logos measured in the browser.** `src/three/logoInfo.ts` reads a small copy of each logo once:
   opaque corners → the logo's own background; light artwork → an ink plate; otherwise white; empty
   margins trimmed. No image pipeline to install.
