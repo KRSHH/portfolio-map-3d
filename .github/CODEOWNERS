@@ -1,0 +1,7 @@
+# Review is the fourth step of the network's handshake (docs/network.md): a maintainer approves
+# every change to the registry and to the protocol. With branch protection on main ("Require
+# review from Code Owners"), nothing joins the network without that approval.
+/registry/             @fritzhand
+/federation/           @fritzhand
+/scripts/build-network.mjs  @fritzhand
+/NETWORK.md            @fritzhand

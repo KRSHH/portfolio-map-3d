@@ -1,0 +1,3252 @@
+{
+  "protocol": "portfolio-map/1",
+  "generated": "2026-10-10",
+  "instances": [
+    {
+      "entry": {
+        "id": "ambition-accelerated",
+        "name": "Ambition Accelerated",
+        "url": "https://ambition.embarccollective.com",
+        "joined": "2026-10-09",
+        "maintainer": "fritzhand"
+      },
+      "status": "verified",
+      "checked": "2026-10-10",
+      "manifest": {
+        "protocol": "portfolio-map/1",
+        "id": "ambition-accelerated",
+        "name": "Ambition Accelerated",
+        "publisher": {
+          "name": "Embarc Collective",
+          "website": "https://embarccollective.com"
+        },
+        "url": "https://ambition.embarccollective.com",
+        "tagline": "Ambition Accelerated's 2026 cohort by track, its partners and Embarc Collective's coaches.",
+        "logo": "https://ambition.embarccollective.com/brand/aa-badge-180x180.png",
+        "accent": "#5046e3",
+        "nexus": "https://wearenexus.xyz",
+        "framework": {
+          "name": "ambition-community-map",
+          "version": "1.0.0"
+        },
+        "labels": {
+          "company": "company",
+          "companies": "companies",
+          "district": "track",
+          "districts": "tracks",
+          "people": "coaches"
+        },
+        "counts": {
+          "companies": 46,
+          "people": 18,
+          "districts": 4
+        },
+        "districts": [
+          {
+            "slug": "fintech",
+            "label": "FinTech",
+            "color": "#ffbf00",
+            "count": 12
+          },
+          {
+            "slug": "dual-use-defense",
+            "label": "Dual-Use & Defense Tech",
+            "color": "#5046e3",
+            "count": 10
+          },
+          {
+            "slug": "healthtech",
+            "label": "HealthTech",
+            "color": "#f97316",
+            "count": 12
+          },
+          {
+            "slug": "resilience",
+            "label": "Resilience Tech",
+            "color": "#00df81",
+            "count": 12
+          }
+        ],
+        "companies": [
+          {
+            "slug": "aaquant",
+            "name": "AAQuant.ai",
+            "district": "fintech",
+            "description": "AAQuant.ai is an AI-native Quant Research Operating System where autonomous research agents construct proprietary datasets from primary market sources — SEC filings, FDA dockets, patent grants, state registries, alternative data — and turn them into independently backtestable, risk-gated quant trading strategies. It gives investment firms the research power of a big hedge fund.",
+            "website": "https://aaquant.ai/",
+            "keywords": [
+              "AI-native",
+              "Quant fund",
+              "autonomous research agents",
+              "proprietary datasets",
+              "quant trading strategies",
+              "alt-data",
+              "agent swarms",
+              "small-cap"
+            ]
+          },
+          {
+            "slug": "ahg-pay",
+            "name": "AHG Pay",
+            "district": "fintech",
+            "description": "AHG Pay is the payments and growth partner for businesses that traditional processors treat as too complicated to serve.",
+            "website": "https://ahgpay.com/",
+            "keywords": [
+              "High-Risk Payment Processing",
+              "B2B Invoicing",
+              "text-to-pay",
+              "dual-pricing",
+              "QuickBooks",
+              "chargebacks",
+              "hemp",
+              "telehealth"
+            ]
+          },
+          {
+            "slug": "dubpay",
+            "name": "DubPay",
+            "district": "fintech",
+            "description": "DubPay is a Brazilian payment technology company that provides payment processing infrastructure for businesses and digital platforms.",
+            "website": "https://dubpay.com.br/",
+            "keywords": [
+              "payment processing",
+              "Pix",
+              "boleto",
+              "checkout",
+              "split payments",
+              "fraud prevention",
+              "KYC/AML",
+              "cross-border payments"
+            ]
+          },
+          {
+            "slug": "id4us",
+            "name": "ID4US",
+            "district": "fintech",
+            "description": "ID4US is a European deeptech company building the Human Trust Layer: a 4D ultrasound biometric platform that verifies not only identity, but that the legitimate person is physically present and alive.",
+            "website": "https://www.id4us.fr/",
+            "keywords": [
+              "4D ultrasound biometric",
+              "Human Trust Layer",
+              "fingerprint recognition",
+              "sub-surface tissue imaging",
+              "physiological liveness",
+              "anti-spoofing",
+              "high-assurance authentication",
+              "USB-C"
+            ]
+          },
+          {
+            "slug": "microfinance-pro",
+            "name": "MicroFinance Pro",
+            "district": "fintech",
+            "description": "The fintech startup MicroFinance Pro (MFP) aims to bridge traditional and modern finance by connecting international capital providers with vetted local lending institutions, entrepreneurs, and underserved communities.",
+            "website": "https://www.microfinancepro.com/",
+            "keywords": [
+              "financial inclusion",
+              "microfinance",
+              "tontine",
+              "ROSCA",
+              "mobile money",
+              "unbanked",
+              "local transfers",
+              "lending institutions"
+            ]
+          },
+          {
+            "slug": "movik",
+            "name": "Movik",
+            "district": "fintech",
+            "description": "Movik is an AI-powered operating system specifically engineered to modernize the management and financing of small and medium-sized enterprises in the inland transportation and freight industry.",
+            "website": null,
+            "keywords": [
+              "AI-powered operating system",
+              "inland transportation",
+              "freight",
+              "fleet management",
+              "working capital financing",
+              "AI Copilot",
+              "Bills of Lading",
+              "cash flow"
+            ]
+          },
+          {
+            "slug": "payflex",
+            "name": "PayFlex",
+            "district": "fintech",
+            "description": "PayFlex is building the financial wellbeing platform for America’s frontline workforce, starting with the underserved Hispanic workforce.",
+            "website": "https://payflexapp.com/",
+            "keywords": [
+              "financial wellbeing",
+              "frontline workforce",
+              "Hispanic workforce",
+              "earned wage access",
+              "salary advance",
+              "employer subscription",
+              "WhatsApp",
+              "iMessage"
+            ]
+          },
+          {
+            "slug": "payslice",
+            "name": "Payslice",
+            "district": "fintech",
+            "description": "Payslice is embedded fintech infrastructure that lets payroll and fintech companies underwrite and offer their users instant, earned wage access in any currency, including stablecoins.",
+            "website": "https://payslice.com/",
+            "keywords": [
+              "embedded fintech infrastructure",
+              "earned wage access",
+              "stablecoins",
+              "payroll companies",
+              "income infrastructure",
+              "Instapay",
+              "PEOs",
+              "neobanks"
+            ]
+          },
+          {
+            "slug": "rangersai",
+            "name": "RangersAI",
+            "district": "fintech",
+            "description": "RangersAI provides an AI powered scam resilience platform that helps financial institutions protect customers before money is lost.",
+            "website": "https://www.rangersai.com/",
+            "keywords": [
+              "scam resilience",
+              "ScamRanger",
+              "scam prevention",
+              "social engineering",
+              "real time scam detection",
+              "behavioral education",
+              "banks and credit unions",
+              "financial institutions"
+            ]
+          },
+          {
+            "slug": "stingray-technology-solutions",
+            "name": "Stingray Technology Solutions",
+            "district": "fintech",
+            "description": "Stingray Technology Solutions provides Nexus, and services that encompass it. Nexus is an AI native, tenant hosted integration platform that allows for the fast creation of small, targeted software.",
+            "website": "https://stingraytechnologysolutions.com/",
+            "keywords": [
+              "Nexus",
+              "AI native",
+              "tenant hosted",
+              "integration platform",
+              "Azure",
+              "NetSuite",
+              "reporting",
+              "automation"
+            ]
+          },
+          {
+            "slug": "wamy-ai",
+            "name": "Wamy",
+            "district": "fintech",
+            "description": "Wamy is an AI claim analyst for P&C claims. Most claims software treats a claim as a static pile of documents.",
+            "website": "https://www.wamy.com/",
+            "keywords": [
+              "AI claim analyst",
+              "P&C claims",
+              "statutory engine",
+              "insurance statutes",
+              "coverage",
+              "damages",
+              "insurance law",
+              "litigation"
+            ]
+          },
+          {
+            "slug": "wrangle",
+            "name": "Wrangle",
+            "district": "fintech",
+            "description": "Wrangle is an AI assistant for mortgage loan officers. It handles the work between a loan officer taking on a new borrower and that borrower's file being ready for underwriting.",
+            "website": "https://trywrangle.ai/",
+            "keywords": [
+              "AI assistant",
+              "mortgage loan officers",
+              "borrower documents",
+              "qualifying income",
+              "underwriting",
+              "English or Spanish",
+              "independent mortgage shops",
+              "Lasso"
+            ]
+          },
+          {
+            "slug": "aventusoft",
+            "name": "Aventusoft",
+            "district": "healthtech",
+            "description": "Aventusoft is a cardiovascular digital-health company commercializing HEMOTAG, a patented, non-invasive platform that measures cardiac performance in 30 seconds and delivers actionable insight into contractility, preload, afterload, and relaxation.",
+            "website": "https://aventusoft.com/",
+            "keywords": [
+              "MedTech",
+              "HEMOTAG",
+              "heart failure monitoring",
+              "noninvasive cardiac function monitoring",
+              "CarePear",
+              "patient intelligence platform",
+              "home care"
+            ]
+          },
+          {
+            "slug": "careslink",
+            "name": "CaresLink",
+            "district": "healthtech",
+            "description": "CaresLink is the verified network layer for healthcare workforce development - unifying training institutions, professionals, and employers on one open infrastructure, replacing the fragmented credentialing, education, and staffing systems that exist today.",
+            "website": "https://www.careslink.com/en",
+            "keywords": [
+              "worker shortage",
+              "credentialing",
+              "hiring",
+              "training",
+              "state-approved CEUs",
+              "licensure",
+              "healthcare careers"
+            ]
+          },
+          {
+            "slug": "endosurge",
+            "name": "EndoSurge",
+            "district": "healthtech",
+            "description": "EndoSurge develops robotic MRI technologies for image-guided interventions. We aim to give clinicians greater control during procedures while reducing reliance on radiation.",
+            "website": "https://endosurge.co/",
+            "keywords": [
+              "HERMIS",
+              "robotic MRI scanner",
+              "ultra-low-field magnet",
+              "robotic arm",
+              "whole-body MRI",
+              "point of care",
+              "image-guided interventions"
+            ]
+          },
+          {
+            "slug": "healco",
+            "name": "HealCo",
+            "district": "healthtech",
+            "description": "HealCo is building a Control Tower for employer-sponsored healthcare, helping brokers, TPAs, captives, and self-funded employers turn claims and contract data into ongoing oversight. The platform is designed to identify cost drivers, track contract exceptions, and support accountable decisions and fiduciary governance, with a path toward better care routing.",
+            "website": "https://www.healco.us/",
+            "keywords": [
+              "pre-service governance",
+              "routing infrastructure",
+              "employer-sponsored healthcare",
+              "specialty care",
+              "health plan",
+              "self-funded employers"
+            ]
+          },
+          {
+            "slug": "navia-medical",
+            "name": "Navia Medical",
+            "district": "healthtech",
+            "description": "Navia is building the robotic perception and control layer for autonomous endovascular surgery, driving imaging to deliver the optimal view every time.",
+            "website": "https://www.naviamed.com/",
+            "keywords": [
+              "robotic perception",
+              "control layer",
+              "autonomous endovascular surgery",
+              "imaging",
+              "autonomous surgery"
+            ]
+          },
+          {
+            "slug": "pathi-health",
+            "name": "Pathi Health",
+            "district": "healthtech",
+            "description": "Pathi is an AI cancer navigator that helps cancer patients make informed decisions about their own diagnosis and treatment.",
+            "website": "https://pathihealth.com/",
+            "keywords": [
+              "AI navigator",
+              "cancer patients",
+              "medical records",
+              "clinical trials",
+              "English and Spanish",
+              "clinical trial matching"
+            ]
+          },
+          {
+            "slug": "poiesis-medical",
+            "name": "Poiesis Medical",
+            "district": "healthtech",
+            "description": "Poiesis Medical (Jupiter, Fl.) is developing VerdeFend™, a plant-based, non-antibiotic bladder hygiene solution built on technology licensed from MD Anderson Cancer Center.",
+            "website": "https://www.poiesismedical.com/",
+            "keywords": [
+              "urology",
+              "VerdeFend",
+              "bladder health",
+              "non-antibiotic",
+              "biofilm",
+              "Duette",
+              "urinary catheter"
+            ]
+          },
+          {
+            "slug": "ravel-genetics",
+            "name": "Ravel Genetics",
+            "district": "healthtech",
+            "description": "Ravel Genetics is a precision health company whose Health Intelligence Platform reads the genome in the context of dynamic biology (the biology you can change), integrating multi-omic data, including epigenetic and mitochondrial variation, to reveal which health risks can be modified through integrative approaches.",
+            "website": "https://www.ravelgenetics.com/",
+            "keywords": [
+              "precision health",
+              "health intelligence platform",
+              "genome",
+              "dynamic biology",
+              "epigenetic",
+              "mitochondrial",
+              "whole-genome sequencing"
+            ]
+          },
+          {
+            "slug": "seek-health",
+            "name": "Seek Health",
+            "district": "healthtech",
+            "description": "Seek Health is an AI-powered operational intelligence platform that helps hospitals orchestrate clinical work in real time.",
+            "website": "https://seekhealth.ai/",
+            "keywords": [
+              "operational intelligence",
+              "patient flow",
+              "clinical coordination",
+              "care orchestration",
+              "hospital operations",
+              "nurse workflow"
+            ]
+          },
+          {
+            "slug": "sisatech-ai",
+            "name": "SisaTech AI",
+            "district": "healthtech",
+            "description": "SisaTech AI builds SIVIA Medical, a cardiology-first clinical workspace that turns faxes and years of medical records into clinical memory, bringing the patient's full history into every step of care and giving specialists more time for patients.",
+            "website": "https://sisatech.ai/",
+            "keywords": [
+              "SIVIA Medical",
+              "medical records",
+              "patient timeline",
+              "clinical intelligence",
+              "cardio-renal-metabolic disease",
+              "cardiology",
+              "clinical memory"
+            ]
+          },
+          {
+            "slug": "thrive25",
+            "name": "Thrive25",
+            "district": "healthtech",
+            "description": "Thrive25 is the AI Health Teammate that builds healthier teams and lowers healthcare costs - one avoided claim at a time. By combining health data, benefit plans, and claims in one place, employees take control of their health, and employers get more value from the benefits they're already paying for.",
+            "website": "https://employers.thrive25.com/",
+            "keywords": [
+              "AI health teammate",
+              "healthier teams",
+              "healthcare costs",
+              "avoided claim",
+              "health benefit",
+              "personalized health support"
+            ]
+          },
+          {
+            "slug": "vibrant-medical",
+            "name": "Vibrant Medical",
+            "district": "healthtech",
+            "description": "Vibrant Medical is developing the first wearable ultrasound sensor for continuous stroke monitoring, a smoke detector for the brain. It tracks blood flow to the brain around the clock and alerts the care team at the first sign of a stroke.",
+            "website": "https://vibrant-med.com/",
+            "keywords": [
+              "smoke detector for the brain",
+              "wearable ultrasound sensor",
+              "blood flow",
+              "stroke",
+              "continuous stroke monitoring",
+              "high-risk inpatients"
+            ]
+          },
+          {
+            "slug": "sealor",
+            "name": "Sealor",
+            "district": "resilience",
+            "description": "Sealor is building a new category of biogenic materials that harness nature’s mineral-forming intelligence to protect coastal infrastructure from the ground up.",
+            "website": "https://www.sealor.com/",
+            "keywords": [
+              "biogenic materials",
+              "coastal infrastructure",
+              "seawalls",
+              "nature-based injection treatment",
+              "biogenic limestone",
+              "flood prevention"
+            ]
+          },
+          {
+            "slug": "ethos-connected",
+            "name": "Ethos Connected",
+            "district": "resilience",
+            "description": "Ethos Connected turns real-time water data into actionable intelligence that accelerates permitting, reduces development risk, and enables responsible growth.",
+            "website": "https://ethosconnected.com/",
+            "keywords": [
+              "water intelligence",
+              "real-time water data",
+              "IoT sensors",
+              "LoRaWAN",
+              "groundwater",
+              "permitting",
+              "AI-powered analytics"
+            ]
+          },
+          {
+            "slug": "just-cool-it",
+            "name": "Just Cool It, Inc.",
+            "district": "resilience",
+            "description": "Just Cool It is building the Cooling Renewal Coatings category with CoolCrete® RENEW and HeatROI AI, combining advanced materials and property intelligence to cool, protect, and extend the life of buildings and infrastructure.",
+            "website": "https://coolcote.com/",
+            "keywords": [
+              "Cooling Renewal Coatings",
+              "CoolCote RENEW",
+              "CoolCrete",
+              "HeatROI AI",
+              "exterior coating",
+              "lifecycle intelligence",
+              "existing concrete"
+            ]
+          },
+          {
+            "slug": "amatec",
+            "name": "Amatec",
+            "district": "resilience",
+            "description": "Amatec is a ConTech company developing High-Density Gypsum (HDG), a low-carbon alternative to concrete that enables faster, more affordable, and sustainable construction through prefabricated wall and floor systems.",
+            "website": "https://amatec-corp.com/",
+            "keywords": [
+              "High-Density Gypsum (HDG)",
+              "ConTech",
+              "CeleStruct",
+              "prefabricated wall and floor systems",
+              "low-carbon alternative to concrete",
+              "waste gypsum",
+              "structural wall"
+            ]
+          },
+          {
+            "slug": "loss-intel",
+            "name": "LossIntel",
+            "district": "resilience",
+            "description": "Founded by a Sarasota hurricane survivor who recovered 27× his carrier's opening offer, LossIntel is the AI claims recovery service protecting Florida homeowners from underpayment.",
+            "website": "https://lossintel.ai/",
+            "keywords": [
+              "claims intelligence",
+              "AI claims recovery",
+              "ClaimRestored",
+              "BlindEye",
+              "Florida homeowners",
+              "underpayment",
+              "property claims"
+            ]
+          },
+          {
+            "slug": "primostar",
+            "name": "Primostar Group",
+            "district": "resilience",
+            "description": "Primostar is a green construction technology company that, instead of fighting the natural physics of concrete by trying to prevent cracking, works with it—engineering where and how cracks form and making them watertight by design.",
+            "website": "https://primostargroup.com/",
+            "keywords": [
+              "green construction technology",
+              "Crack Control System",
+              "Integral Waterproofing System",
+              "below-grade waterproofing",
+              "watertight concrete",
+              "crystalline admixture",
+              "metal sheet waterstops"
+            ]
+          },
+          {
+            "slug": "airorasense",
+            "name": "AIroraSense",
+            "district": "resilience",
+            "description": "AIroraSense is a critical infrastructure and operational intelligence platform that uses AI to verify electric utility distribution construction against engineering standards in near real time, from the crews in the field, while they are still on site.",
+            "website": "https://airorasense.com/",
+            "keywords": [
+              "AIS|Grid",
+              "computer vision",
+              "engineering standards",
+              "grid hardening",
+              "QA/QC",
+              "operational intelligence"
+            ]
+          },
+          {
+            "slug": "hubi",
+            "name": "Hubi",
+            "district": "resilience",
+            "description": "Hubi builds a live 3D digital twin of your home that watches every wet area and opening 24/7, tells you what's wrong, what it should cost to fix, and which local pro to call.",
+            "website": "https://askhubi.com/",
+            "keywords": [
+              "live 3D digital twin",
+              "hub and sensor kit",
+              "leaks",
+              "humidity",
+              "wet area",
+              "PriceIQ",
+              "local pro"
+            ]
+          },
+          {
+            "slug": "printera",
+            "name": "Printera",
+            "district": "resilience",
+            "description": "Printera manufactures high performance, off site 3D printed concrete components for coastal resilience, infrastructure, and architectural applications using climate controlled robotic fabrication.",
+            "website": "https://printera3d.com/",
+            "keywords": [
+              "3D printed concrete components",
+              "robotic fabrication",
+              "coastal resilience",
+              "Pre-Printed 3DCP",
+              "architectural elements",
+              "columns",
+              "facades",
+              "planters"
+            ]
+          },
+          {
+            "slug": "climingo",
+            "name": "Climingo",
+            "district": "resilience",
+            "description": "Climingo helps organizations get the best weather data on the market",
+            "website": "https://climingo.com/",
+            "keywords": [
+              "weather data",
+              "weather and climate provider evaluation",
+              "Weather Forecast Benchmarking",
+              "Climate Risk Model Comparison",
+              "Historical Weather Data Comparison",
+              "Multi-Model",
+              "procurement"
+            ]
+          },
+          {
+            "slug": "thrive-florida",
+            "name": "Thrive Florida",
+            "district": "resilience",
+            "description": "Thrive Home Builders brings advanced building science and innovative construction practices into mainstream production housing, and through Thrive Florida is applying more than 30 years of experience to create resilient, high-performance homes designed specifically for Southwest Florida.",
+            "website": null,
+            "keywords": [
+              "advanced building science",
+              "production housing",
+              "resilient, high-performance homes",
+              "Southwest Florida",
+              "Thrive Home Builders"
+            ]
+          },
+          {
+            "slug": "wildlifeos-crocalarm",
+            "name": "WildlifeOS™ | CrocAlarm™",
+            "district": "resilience",
+            "description": "WildlifeOS™ is building the intelligence layer for wildlife risk, starting with CrocAlarm™, a sonar-first AI early-warning system designed to detect alligators and crocodiles in murky waterways before they surface.",
+            "website": "https://crocalarm.com/",
+            "keywords": [
+              "wildlife risk",
+              "sonar-first AI",
+              "early-warning system",
+              "alligators and crocodiles",
+              "wildlife threat detection",
+              "edge AI",
+              "waterways"
+            ]
+          },
+          {
+            "slug": "ave-maria-biotech",
+            "name": "Ave Maria Biotech",
+            "district": "dual-use-defense",
+            "description": "Ave Maria Biotech is advancing the state-of-the-art in airborne pathogen detection to protect those at risk, from the school to the hospital to the battlefield.",
+            "website": "https://avemariabiotech.com/",
+            "keywords": [
+              "airborne pathogen detection",
+              "BD-500",
+              "biodefense",
+              "CBRN defense",
+              "bio-surveillance",
+              "public health",
+              "UV laser-induced fluorescence",
+              "real-time pathogen surveillance"
+            ]
+          },
+          {
+            "slug": "arsoft-us",
+            "name": "ARSOFT US",
+            "district": "dual-use-defense",
+            "description": "ARSOFT US turns complex industrial and clinical workflows into immersive XR experiences - enabling teams to author their own training, guide field work with AI-powered AR, plan surgeries from 3D medical scans, and build living digital twins from LiDAR, sensors, and real-time data.",
+            "website": "https://www.arsoftus.com/",
+            "keywords": [
+              "XR",
+              "EyeFlow",
+              "EyeInspection",
+              "LAIA XR",
+              "digital twins",
+              "immersive training",
+              "surgical planning",
+              "LiDAR"
+            ]
+          },
+          {
+            "slug": "certus-core",
+            "name": "Certus Core",
+            "district": "dual-use-defense",
+            "description": "Certus Core's flagship AI appliance, IBIS™, fuses data from any sensor platform and puts a natural language interface on top — so any operator at the edge can query it directly, without needing to interpret the raw output, and without a network connection or a data engineer.",
+            "website": "https://www.certuscore.com/",
+            "keywords": [
+              "IBIS™",
+              "AI appliance",
+              "sensor data",
+              "natural language interface",
+              "edge",
+              "electronic warfare",
+              "Counter-UAS",
+              "maritime domain awareness"
+            ]
+          },
+          {
+            "slug": "keeperspace",
+            "name": "KeeperSpace",
+            "district": "dual-use-defense",
+            "description": "The traffic, coordination, and tracking infrastructure layer built in-space, for space — enabling resilience and autonomy for spacecraft in an increasingly congested, contested, and complex operational environment.",
+            "website": "https://keeperspace.com/",
+            "keywords": [
+              "traffic control for space",
+              "Space Domain Awareness",
+              "satellite operators",
+              "collision avoidance",
+              "collision warnings",
+              "orbit",
+              "dual-use architecture"
+            ]
+          },
+          {
+            "slug": "soarce",
+            "name": "Soarce",
+            "district": "dual-use-defense",
+            "description": "Soarce is a modern biorefinery company converting abundant U.S. feedstocks into high-performance and commodity materials for critical industries.",
+            "website": "https://www.soarceusa.com/",
+            "keywords": [
+              "biorefinery",
+              "nanocellulose",
+              "miscanthus",
+              "composites",
+              "coatings",
+              "critical materials",
+              "Aglyte™",
+              "Seabind™"
+            ]
+          },
+          {
+            "slug": "tekmara",
+            "name": "Tekmara",
+            "district": "dual-use-defense",
+            "description": "Always-on underwater systems securing and monitoring critical ocean infrastructure.",
+            "website": "https://www.tekmara.com/",
+            "keywords": [
+              "underwater systems",
+              "critical ocean infrastructure",
+              "autonomous systems",
+              "edge computing",
+              "Blue Economy",
+              "AUV",
+              "Inflatable Underwater Data Center",
+              "Aquarius Reef Base"
+            ]
+          },
+          {
+            "slug": "supply-veins",
+            "name": "Supply Veins",
+            "district": "dual-use-defense",
+            "description": "Supply Veins is the AI-native operating system for dual-use manufacturers to build, manage, and scale resilient supply chains.",
+            "website": "https://supplyveins.com/",
+            "keywords": [
+              "AI-native operating system",
+              "supplier emails",
+              "procurement",
+              "purchase orders",
+              "dual-use manufacturers",
+              "supply chains",
+              "email follow-ups",
+              "supplier communication"
+            ]
+          },
+          {
+            "slug": "earendel",
+            "name": "Earendel",
+            "district": "dual-use-defense",
+            "description": "Earendel is an energy autonomy platform providing operational energy decision intelligence and unmanned power to defense customers in distributed autonomous operations.",
+            "website": "https://earendel.ai/",
+            "keywords": [
+              "energy autonomy",
+              "operational energy",
+              "decision intelligence",
+              "unmanned power",
+              "unmanned systems",
+              "energy orchestration",
+              "battery energy storage",
+              "Energy Common Operating Picture"
+            ]
+          },
+          {
+            "slug": "reef-arches",
+            "name": "Reef Arches",
+            "district": "dual-use-defense",
+            "description": "Coastal defense company protecting critical infrastructure & shorelines from erosion & building Florida's marine habitat with novel infrastructure products.",
+            "website": "https://www.reefarches.com/",
+            "keywords": [
+              "coastal defense",
+              "coastal restoration",
+              "wave attenuation",
+              "living shorelines",
+              "honey-comb arch",
+              "artificial reef",
+              "coral outplanting",
+              "Seawall Tiles"
+            ]
+          },
+          {
+            "slug": "deeper-breath",
+            "name": "Deeper Breath AI",
+            "district": "dual-use-defense",
+            "description": "Deeper Breath is building a connected safety platform that helps industrial, government, defense, research, and performance organizations detect threats earlier, protect people more effectively, and make better decisions from real-time data.",
+            "website": "https://deeperbreath.ai/",
+            "keywords": [
+              "Canary",
+              "connected safety platform",
+              "smart PPE",
+              "connected protective equipment",
+              "environmental and physiological sensors",
+              "respiratory performance",
+              "AI-driven analytics",
+              "human-performance"
+            ]
+          }
+        ],
+        "updated": "2026-10-10"
+      },
+      "logoFile": "instances/ambition-accelerated.png",
+      "proof": "domain",
+      "problems": []
+    },
+    {
+      "entry": {
+        "id": "embarc-collective",
+        "name": "Embarc Collective",
+        "url": "https://community.embarccollective.com",
+        "joined": "2026-10-09",
+        "maintainer": "fritzhand"
+      },
+      "status": "verified",
+      "checked": "2026-10-10",
+      "manifest": {
+        "protocol": "portfolio-map/1",
+        "id": "embarc-collective",
+        "name": "Embarc Collective",
+        "publisher": {
+          "name": "Embarc Collective",
+          "website": "https://embarccollective.com"
+        },
+        "url": "https://community.embarccollective.com",
+        "tagline": "Embarc Collective's member companies in 3D, by industry.",
+        "logo": "https://community.embarccollective.com/brand/embarc-logo.png",
+        "accent": "#0c7a8c",
+        "nexus": "https://wearenexus.xyz",
+        "framework": {
+          "name": "embarc-3d",
+          "version": "1.0.0"
+        },
+        "labels": {
+          "company": "member",
+          "companies": "members",
+          "district": "district",
+          "districts": "districts",
+          "people": "coaches"
+        },
+        "counts": {
+          "companies": 127,
+          "people": 18,
+          "districts": 15
+        },
+        "districts": [
+          {
+            "slug": "health",
+            "label": "Health & Life Sciences",
+            "color": "#e34948",
+            "count": 29
+          },
+          {
+            "slug": "ai-data",
+            "label": "AI & Data",
+            "color": "#00a3b4",
+            "count": 10
+          },
+          {
+            "slug": "sports-media",
+            "label": "Sports, Media & Entertainment",
+            "color": "#eb6834",
+            "count": 8
+          },
+          {
+            "slug": "cyber",
+            "label": "Cybersecurity",
+            "color": "#4a3aa7",
+            "count": 3
+          },
+          {
+            "slug": "defense-gov",
+            "label": "Defense & Government",
+            "color": "#bf37f0",
+            "count": 2
+          },
+          {
+            "slug": "proptech",
+            "label": "Real Estate, Construction & Home",
+            "color": "#c0602a",
+            "count": 12
+          },
+          {
+            "slug": "enterprise-software",
+            "label": "Enterprise & Developer Software",
+            "color": "#2a78d6",
+            "count": 10
+          },
+          {
+            "slug": "mobility-logistics",
+            "label": "Mobility, Logistics & Supply Chain",
+            "color": "#7a9a01",
+            "count": 5
+          },
+          {
+            "slug": "marketing-cx",
+            "label": "Marketing, Sales & Customer Experience",
+            "color": "#c2185b",
+            "count": 9
+          },
+          {
+            "slug": "commerce",
+            "label": "Consumer, Commerce & Marketplaces",
+            "color": "#e87ba4",
+            "count": 7
+          },
+          {
+            "slug": "climate-energy",
+            "label": "Energy, Climate & Agriculture",
+            "color": "#008300",
+            "count": 4
+          },
+          {
+            "slug": "work-learning",
+            "label": "Work, Talent & Learning",
+            "color": "#9085e9",
+            "count": 10
+          },
+          {
+            "slug": "fintech",
+            "label": "Fintech & Financial Services",
+            "color": "#1baf7a",
+            "count": 8
+          },
+          {
+            "slug": "hardware",
+            "label": "Hardware & Deep Tech",
+            "color": "#3f51b5",
+            "count": 6
+          },
+          {
+            "slug": "community",
+            "label": "Community Partners",
+            "color": "#eda100",
+            "count": 4
+          }
+        ],
+        "companies": [
+          {
+            "slug": "ablenook",
+            "name": "AbleNook",
+            "district": "proptech",
+            "description": "AbleNook designs and sells flat-packed modular dwellings built from aluminum framing and structural insulated panels that assemble with minimal tools, for use as homes, accessory dwelling units and disaster-relief shelters.",
+            "website": "https://ablenook.com/",
+            "keywords": [
+              "modular homes",
+              "accessory dwelling units",
+              "prefab housing",
+              "disaster relief shelters",
+              "flat-pack construction"
+            ]
+          },
+          {
+            "slug": "aces-nation",
+            "name": "ACES Nation",
+            "district": "sports-media",
+            "description": "ACES Nation offers a sports management platform for youth sports clubs, coaches and athletes covering performance training, development tracking and college recruiting, plus a tuition rewards scholarship program.",
+            "website": "https://www.acesnation.org/",
+            "keywords": [
+              "youth sports management",
+              "athlete performance training",
+              "college recruiting",
+              "coach tools",
+              "sports club software"
+            ]
+          },
+          {
+            "slug": "actualization-ai-llc",
+            "name": "Actualization.AI LLC",
+            "district": "ai-data",
+            "description": "Actualization.AI provides AI consulting, LLM and RAG evaluation audits, and training for teams building AI features, and develops SquarePact, a Microsoft Word add-in for reviewing procurement documents and contracts.",
+            "website": "https://actualization.ai/",
+            "keywords": [
+              "AI consulting",
+              "LLM evaluation",
+              "RAG audits",
+              "AI training",
+              "contract review AI",
+              "procurement document review"
+            ]
+          },
+          {
+            "slug": "admiral",
+            "name": "Admiral",
+            "district": "marketing-cx",
+            "description": "Admiral provides digital publishers with a visitor relationship management platform covering adblock revenue recovery, paywalls and subscriptions, privacy consent management, and email and social audience growth.",
+            "website": "https://www.getadmiral.com/",
+            "keywords": [
+              "adblock recovery",
+              "paywalls and subscriptions",
+              "consent management",
+              "publisher revenue",
+              "visitor relationship management",
+              "first-party data"
+            ]
+          },
+          {
+            "slug": "aetheria-intelligence-inc",
+            "name": "Aetheria Intelligence Inc",
+            "district": "ai-data",
+            "description": "Aetheria Intelligence builds software that sits between AI systems and real-world actions, checking delegated authority before an AI-proposed action runs, limiting execution to registered actions and recording evidence of outcomes.",
+            "website": "https://aetheriaintelligence.com/",
+            "keywords": [
+              "AI governance",
+              "AI execution control",
+              "delegated authority",
+              "audit evidence",
+              "AI agent guardrails"
+            ]
+          },
+          {
+            "slug": "alchemain-inc",
+            "name": "Alchemain Inc.",
+            "district": "enterprise-software",
+            "description": "Alchemain makes 00felix, a GitHub-connected service that scans repositories for outdated or vulnerable dependencies and opens build-tested pull requests that upgrade them, supporting Java, JavaScript, .NET and Python.",
+            "website": "https://www.alchemain.com/",
+            "keywords": [
+              "dependency management",
+              "automated dependency upgrades",
+              "software composition analysis",
+              "vulnerability remediation",
+              "DevOps automation"
+            ]
+          },
+          {
+            "slug": "allsource-data-corporation",
+            "name": "Allsource Data Corporation",
+            "district": "marketing-cx",
+            "description": "Allsource Data Corporation runs an audience data platform that lets marketing agencies and brands build audiences, identify website visitors and validate email, phone and postal data, with a white-label reseller program for agencies.",
+            "website": "https://allsourcedata.io/",
+            "keywords": [
+              "audience data",
+              "lookalike audiences",
+              "website visitor identification",
+              "contact data validation",
+              "agency white label data"
+            ]
+          },
+          {
+            "slug": "alterna-cx",
+            "name": "Alterna CX",
+            "district": "marketing-cx",
+            "description": "Alterna CX makes AI-based customer and employee experience analytics software that combines feedback from surveys, contact center conversations and other channels and identifies what drives satisfaction scores.",
+            "website": "https://alternacx.com/",
+            "keywords": [
+              "customer experience analytics",
+              "voice of customer",
+              "contact center analytics",
+              "text analytics",
+              "NPS driver analysis",
+              "voice of employee"
+            ]
+          },
+          {
+            "slug": "apaly-health",
+            "name": "Apaly Health",
+            "district": "health",
+            "description": "Apaly Health runs a platform that connects self-funded employers and their health plan members to Advanced Primary Care Plus (APC+) providers nationwide, and offers cost-plus prescription pricing through Apaly Rx.",
+            "website": "https://apaly.com/",
+            "keywords": [
+              "advanced primary care",
+              "self-funded employer health plans",
+              "employee health benefits",
+              "primary care network",
+              "cost-plus pharmacy"
+            ]
+          },
+          {
+            "slug": "appyhour",
+            "name": "AppyHour",
+            "district": "marketing-cx",
+            "description": "AppyHour runs a consumer app for finding local happy hours, specials and events, and a brand activation and sales-enablement platform for beverage alcohol suppliers, distributors, bars and restaurants.",
+            "website": "https://www.appyhourmobile.com/",
+            "keywords": [
+              "beverage alcohol marketing",
+              "brand activation",
+              "on-premise sales enablement",
+              "happy hour app",
+              "proximity targeting",
+              "bar and restaurant promotion"
+            ]
+          },
+          {
+            "slug": "apxr-inc",
+            "name": "APXR Inc",
+            "district": "mobility-logistics",
+            "description": "APXR makes APXR Pick, an AI copilot on enterprise smart glasses that guides warehouse pickers by voice, verifies each pick by barcode scan, and integrates with SAP WM and EWM, for distribution centers.",
+            "website": "https://apxr.com/",
+            "keywords": [
+              "AI warehouse picking",
+              "smart glasses",
+              "SAP EWM integration",
+              "pick verification",
+              "frontline worker onboarding"
+            ]
+          },
+          {
+            "slug": "biatech-corporation",
+            "name": "BiaTech Corporation",
+            "district": "climate-energy",
+            "description": "BiaTech develops BiaSense, a physics-based AI platform that combines live and historical operating data with engineering models to give facility, drilling, and asset-integrity teams plain-language operating guidance.",
+            "website": "https://biatech.com/",
+            "keywords": [
+              "physics AI",
+              "industrial operations",
+              "drilling intelligence",
+              "asset integrity",
+              "digital twins",
+              "edge AI"
+            ]
+          },
+          {
+            "slug": "biological-information-os",
+            "name": "Biological Information OS",
+            "district": "work-learning",
+            "description": "BIOS (Biological Information OS) builds a knowledge graph for the life sciences that links 3D models, concepts, and curriculum standards such as NGSS, AP, and IB for learners, educators, and researchers.",
+            "website": "https://www.bios.education/",
+            "keywords": [
+              "life sciences knowledge graph",
+              "3D biology models",
+              "curriculum standards alignment",
+              "science education",
+              "bioinformatics data"
+            ]
+          },
+          {
+            "slug": "blockspaces",
+            "name": "BlockSpaces",
+            "district": "fintech",
+            "description": "BlockSpaces builds ARCC, infrastructure that lets banks, credit unions, and capital markets firms use Bitcoin as collateral for loans, forwards, and structured products by automating contract enforcement and settlement.",
+            "website": "https://www.blockspaces.com/",
+            "keywords": [
+              "Bitcoin collateral",
+              "Bitcoin-backed loans",
+              "collateral management",
+              "digital asset infrastructure",
+              "post-trade automation"
+            ]
+          },
+          {
+            "slug": "blue-zone-therapeutics",
+            "name": "Blue Zone Therapeutics",
+            "district": "health",
+            "description": "Blue Zone Therapeutics develops treatments for age-related diseases in pets, bringing together scientists and veterinarians with the goal of helping pets live longer, healthier lives.",
+            "website": "https://bluezonetherapeutics.com/",
+            "keywords": [
+              "pet longevity",
+              "veterinary therapeutics",
+              "age-related disease in pets",
+              "animal health"
+            ]
+          },
+          {
+            "slug": "brookwell",
+            "name": "Brookwell",
+            "district": "fintech",
+            "description": "Brookwell provides consulting, system integrations, and AI workflow automation to RIAs and broker-dealers, focusing on advisor transitions, account onboarding, and NIGO reduction.",
+            "website": "https://www.brookwellgroup.com/",
+            "keywords": [
+              "advisor transitions",
+              "RIA operations",
+              "broker-dealer automation",
+              "AI agentic workflows",
+              "NIGO reduction",
+              "wealth management technology"
+            ]
+          },
+          {
+            "slug": "c-v",
+            "name": "CēVē",
+            "district": "mobility-logistics",
+            "description": "CēVē makes a smartphone app that adds traffic-light countdowns, green-light speed advisories, and speed and red-light warnings to drivers' map apps, for commuters and commercial drivers.",
+            "website": "https://www.ceve.io/",
+            "keywords": [
+              "connected vehicles",
+              "traffic signal timing",
+              "green light speed advisory",
+              "driver safety alerts",
+              "eco-driving"
+            ]
+          },
+          {
+            "slug": "careslink",
+            "name": "CaresLink",
+            "district": "health",
+            "description": "CaresLink is an online platform for US healthcare workers that offers licensure exam prep, state-approved continuing education, and job matching, with separate offerings for employers and schools.",
+            "website": "https://www.careslink.com/",
+            "keywords": [
+              "healthcare jobs",
+              "nursing CEUs",
+              "NCLEX prep",
+              "healthcare job matching",
+              "credential verification"
+            ]
+          },
+          {
+            "slug": "cashy",
+            "name": "Cashy",
+            "district": "fintech",
+            "description": "Cashy provides gamified financial education to banks and credit unions, including game-show workshops, an embeddable branded learning center, and a personal finance curriculum institutions sponsor for schools.",
+            "website": "https://www.cashygame.com/",
+            "keywords": [
+              "financial literacy",
+              "gamified learning",
+              "credit union community programs",
+              "CRA reporting",
+              "personal finance curriculum"
+            ]
+          },
+          {
+            "slug": "certus-core",
+            "name": "Certus Core",
+            "district": "hardware",
+            "description": "Certus Core makes IBIS, an AI appliance (hardware and software) that lets field operators ask questions of their sensor data in plain English on a small, air-gapped device, with all inference running on the box.",
+            "website": "https://www.certuscore.com/",
+            "keywords": [
+              "edge AI",
+              "sensor data fusion",
+              "air-gapped analytics",
+              "defense technology",
+              "natural language data query",
+              "maritime domain awareness",
+              "AI appliance"
+            ]
+          },
+          {
+            "slug": "ciennar-llc",
+            "name": "Ciennar LLC",
+            "district": "community",
+            "description": "Ciennar LLC is listed as a Community Partner in Embarc Collective's member directory. No public description of its activities was found.",
+            "website": null,
+            "keywords": [
+              "community partner",
+              "Embarc community",
+              "Tampa Bay ecosystem"
+            ]
+          },
+          {
+            "slug": "clarify",
+            "name": "Clarify",
+            "district": "ai-data",
+            "description": "Clarify is building a communication app and keyboard that analyzes the tone, patterns, and escalation risk of a message as the user types it, so the user can pause or rewrite before sending.",
+            "website": "https://theclarifyapp.com/",
+            "keywords": [
+              "communication intelligence",
+              "message tone analysis",
+              "escalation detection",
+              "emotional reflection platform",
+              "Self-Accountability Intelligence",
+              "communication keyboard"
+            ]
+          },
+          {
+            "slug": "clarky-ai",
+            "name": "Clarky AI",
+            "district": "marketing-cx",
+            "description": "Clarky is an AI front-office platform for small service businesses that answers website chat, phone calls, texts, and email, books appointments, and follows up, with a built-in CRM.",
+            "website": "https://clarky.ai/",
+            "keywords": [
+              "AI receptionist",
+              "AI phone agents",
+              "website chat agent",
+              "small business CRM",
+              "appointment booking",
+              "SMS messaging",
+              "outreach sequences"
+            ]
+          },
+          {
+            "slug": "coi-energy",
+            "name": "COI Energy",
+            "district": "climate-energy",
+            "description": "COI Energy provides a digital energy management platform that helps businesses find idle energy capacity in their buildings, cut waste, and share or monetize that capacity through its Virtual Battery Network.",
+            "website": "https://www.coienergy.com/",
+            "keywords": [
+              "energy management platform",
+              "virtual battery network",
+              "idle energy capacity",
+              "building energy efficiency",
+              "demand flexibility",
+              "energy equity"
+            ]
+          },
+          {
+            "slug": "compass-health",
+            "name": "Compass Health",
+            "district": "health",
+            "description": "Compass Health is a Tampa Bay membership service that gives patients and families direct access to medical specialists, with care coordination, care navigation, and medical records management.",
+            "website": "https://www.thecompasshealth.com/",
+            "keywords": [
+              "care coordination",
+              "specialist access",
+              "care navigation",
+              "concierge medicine",
+              "patient advocacy",
+              "medical records management"
+            ]
+          },
+          {
+            "slug": "coopercast-llc",
+            "name": "CooperCast LLC",
+            "district": "marketing-cx",
+            "description": "CooperCast provides sales forecasting and commercial operations software for beverage alcohol suppliers, consolidating distributor sales data in one platform for planning, analytics, and market execution.",
+            "website": "https://www.coopercast.com/",
+            "keywords": [
+              "sales forecasting",
+              "beverage alcohol",
+              "distributor data consolidation",
+              "commercial operations",
+              "brand analytics",
+              "trade marketing"
+            ]
+          },
+          {
+            "slug": "cope-notes",
+            "name": "Cope Notes",
+            "district": "health",
+            "description": "Cope Notes sends daily text messages that combine peer support and positive psychology exercises to support mental health. It sells to individuals and to employers, healthcare groups, governments, and schools.",
+            "website": "https://www.copenotes.com/",
+            "keywords": [
+              "mental health text messages",
+              "peer support",
+              "positive psychology",
+              "employee wellness",
+              "digital mental health",
+              "HSA/FSA eligible"
+            ]
+          },
+          {
+            "slug": "critikality",
+            "name": "Critikality",
+            "district": "proptech",
+            "description": "Critikality provides on-premise edge AI for high-hazard industrial sites that verifies workers by face at zone entry, checks certifications and permits in real time, and monitors equipment for hazards.",
+            "website": "https://www.critikality.com/",
+            "keywords": [
+              "edge AI",
+              "industrial safety",
+              "face-verified access",
+              "contractor workforce management",
+              "refinery turnarounds",
+              "emergency mustering",
+              "equipment hazard monitoring"
+            ]
+          },
+          {
+            "slug": "cvergenx-inc",
+            "name": "Cvergenx Inc",
+            "district": "health",
+            "description": "Cvergenx develops genomic decision-support tools for radiation oncology, including the Radiosensitivity Index (RSI) and Genomic Adjusted Radiation Dose (GARD), to help clinicians personalize radiation dose.",
+            "website": "https://www.cvergenx.com/",
+            "keywords": [
+              "precision radiation oncology",
+              "genomic biomarkers",
+              "clinical decision support",
+              "Radiosensitivity Index",
+              "genomic adjusted radiation dose",
+              "Moffitt spinout"
+            ]
+          },
+          {
+            "slug": "dagr-group-llc",
+            "name": "DAGR Group LLC",
+            "district": "defense-gov",
+            "description": "DAGR Group builds DAGR, a platform that monitors public-source information, detects changes, correlates evidence, and delivers analyst-reviewed intelligence briefings to mission teams.",
+            "website": "https://www.dagr-group.com/",
+            "keywords": [
+              "open-source intelligence",
+              "decision intelligence",
+              "evidence verification",
+              "defense analytics",
+              "change detection",
+              "veteran-owned small business"
+            ]
+          },
+          {
+            "slug": "dayones-live",
+            "name": "DayOnes Live",
+            "district": "sports-media",
+            "description": "DayOnes Live is a mobile app and fan CRM for live entertainment: concertgoers tap in at shows to collect digital autographs, giving artists a verified attendee list and automated merch sales.",
+            "website": "https://dayones.live/",
+            "keywords": [
+              "fan engagement app",
+              "live event CRM",
+              "digital autographs",
+              "concert merch sales",
+              "verified fan audience",
+              "artist-to-fan platform"
+            ]
+          },
+          {
+            "slug": "deckhand",
+            "name": "Deckhand",
+            "district": "commerce",
+            "description": "Deckhand runs an app-based marketplace in Tampa Bay where boat owners book insured detailers to wash and detail boats at the slip, with escrowed payment and a photo-verified service log.",
+            "website": "https://www.deckhand-llc.com/",
+            "keywords": [
+              "boat detailing marketplace",
+              "marine cleaning",
+              "photo-verified service",
+              "vessel service history",
+              "marina partnerships",
+              "Tampa Bay boating"
+            ]
+          },
+          {
+            "slug": "diginetics",
+            "name": "DigiNetics",
+            "district": "ai-data",
+            "description": "DigiNetics is building Elijah, software in private development that tests the business assumptions AI agents and operators rely on, such as pricing and scheduling rules, against a company's operating data.",
+            "website": "https://diginetics.co/",
+            "keywords": [
+              "AI agent verification",
+              "operational intelligence",
+              "job-costing drift detection",
+              "ERP audit layer",
+              "margin leak detection",
+              "decision certification"
+            ]
+          },
+          {
+            "slug": "directlend-ai",
+            "name": "Directlend AI",
+            "district": "fintech",
+            "description": "DirectLend AI is an online platform that matches U.S. business owners with lenders from a network of 75+ partners, covering $5K to $25M in financing across 15+ loan types.",
+            "website": "https://www.directlend.ai/",
+            "keywords": [
+              "business loan matching",
+              "lender marketplace",
+              "small business financing",
+              "SBA loan options",
+              "cash flow analysis",
+              "AI lender matching"
+            ]
+          },
+          {
+            "slug": "easealert",
+            "name": "EaseAlert",
+            "district": "hardware",
+            "description": "EaseAlert makes fire station alerting systems that deliver tactile, visual and audible alerts directly to firefighters in place of station-wide alarms, aiming to reduce alarm-related stress.",
+            "website": "https://easealert.com/",
+            "keywords": [
+              "fire station alerting",
+              "firefighter wearables",
+              "tactile alerts",
+              "first responder health",
+              "public safety hardware",
+              "hearing-impaired alerting"
+            ]
+          },
+          {
+            "slug": "ehomefacts",
+            "name": "eHomeFacts",
+            "district": "proptech",
+            "description": "eHomeFacts is a website for real estate investors that provides rapid resale analysis and property valuations of single-family homes in the Tampa Bay area.",
+            "website": "https://www.ehomefacts.com",
+            "keywords": [
+              "home resale analysis",
+              "property valuation",
+              "real estate investor tools",
+              "single-family homes",
+              "Tampa Bay housing data"
+            ]
+          },
+          {
+            "slug": "electus-global-education",
+            "name": "Electus Global Education",
+            "district": "work-learning",
+            "description": "Electus Global Education makes Life Hub, an app that rewards kids ages 6 to 18 with cash-redeemable tokens for lessons in money, career, health, AI and academic skills; it sells to families, schools and youth groups.",
+            "website": "https://www.lifehubeducation.com/",
+            "keywords": [
+              "financial literacy for kids",
+              "monetized learning app",
+              "youth life skills",
+              "AI literacy for kids",
+              "kids rewards card",
+              "homeschool and microschool edtech"
+            ]
+          },
+          {
+            "slug": "ellipsis-connect",
+            "name": "Ellipsis Connect",
+            "district": "work-learning",
+            "description": "Ellipsis Connect runs a private, vetted network of software engineers and a subscription database that venture capital firms and their portfolio startups use to hire engineering talent.",
+            "website": "https://ellipsisconnect.com/",
+            "keywords": [
+              "engineering recruiting",
+              "vetted engineer network",
+              "VC portfolio talent",
+              "technical hiring subscription",
+              "startup recruiters"
+            ]
+          },
+          {
+            "slug": "elucid8-inc",
+            "name": "Elucid8 Inc",
+            "district": "climate-energy",
+            "description": "Elucid8 Inc. develops Augur (Augur Intelligence), a software platform that provides real-time intelligence on environmental regulations.",
+            "website": "https://augurintel.com",
+            "keywords": [
+              "environmental regulation intelligence",
+              "regulatory monitoring",
+              "environmental compliance data",
+              "real-time regulatory alerts"
+            ]
+          },
+          {
+            "slug": "energiacres",
+            "name": "EnergiAcres",
+            "district": "climate-energy",
+            "description": "EnergiAcres develops campuses that pair data-center-ready sites with behind-the-meter power generation and greenhouse agriculture that reuses waste heat, CO2 and rainwater.",
+            "website": "https://www.energiacres.com/",
+            "keywords": [
+              "data center campus development",
+              "behind-the-meter power",
+              "controlled-environment agriculture",
+              "waste heat reuse",
+              "microgrids and CHP",
+              "powered land"
+            ]
+          },
+          {
+            "slug": "esencia-property-maintenance-system",
+            "name": "Esencia Property Maintenance System",
+            "district": "proptech",
+            "description": "Esencia runs a technology platform that connects multifamily property managers with certified maintenance service providers and manages work orders such as cleaning, painting and repairs.",
+            "website": "https://esenciamaintenance.com/",
+            "keywords": [
+              "multifamily property maintenance",
+              "maintenance work order platform",
+              "certified service provider network",
+              "cleaning and painting services",
+              "property manager tools"
+            ]
+          },
+          {
+            "slug": "evergait",
+            "name": "evergait",
+            "district": "health",
+            "description": "evergait develops evergait Go, a prescription gait rehabilitation device worn over the shoe with a companion app, for adults with uneven walking after stroke to use in the clinic and at home.",
+            "website": "https://evergait.com/",
+            "keywords": [
+              "stroke rehabilitation",
+              "gait training device",
+              "wearable medical device",
+              "home rehabilitation",
+              "remote therapy monitoring",
+              "USF spinout"
+            ]
+          },
+          {
+            "slug": "fabrics",
+            "name": "Fabrics",
+            "district": "enterprise-software",
+            "description": "Fabrics, Inc. provides software that monitors Azure and AWS cloud environments and automatically rightsizes and scales resources to match actual demand, reducing cloud spending.",
+            "website": "https://www.trustfabrics.com/",
+            "keywords": [
+              "cloud cost optimization",
+              "Azure and AWS rightsizing",
+              "automated cloud scaling",
+              "cloud waste reduction",
+              "Azure Virtual Desktop",
+              "managed service providers"
+            ]
+          },
+          {
+            "slug": "fayven",
+            "name": "fayVen",
+            "district": "commerce",
+            "description": "fayVen operates an online marketplace that connects vendors and artisans seeking temporary retail space with venues such as restaurants, breweries and hotels that host pop-up markets.",
+            "website": "https://fayven.com/",
+            "keywords": [
+              "pop-up markets",
+              "vendor-venue marketplace",
+              "temporary retail space",
+              "event vendor booking",
+              "venue activation"
+            ]
+          },
+          {
+            "slug": "flexmode",
+            "name": "Flexmode",
+            "district": "sports-media",
+            "description": "Flexmode operates an application-only social community and app that hosts weekly in-person events, such as dinners and sport sessions, for vetted professionals in Miami.",
+            "website": "https://www.theflexmode.com/",
+            "keywords": [
+              "members-only social club",
+              "vetted professional community",
+              "in-person social events",
+              "sport and lifestyle events",
+              "brand partner experiences"
+            ]
+          },
+          {
+            "slug": "fractio",
+            "name": "Fractio",
+            "district": "enterprise-software",
+            "description": "Fractio provides software that attributes human and AI cost separately on each unit of work for professional services firms, such as accounting, consulting and IT firms, to support outcome-based pricing.",
+            "website": "https://www.fractio.co/",
+            "keywords": [
+              "AI cost attribution",
+              "professional services pricing",
+              "outcome-based billing",
+              "unit-of-work metering",
+              "margin analytics",
+              "fractional services"
+            ]
+          },
+          {
+            "slug": "genhealth-ai",
+            "name": "GenHealth.ai",
+            "district": "health",
+            "description": "GenHealth.ai builds AI agents that automate healthcare administrative work, including intake, eligibility checks, prior authorization, billing and denials, for providers, medical equipment suppliers and health plans.",
+            "website": "https://genhealth.ai/",
+            "keywords": [
+              "healthcare AI agents",
+              "prior authorization automation",
+              "revenue cycle management",
+              "DME intake automation",
+              "eligibility verification",
+              "health plan automation"
+            ]
+          },
+          {
+            "slug": "gia-marine-intelligence",
+            "name": "GIA Marine Intelligence",
+            "district": "ai-data",
+            "description": "Gia Marine Intelligence offers a conversational AI assistant that answers questions about a specific vessel from its owner's, engine and electronics manuals and cites the source page, for boat owners, dealers and manufacturers.",
+            "website": "https://giamarine.com/",
+            "keywords": [
+              "marine documentation AI",
+              "yacht manual assistant",
+              "technician lookup tool",
+              "cited answers from manuals",
+              "boat owner support"
+            ]
+          },
+          {
+            "slug": "glamnow",
+            "name": "GLAMNOW",
+            "district": "health",
+            "description": "GlamNow provides in-home medical aesthetic treatments, including neurotoxins, dermal fillers, IV therapy and medical weight-loss programs, through a nationwide network of licensed medical professionals.",
+            "website": "https://glamnow.com/",
+            "keywords": [
+              "concierge aesthetics",
+              "in-home injectables",
+              "dermal fillers",
+              "IV therapy",
+              "medical weight loss",
+              "mobile med spa"
+            ]
+          },
+          {
+            "slug": "grifin",
+            "name": "Grifin",
+            "district": "fintech",
+            "description": "Grifin offers a mobile investing app that links users' payment cards and automatically buys fractional shares of the public companies where they shop, starting with as little as $1.",
+            "website": "https://www.grifin.com/",
+            "keywords": [
+              "automated investing app",
+              "stock where you shop",
+              "fractional shares",
+              "spend-based investing",
+              "consumer fintech"
+            ]
+          },
+          {
+            "slug": "grip-intelligence",
+            "name": "GRIP Intelligence",
+            "district": "marketing-cx",
+            "description": "GRIP Intelligence builds a credit-first sales execution platform for car dealerships. It uses soft-pull credit prescreens and equity data to find buyers in a dealer's existing data and runs text and email campaigns to book appointments.",
+            "website": "https://gripintelligence.com/",
+            "keywords": [
+              "car dealership sales platform",
+              "credit prescreen",
+              "equity mining",
+              "service-to-sales",
+              "automotive BDC",
+              "dealer text and email campaigns"
+            ]
+          },
+          {
+            "slug": "happinest-ai",
+            "name": "HappiNest.AI",
+            "district": "proptech",
+            "description": "HappiNest provides an AI leasing agent for mid-market property managers. It answers rental inquiries by voice and text, pre-qualifies prospects, books tours and writes records into property management systems such as Rent Manager.",
+            "website": "https://happinest.ai/",
+            "keywords": [
+              "AI leasing agent",
+              "property management",
+              "rental lead response",
+              "tour scheduling",
+              "applicant pre-qualification",
+              "Rent Manager integration"
+            ]
+          },
+          {
+            "slug": "heave",
+            "name": "Heave",
+            "district": "proptech",
+            "description": "Heave runs an on-demand field service platform for heavy equipment. Contractors, rental companies and dealers post a downed machine and book a vetted independent diesel mechanic nearby, often for same-day repair.",
+            "website": "https://www.heaveapp.com/",
+            "keywords": [
+              "heavy equipment repair",
+              "diesel mechanics",
+              "field service marketplace",
+              "construction equipment",
+              "same-day repair",
+              "equipment downtime"
+            ]
+          },
+          {
+            "slug": "hello-world-solutions",
+            "name": "Hello World Solutions",
+            "district": "health",
+            "description": "Hello World Solutions makes PorchLink, a privacy-first app for older adults that passively learns daily routines from phone and home-device usage and shares changes that may signal health shifts with a chosen care circle.",
+            "website": "https://helloporchlink.com/",
+            "keywords": [
+              "aging in place",
+              "AgeTech",
+              "digital phenotyping",
+              "passive health monitoring",
+              "caregiver alerts",
+              "cognitive health"
+            ]
+          },
+          {
+            "slug": "hipstr",
+            "name": "Hipstr",
+            "district": "marketing-cx",
+            "description": "Hipstr provides photo and video booth experiences, including 360-degree video and multi-camera GIF setups, for private parties and brand activations in U.S. markets, with online booking and on-site hosts.",
+            "website": "https://www.hipstr.com/",
+            "keywords": [
+              "photo booth rental",
+              "360 video booth",
+              "brand activations",
+              "experiential marketing",
+              "event photography",
+              "user-generated content"
+            ]
+          },
+          {
+            "slug": "immigr8",
+            "name": "immigr8",
+            "district": "work-learning",
+            "description": "immigr8 offers an AI-based platform for employers to manage employee immigration. It pre-populates visa petition data, generates support letters and LCA posting notices, tracks case status and connects to ATS and HRIS systems.",
+            "website": "https://immigr8now.com/",
+            "keywords": [
+              "employee immigration software",
+              "visa petition automation",
+              "LCA posting",
+              "immigration case tracking",
+              "HRIS integration",
+              "foreign worker hiring"
+            ]
+          },
+          {
+            "slug": "ingenee-inc",
+            "name": "Ingenee Inc.",
+            "district": "sports-media",
+            "description": "Ingenee provides an AI platform that automates media operations for streaming services, broadcasters and video distributors, including metadata enrichment, VOD programming, FAST scheduling, localization and distribution.",
+            "website": "https://www.ingenee.ai/",
+            "keywords": [
+              "media operations automation",
+              "FAST channel scheduling",
+              "VOD programming",
+              "metadata enrichment",
+              "content localization",
+              "AI dubbing and subtitles"
+            ]
+          },
+          {
+            "slug": "iteright",
+            "name": "Iteright",
+            "district": "enterprise-software",
+            "description": "Iteright offers an AI product strategy and execution platform that helps product and transformation leaders validate ideas, prioritize investments, generate product documents and track outcomes using Jira, Azure DevOps or ServiceNow data.",
+            "website": "https://www.iteright.com/",
+            "keywords": [
+              "product strategy software",
+              "AI product agents",
+              "roadmap planning",
+              "OKR and outcome tracking",
+              "portfolio intelligence",
+              "Jira and ServiceNow integration"
+            ]
+          },
+          {
+            "slug": "iya-inc",
+            "name": "IYA inc",
+            "district": "health",
+            "description": "IYA is an on-demand maternal wellness platform that connects mothers with vetted birth workers, such as doulas, midwives and lactation consultants, and offers AI-powered support during pregnancy and postpartum.",
+            "website": "https://app.iyacares.com/",
+            "keywords": [
+              "maternal health",
+              "pregnancy app",
+              "postpartum support",
+              "doula and midwife directory",
+              "AI doula",
+              "birth plans"
+            ]
+          },
+          {
+            "slug": "knack",
+            "name": "Knack",
+            "district": "work-learning",
+            "description": "Knack partners with colleges and universities to run peer tutoring programs. It hires, trains and pays high-performing students as tutors who give classmates course-specific academic support.",
+            "website": "https://www.joinknack.com/",
+            "keywords": [
+              "peer tutoring",
+              "higher education",
+              "student employment",
+              "academic support",
+              "campus community",
+              "tutor hiring and training"
+            ]
+          },
+          {
+            "slug": "knowbe4",
+            "name": "KnowBe4",
+            "district": "community",
+            "description": "KnowBe4 provides security awareness training, simulated phishing, email security and AI agent risk management software that helps organizations reduce human-driven cybersecurity risk.",
+            "website": "https://www.knowbe4.com/",
+            "keywords": [
+              "security awareness training",
+              "phishing simulation",
+              "email security",
+              "human risk management",
+              "AI agent security",
+              "compliance training"
+            ]
+          },
+          {
+            "slug": "krew-social",
+            "name": "Krew Social",
+            "district": "work-learning",
+            "description": "Krew Social provides an in-person belonging app that suggests which hangouts to attend, whom to talk to and what to talk about, for hospitals, employers, universities, military and veteran groups and faith communities.",
+            "website": "https://krewsocial.com/",
+            "keywords": [
+              "employee belonging",
+              "in-person hangouts",
+              "employee retention",
+              "social wellbeing",
+              "veteran isolation",
+              "community engagement app"
+            ]
+          },
+          {
+            "slug": "kush-com",
+            "name": "Kush.com",
+            "district": "commerce",
+            "description": "Kush.com operates kushTRAX, a compliance platform that verifies certificates of analysis (COAs) and labels for hemp, kratom and other emerging consumer products for brands, distributors, retailers and regulators.",
+            "website": "https://kushtrax.com/",
+            "keywords": [
+              "hemp compliance",
+              "COA verification",
+              "label compliance",
+              "product verification",
+              "THC beverage compliance",
+              "regulatory digests"
+            ]
+          },
+          {
+            "slug": "loop-ai",
+            "name": "Loop AI",
+            "district": "fintech",
+            "description": "Loop AI provides AI agents for restaurant finance, marketing and operations that connect POS, delivery marketplace, accounting and banking data to reconcile revenue and analyze channel performance.",
+            "website": "https://www.loopai.com/",
+            "keywords": [
+              "restaurant AI agents",
+              "delivery revenue reconciliation",
+              "restaurant analytics",
+              "third-party delivery marketing",
+              "restaurant finance automation"
+            ]
+          },
+          {
+            "slug": "melmat",
+            "name": "MelMat",
+            "district": "ai-data",
+            "description": "MelMat runs four AI engines on each research question and produces a cited brief showing where they agree and disagree, for consultants, advisors, investors and compliance professionals.",
+            "website": "https://melmat.ai/",
+            "keywords": [
+              "multi-model AI research",
+              "AI research briefs",
+              "due diligence research",
+              "citation verification",
+              "consultant research tool"
+            ]
+          },
+          {
+            "slug": "motiq-technologies-inc",
+            "name": "Motiq Technologies Inc",
+            "district": "health",
+            "description": "Motiq Technologies is building AI-powered care coordination infrastructure for hospitals and care coordination teams, aimed at reducing care gaps and streamlining handoffs for high-acuity patients.",
+            "website": "https://www.motiqtech.com",
+            "keywords": [
+              "care coordination",
+              "patient handoffs",
+              "hospital care gaps",
+              "AI care coordination",
+              "high-acuity patients"
+            ]
+          },
+          {
+            "slug": "myelai",
+            "name": "Myelai",
+            "district": "ai-data",
+            "description": "Myelai maps how a company's operations actually run, using interviews, voice agents and its Dendron platform, then identifies where time and money are lost and implements fixes such as automations.",
+            "website": "https://myelai.io/",
+            "keywords": [
+              "process mapping",
+              "process intelligence",
+              "operations diagnostics",
+              "workflow automation",
+              "voice agents",
+              "Dendron platform"
+            ]
+          },
+          {
+            "slug": "myzoda",
+            "name": "MyZODA",
+            "district": "health",
+            "description": "MyZODA builds ZODA Health, a Nigerian telemedicine app that uses AI symptom triage to route patients to self-care, pharmacy or licensed doctors, with medication delivery and pilots for HMOs and organizations.",
+            "website": "https://www.zodahealth.ng/",
+            "keywords": [
+              "telemedicine Nigeria",
+              "AI symptom triage",
+              "online doctor consultations",
+              "medication delivery",
+              "HMO care navigation"
+            ]
+          },
+          {
+            "slug": "naya-software",
+            "name": "Naya Software",
+            "district": "proptech",
+            "description": "Naya Software provides an AI-enabled document automation and transaction management platform for commercial mortgage lenders and their outside counsel, plus fixed-fee loan closing services.",
+            "website": "https://nayasoftware.com/",
+            "keywords": [
+              "CRE loan closing",
+              "document automation",
+              "transaction management",
+              "commercial mortgage lending software",
+              "legal tech",
+              "due diligence AI"
+            ]
+          },
+          {
+            "slug": "neux-technologies",
+            "name": "NeuX Technologies",
+            "district": "health",
+            "description": "NeuX Technologies makes the NXPro, an FDA-cleared Class II device that uses interactive neuromuscular stimulation (iNMS) for pain relief, recovery and athletic performance, for gyms, clubs, athletes and individuals.",
+            "website": "https://www.neuxtec.com/",
+            "keywords": [
+              "neuromuscular stimulation",
+              "pain relief device",
+              "athletic recovery",
+              "FDA-cleared medical device",
+              "rehabilitation technology",
+              "fitness performance"
+            ]
+          },
+          {
+            "slug": "orchid-healthcare-technologies",
+            "name": "Orchid Healthcare Technologies",
+            "district": "health",
+            "description": "Orchid Healthcare Technologies builds AI claim review software that checks a claim against the medical record and applicable reimbursement rules, for providers and billing teams before submission and for health plans before payment.",
+            "website": "https://orchidhealthtech.com/",
+            "keywords": [
+              "AI claim review",
+              "revenue cycle management",
+              "pre-submission claim review",
+              "payment integrity",
+              "medical billing",
+              "denial prevention"
+            ]
+          },
+          {
+            "slug": "packfiles-inc",
+            "name": "Packfiles Inc.",
+            "district": "enterprise-software",
+            "description": "Packfiles builds tools that help enterprises migrate repositories, teams and data from Azure DevOps and Bitbucket Server to GitHub. Its Warp product plans and runs migrations and works with GitHub Copilot.",
+            "website": "https://packfiles.io/",
+            "keywords": [
+              "GitHub migration",
+              "Azure DevOps to GitHub",
+              "Bitbucket Server migration",
+              "DevOps tooling",
+              "repository migration",
+              "GitHub adoption"
+            ]
+          },
+          {
+            "slug": "pathi-health",
+            "name": "Pathi Health",
+            "district": "health",
+            "description": "Pathi Health runs a free, English- and Spanish-language platform where cancer patients combine their health records, get plain-language AI explanations and find matching clinical trials; trial sponsors can reach opted-in patients.",
+            "website": "https://pathihealth.com/",
+            "keywords": [
+              "cancer patient navigation",
+              "health record aggregation",
+              "clinical trial matching",
+              "AI health records",
+              "bilingual patient platform",
+              "oncology"
+            ]
+          },
+          {
+            "slug": "peerfit",
+            "name": "Peerfit",
+            "district": "health",
+            "description": "Peerfit, now operating as FitOn Health, provides an employee fitness and wellness benefit that combines digital fitness, nutrition and mental health content with a national network of gyms and studios, sold to employers and health plans.",
+            "website": "https://www.fitonhealth.com/",
+            "keywords": [
+              "employee wellness benefits",
+              "corporate fitness program",
+              "gym and studio network",
+              "digital fitness",
+              "preventive care",
+              "health plan wellness"
+            ]
+          },
+          {
+            "slug": "perimeter-health",
+            "name": "Perimeter Health",
+            "district": "health",
+            "description": "Perimeter Health builds clinical decision-support tools for high-acuity care teams, trial site identification and patient mapping for rare disease trial sponsors, and human performance tools for austere settings, including spaceflight.",
+            "website": "https://www.perimeter.health/",
+            "keywords": [
+              "rare disease trial site identification",
+              "clinical decision support",
+              "space medicine",
+              "precision medicine",
+              "patient mapping",
+              "genomic data"
+            ]
+          },
+          {
+            "slug": "pet-harmony",
+            "name": "Pet Harmony",
+            "district": "proptech",
+            "description": "Pet Harmony, Inc. operates Vetzi, a veterinary telehealth service that connects Florida pet owners with licensed veterinarians by video, along with vet nurses, pet trainers, an AI chat, an online pharmacy and pet health records.",
+            "website": "https://myvetzi.com/",
+            "keywords": [
+              "veterinary telehealth",
+              "online vet consultations",
+              "pet telehealth",
+              "pet pharmacy",
+              "pet health records",
+              "AI pet chat"
+            ]
+          },
+          {
+            "slug": "pieces",
+            "name": "Pieces",
+            "district": "ai-data",
+            "description": "Pieces, built by Mesh Intelligent Technologies, makes desktop software that captures a user's work activity on-device into a searchable memory and supplies that context to AI tools, with individual, team and enterprise versions.",
+            "website": "https://pieces.app/",
+            "keywords": [
+              "AI memory layer",
+              "developer productivity",
+              "on-device AI",
+              "MCP integration",
+              "workflow context capture",
+              "knowledge management"
+            ]
+          },
+          {
+            "slug": "poach-prevent",
+            "name": "Poach Prevent",
+            "district": "work-learning",
+            "description": "Poach Prevent audits staffing and recruiting agencies each month for compliance with non-solicit clauses, checking that they are not recruiting their clients' employees. Agencies pay a monthly fee; the service is free to clients.",
+            "website": "https://www.poachprevent.com/",
+            "keywords": [
+              "non-solicit compliance",
+              "staffing agency audits",
+              "employee poaching prevention",
+              "vendor compliance monitoring",
+              "restrictive covenants",
+              "recruitment monitoring"
+            ]
+          },
+          {
+            "slug": "px",
+            "name": "PX",
+            "district": "enterprise-software",
+            "description": "PX Systems makes the PX command-line tool, which provisions clusters in a customer's own cloud account, such as AWS, Google Cloud or Azure, and runs existing code in parallel across them without code changes, with a web job dashboard.",
+            "website": "https://px.app/",
+            "keywords": [
+              "cloud cluster provisioning",
+              "parallel job execution",
+              "developer CLI",
+              "multi-cloud",
+              "batch processing",
+              "cloud runtime debugging"
+            ]
+          },
+          {
+            "slug": "pxai",
+            "name": "PXAI",
+            "district": "proptech",
+            "description": "PXAI is listed in Embarc Collective's member directory under AI and Contech + Proptech. Its website shows only a \"Coming Soon\" page, and no public description of its product was found.",
+            "website": "https://pxai.my.canva.site/",
+            "keywords": [
+              "AI",
+              "construction technology",
+              "proptech"
+            ]
+          },
+          {
+            "slug": "quant-fusion",
+            "name": "Quant Fusion",
+            "district": "mobility-logistics",
+            "description": "Quant Fusion makes software that unifies a company's existing internal and external data to automate ship-date status and other Excel-based operations tasks for manufacturers and distributors. Its TradeGauge tool projects tariff impacts.",
+            "website": "https://www.quant-fusion.com/",
+            "keywords": [
+              "ship date automation",
+              "order management",
+              "supply chain data integration",
+              "tariff impact modeling",
+              "Excel workflow automation",
+              "operations analytics"
+            ]
+          },
+          {
+            "slug": "ravel-genetics",
+            "name": "Ravel Genetics",
+            "district": "health",
+            "description": "Ravel Genetics interprets whole-genome and mitochondrial DNA sequencing with a focus on epigenetic regulation, giving members a report of prioritized, evidence-based focus areas to discuss with their doctor.",
+            "website": "https://www.ravelgenetics.com/",
+            "keywords": [
+              "whole-genome sequencing",
+              "epigenetics",
+              "mitochondrial DNA analysis",
+              "precision medicine",
+              "preventive health insights"
+            ]
+          },
+          {
+            "slug": "read-my-mri",
+            "name": "Read My MRI",
+            "district": "health",
+            "description": "Read My MRI uses AI to turn MRI, CT, X-ray, ultrasound and PET reports into plain-language summaries for patients, and offers Harbour, a white-label version clinics brand for their own leads and patients.",
+            "website": "https://readmymri.com/",
+            "keywords": [
+              "AI radiology report summaries",
+              "patient imaging explanations",
+              "white-label clinic reports",
+              "MRI CT X-ray summaries",
+              "patient education"
+            ]
+          },
+          {
+            "slug": "real-home-profile",
+            "name": "Real Home Profile",
+            "district": "proptech",
+            "description": "Real Home Profile is a social network for home buyers where users share comments, community insights and living reports on residential properties to cut the time and money spent on the home search.",
+            "website": "https://www.realhomeprofile.com/",
+            "keywords": [
+              "home-buying transparency",
+              "homebuyer community",
+              "property comments",
+              "community insights",
+              "living reports"
+            ]
+          },
+          {
+            "slug": "real-random-llc",
+            "name": "Real Random LLC",
+            "district": "cyber",
+            "description": "Real Random generates entropy from physical dice tumbling in fluid, captured by high-speed cameras, and delivers it through hardware appliances or a REST API for encryption keys and other security uses.",
+            "website": "https://real-random.com/",
+            "keywords": [
+              "true random number generation",
+              "hardware entropy source",
+              "entropy as a service",
+              "post-quantum cryptography",
+              "encryption key generation"
+            ]
+          },
+          {
+            "slug": "rehq",
+            "name": "REHQ",
+            "district": "proptech",
+            "description": "REHQ provides prospecting and deal-management software for commercial real estate brokers and investors, combining U.S. property and owner contact data with AI-driven outreach sequences and a deal pipeline.",
+            "website": "https://www.getrehq.com/",
+            "keywords": [
+              "CRE prospecting",
+              "property owner contact data",
+              "power dialer",
+              "AI outreach sequences",
+              "deal pipeline management",
+              "commercial real estate leads"
+            ]
+          },
+          {
+            "slug": "running-mate",
+            "name": "Running Mate",
+            "district": "sports-media",
+            "description": "Running Mate is an on-demand app that matches runners and walkers with background-checked running partners for safer outdoor workouts, and offers employers a coached race-training wellness program.",
+            "website": "https://www.getrunningmate.com/",
+            "keywords": [
+              "running safety app",
+              "on-demand running partners",
+              "background-checked mates",
+              "corporate wellness race training",
+              "women's running safety"
+            ]
+          },
+          {
+            "slug": "ryco-io",
+            "name": "ryco.io",
+            "district": "work-learning",
+            "description": "ryco.io builds custom, standards-aligned curriculum, courses and interactive learning content for schools, districts and workplace training teams, pairing instructional designers with rybot, its AI assistant.",
+            "website": "https://www.ryco.io/",
+            "keywords": [
+              "custom curriculum development",
+              "instructional design",
+              "eLearning content",
+              "AI teaching assistant",
+              "corporate training development",
+              "XR learning experiences"
+            ]
+          },
+          {
+            "slug": "satisfi-labs",
+            "name": "Satisfi Labs",
+            "district": "sports-media",
+            "description": "Satisfi Labs runs a managed agentic AI platform whose AI agents sell tickets, answer guest questions and gather customer data for sports teams, entertainment venues and tourism destinations.",
+            "website": "https://satisfilabs.com/",
+            "keywords": [
+              "AI agents for venues",
+              "conversational ticketing",
+              "fan and guest experience",
+              "tourism visitor chat",
+              "agentic AI platform"
+            ]
+          },
+          {
+            "slug": "shufflrr",
+            "name": "Shufflrr",
+            "district": "enterprise-software",
+            "description": "Shufflrr makes presentation-management software that turns an organization's SharePoint files into a searchable, version-controlled slide library, with a PowerPoint add-in and an AI tool that surfaces approved slides.",
+            "website": "https://shufflrr.com/",
+            "keywords": [
+              "presentation management",
+              "PowerPoint slide library",
+              "SharePoint presentation server",
+              "AI slide search",
+              "sales enablement content",
+              "Dynamics 365 in PowerPoint"
+            ]
+          },
+          {
+            "slug": "shyftoff",
+            "name": "ShyftOff",
+            "district": "work-learning",
+            "description": "ShyftOff runs a workforce platform that supplies contact centers with on-demand, certified agents who work alongside a client's AI and in-house staff on phone, chat, email and help desk support.",
+            "website": "https://www.shyftoff.com/",
+            "keywords": [
+              "contact center staffing",
+              "call center outsourcing",
+              "on-demand agents",
+              "customer support outsourcing",
+              "live chat support",
+              "help desk outsourcing"
+            ]
+          },
+          {
+            "slug": "skytl",
+            "name": "SkyTL",
+            "district": "defense-gov",
+            "description": "SkyTL builds a multi-hazard intelligence platform that combines sensor data, AI and physics models to forecast wildfires, floods, storm surge and water-quality events for agencies, utilities and responders.",
+            "website": "https://www.skytl.com/",
+            "keywords": [
+              "wildfire prediction",
+              "flood and storm surge modeling",
+              "water quality monitoring",
+              "disaster response intelligence",
+              "UAS airspace coordination",
+              "multi-hazard risk mapping"
+            ]
+          },
+          {
+            "slug": "smart-edge-technologies",
+            "name": "Smart Edge Technologies",
+            "district": "ai-data",
+            "description": "Smart Edge Technologies is an AI consultancy that implements Claude for Business, trains staff and builds custom AI automations for small and mid-sized businesses and nonprofits in the U.S. and Latin America.",
+            "website": "https://www.smartedgetech.io/",
+            "keywords": [
+              "Claude for Business implementation",
+              "AI staff training",
+              "AI strategy audit",
+              "SMB AI automation",
+              "nonprofit AI adoption",
+              "AI-native retail tools"
+            ]
+          },
+          {
+            "slug": "smartcare360",
+            "name": "SmartCare360",
+            "district": "health",
+            "description": "SmartCare360 provides a virtual care management platform and care team that run remote patient monitoring, chronic care management and billing support programs for medical practices, ACOs, FQHCs and payers.",
+            "website": "https://smartcare360.health/",
+            "keywords": [
+              "remote patient monitoring",
+              "chronic care management",
+              "principal care management",
+              "transitional care management",
+              "revenue cycle management",
+              "patient engagement app"
+            ]
+          },
+          {
+            "slug": "soteria-360",
+            "name": "Soteria-360",
+            "district": "health",
+            "description": "Soteria-360 is a healthcare company whose founder and CEO, Scott Rein, moderated Embarc Collective's Q3 2026 Tampa Bay HealthTech Meetup on remote patient monitoring.",
+            "website": "https://www.soteria-360.com",
+            "keywords": [
+              "healthcare"
+            ]
+          },
+          {
+            "slug": "spontivly-inc",
+            "name": "Spontivly Inc.",
+            "district": "fintech",
+            "description": "Spontivly is a data platform for founder-led registered investment advisers (RIAs) that brings custodian, CRM and billing data into one view for growth, reporting, marketing and compliance.",
+            "website": "https://www.spontivly.com/",
+            "keywords": [
+              "RIA growth analytics",
+              "no-code data platform",
+              "advisor productivity reporting",
+              "NFC pipeline capture",
+              "CRM data integration",
+              "AUM reporting"
+            ]
+          },
+          {
+            "slug": "squeez-inc",
+            "name": "Squeez Inc",
+            "district": "commerce",
+            "description": "Squeez is a concierge reservation app that offers people access to busy, in-demand locations.",
+            "website": "https://TrySqueez.com",
+            "keywords": [
+              "concierge reservations",
+              "reservation app",
+              "consumer mobile app"
+            ]
+          },
+          {
+            "slug": "stablein-solutions",
+            "name": "Stablein Solutions",
+            "district": "ai-data",
+            "description": "Stablein Solutions builds AI automation for promotional products suppliers and distributors, including purchase order processing, artwork extraction, email parsing, trademark checks and company data lookup.",
+            "website": "https://stableinsolutions.com/",
+            "keywords": [
+              "purchase order automation",
+              "artwork extraction",
+              "email parsing",
+              "trademark verification",
+              "promotional products automation",
+              "PromoStandards integration"
+            ]
+          },
+          {
+            "slug": "stackyon-inc",
+            "name": "Stackyon Inc",
+            "district": "health",
+            "description": "Stackyon offers a no-code platform with built-in AI agents for building and modernizing enterprise applications, with a focus on clinical, administrative and billing workflows for healthcare organizations.",
+            "website": "https://stackyon.com/ai-native-healthcare",
+            "keywords": [
+              "no-code app platform",
+              "healthcare AI agents",
+              "revenue cycle automation",
+              "care coordination workflows",
+              "legacy app modernization",
+              "EHR integration"
+            ]
+          },
+          {
+            "slug": "stemrad",
+            "name": "StemRad",
+            "district": "hardware",
+            "description": "StemRad designs and makes wearable radiation shields that protect bone marrow and other sensitive organs for first responders, military personnel, medical staff, nuclear workers and astronauts.",
+            "website": "https://stemrad.com/",
+            "keywords": [
+              "radiation shielding",
+              "personal protective equipment",
+              "360 Gamma shield",
+              "AstroRad vest",
+              "medical radiation protection",
+              "CBRN preparedness"
+            ]
+          },
+          {
+            "slug": "sus-clinicals-inc",
+            "name": "Sus Clinicals Inc.",
+            "district": "health",
+            "description": "Sus Clinicals supplies the Oncopig, an FDA-cleared, genetically engineered pig cancer model, and designs preclinical studies so drug, device, and diagnostic developers can test cancer therapies through CRO partners or in-house labs.",
+            "website": "https://susclinicals.com/",
+            "keywords": [
+              "Oncopig cancer model",
+              "preclinical oncology studies",
+              "large animal tumor models",
+              "medical device testing",
+              "drug and diagnostic development",
+              "CRO study support"
+            ]
+          },
+          {
+            "slug": "swaption-llc",
+            "name": "Swaption LLC",
+            "district": "commerce",
+            "description": "Swaption runs a peer-to-peer marketplace where people trade items they own for items they want, with optional cash purchases and a hold-and-verify system called SwapLock that protects both sides of a trade.",
+            "website": "https://swaption.us/",
+            "keywords": [
+              "peer-to-peer swaps",
+              "secondhand marketplace",
+              "item trading",
+              "SwapLock trade protection",
+              "local meet-up SwapZones"
+            ]
+          },
+          {
+            "slug": "synsormed",
+            "name": "SynsorMed",
+            "district": "health",
+            "description": "SynsorMed runs remote patient monitoring and chronic care management programs for medical practices and payers, handling patient enrollment, nurse-led monitoring, devices, and billing reports as an outsourced service.",
+            "website": "https://www.synsormed.com/",
+            "keywords": [
+              "remote patient monitoring",
+              "chronic care management",
+              "Remote Care as a Service",
+              "nurse care coordination",
+              "RPM billing reports",
+              "patient enrollment"
+            ]
+          },
+          {
+            "slug": "syp",
+            "name": "syp",
+            "district": "hardware",
+            "description": "syp makes a sleeve that clips onto a water bottle and measures fluid intake in real time with a load-cell sensor, syncing data to a mobile app and to a live roster dashboard for coaches and athletic trainers.",
+            "website": "https://syphydration.com/",
+            "keywords": [
+              "smart hydration tracking",
+              "bottle-mounted sensor",
+              "athlete hydration monitoring",
+              "coach hydration dashboard",
+              "wearable hardware",
+              "sports performance data"
+            ]
+          },
+          {
+            "slug": "talent-frequency",
+            "name": "Talent Frequency",
+            "district": "work-learning",
+            "description": "Talent Frequency provides AI voice and chat recruiting assistants that engage job seekers on career sites, run pre-screening phone calls, and send screening data into employers' applicant tracking systems.",
+            "website": "https://talentfrequency.com/",
+            "keywords": [
+              "AI voice recruiting assistant",
+              "career site chat assistant",
+              "candidate pre-screening",
+              "recruiting automation",
+              "ATS integration",
+              "interview scheduling"
+            ]
+          },
+          {
+            "slug": "tesseract-ventures",
+            "name": "Tesseract Ventures",
+            "district": "hardware",
+            "description": "Tesseract Ventures builds edge sensors, drones, and software that combine field data into real-time operational views and digital twins for defense, construction, agriculture, and infrastructure operators.",
+            "website": "https://www.tesseractventures.io/",
+            "keywords": [
+              "edge sensor hardware",
+              "drones",
+              "digital twin software",
+              "command and control systems",
+              "construction site intelligence",
+              "agricultural data platform",
+              "dual-use defense technology"
+            ]
+          },
+          {
+            "slug": "tgh-ventures",
+            "name": "TGH Ventures",
+            "district": "health",
+            "description": "TGH Ventures is Tampa General Hospital's venture capital arm. It invests in healthcare companies and helps them test and refine their products inside the Tampa General health system.",
+            "website": "https://www.tghventures.vc/",
+            "keywords": [
+              "healthcare venture capital",
+              "corporate venture fund",
+              "clinical pilot programs",
+              "health system validation",
+              "digital health investment"
+            ]
+          },
+          {
+            "slug": "thoragenix-innovations",
+            "name": "Thoragenix Innovations",
+            "district": "health",
+            "description": "Thoragenix Innovations develops biologic products for cardiothoracic surgery, including ThoraGraft, a sternal bone graft substitute, and ThoraPutty IRM, a synthetic material for bone voids and fractures.",
+            "website": "https://www.thoragenix.com/",
+            "keywords": [
+              "sternal bone graft",
+              "cardiothoracic surgery",
+              "sternal closure",
+              "bone void filler",
+              "rib fracture repair",
+              "surgical hemostasis"
+            ]
+          },
+          {
+            "slug": "threshold-360",
+            "name": "Threshold 360",
+            "district": "proptech",
+            "description": "Threshold 360 captures hotels, event spaces, destinations, and other venues in 360-degree and 3D formats, producing virtual tours, fly-through video, and interactive maps that venues use to market their space.",
+            "website": "https://threshold360.com/",
+            "keywords": [
+              "360-degree virtual tours",
+              "3D venue capture",
+              "fly-through video",
+              "interactive destination maps",
+              "Google virtual tour publishing",
+              "venue marketing"
+            ]
+          },
+          {
+            "slug": "ticketwin-llc",
+            "name": "TICKETWIN LLC",
+            "district": "sports-media",
+            "description": "Ticketwin is an event ticketing platform for live music and entertainment organizers, with all-in pricing, referral-code sales attribution, attendee check-in, and email campaigns to past attendees.",
+            "website": "https://ticketwin.io/",
+            "keywords": [
+              "event ticketing",
+              "live music ticketing",
+              "referral code attribution",
+              "attendee email campaigns",
+              "QR code check-in",
+              "all-in ticket pricing"
+            ]
+          },
+          {
+            "slug": "tie-tampa-bay",
+            "name": "TiE Tampa Bay",
+            "district": "community",
+            "description": "Tampa Bay chapter of TiE, a global nonprofit network for entrepreneurs. It offers mentoring, networking, education and investor access through TiE Angels, TiE Women, TiE Students and the TiECon Florida conference.",
+            "website": "https://tampa.tie.org",
+            "keywords": [
+              "entrepreneur mentoring",
+              "angel investor network",
+              "TiE Angels",
+              "TiE Women",
+              "student entrepreneurship",
+              "TiECon Florida",
+              "pitch events"
+            ]
+          },
+          {
+            "slug": "track-it-up",
+            "name": "Track It Up",
+            "district": "sports-media",
+            "description": "App where runners and cyclists compete in challenges and events and form clubs. Organizers can design routes with checkpoints and run free or paid events with registrant tracking, live rankings and check-in.",
+            "website": "https://trackitup.co/",
+            "keywords": [
+              "running and cycling challenges",
+              "race event management",
+              "route builder",
+              "club competitions",
+              "live rankings",
+              "gamified fitness"
+            ]
+          },
+          {
+            "slug": "tripfusion-by-vacayou",
+            "name": "TripFusion by Vacayou",
+            "district": "commerce",
+            "description": "Booking platform that packages hotel, golf, spa, transportation, events and experiences into one cart and transaction. Resorts, golf operators and travel distributors use it for white-label booking sites, APIs and AI booking agents.",
+            "website": "https://www.tripfusion.com/",
+            "keywords": [
+              "golf travel booking",
+              "dynamic travel packaging",
+              "white-label booking engine",
+              "real-time inventory",
+              "AI booking agents",
+              "resort and spa packages"
+            ]
+          },
+          {
+            "slug": "trippnshipp",
+            "name": "TrippNShipp",
+            "district": "commerce",
+            "description": "iOS app that lets travelers, including cruise passengers, match and chat with others headed to the same destination before their trip, for friendship, dating or shared excursions.",
+            "website": "https://www.trippnshipp.com/",
+            "keywords": [
+              "travel companion matching",
+              "cruise passenger social app",
+              "destination community chat",
+              "travel social networking"
+            ]
+          },
+          {
+            "slug": "trustate-corporation",
+            "name": "Trustate Corporation",
+            "district": "fintech",
+            "description": "Trusts and estates software for attorneys, trust companies and wealth managers. It covers estate planning documents, trust funding, asset and liability searches, and probate and trust administration tasks.",
+            "website": "https://www.trustate.com/",
+            "keywords": [
+              "estate planning documents",
+              "trust funding",
+              "probate automation",
+              "trust administration",
+              "asset and liability searches",
+              "estate attorney software"
+            ]
+          },
+          {
+            "slug": "trustlayer",
+            "name": "TrustLayer",
+            "district": "enterprise-software",
+            "description": "Third-party risk management platform that automates the collection and verification of certificates of insurance, licenses and other compliance documents from vendors, subcontractors and other business partners.",
+            "website": "https://www.trustlayer.io/",
+            "keywords": [
+              "COI tracking",
+              "certificate of insurance verification",
+              "vendor compliance",
+              "third-party risk management",
+              "subcontractor compliance",
+              "insurance broker tools"
+            ]
+          },
+          {
+            "slug": "uncommon-cyber-llc",
+            "name": "Uncommon Cyber LLC",
+            "district": "cyber",
+            "description": "Cybersecurity advisory firm that helps organizations design security architecture, run security operations, protect data, and select and integrate security tools, with a focus on automation and AI.",
+            "website": "https://www.uncommoncyber.com/",
+            "keywords": [
+              "security architecture",
+              "security operations",
+              "zero trust",
+              "data security",
+              "security tool selection",
+              "security automation"
+            ]
+          },
+          {
+            "slug": "vcs",
+            "name": "VCS",
+            "district": "marketing-cx",
+            "description": "Tampa marketing agency that runs location-level campaigns for franchise and multi-location businesses across geofencing, paid social, streaming TV and search, with attribution tied to point-of-sale revenue.",
+            "website": "https://www.vc-solutions.net/",
+            "keywords": [
+              "geofencing ads",
+              "multi-location marketing",
+              "franchise marketing",
+              "POS revenue attribution",
+              "streaming TV ads",
+              "paid social and search"
+            ]
+          },
+          {
+            "slug": "visitry",
+            "name": "Visitry",
+            "district": "health",
+            "description": "Florida network of home health physical and occupational therapists that covers overflow PT and OT referrals for home health agencies, with an app clinicians use to pick up visits, manage schedules and track pay.",
+            "website": "https://visitry.com/",
+            "keywords": [
+              "home health therapy",
+              "PT and OT referrals",
+              "clinician network",
+              "home health staffing",
+              "visit scheduling app"
+            ]
+          },
+          {
+            "slug": "vtem-labs",
+            "name": "VTEM Labs",
+            "district": "cyber",
+            "description": "Builds security platforms for remote penetration testing, security consultancy management, wireless testing, counter-surveillance and secure compute, used by consultancies, security teams and government.",
+            "website": "https://vtemlabs.com/",
+            "keywords": [
+              "penetration testing platform",
+              "remote security operations",
+              "wireless penetration testing",
+              "counter-surveillance and TSCM",
+              "secure compute",
+              "service-disabled veteran-owned"
+            ]
+          },
+          {
+            "slug": "vuessence",
+            "name": "VuEssence",
+            "district": "health",
+            "description": "VuEssence develops molecular diagnostic tools to help physicians detect and manage disease, including a blood test in development that reads gene expression to detect acute ischemic stroke. Its R&D lab is in USF Research Park in Tampa.",
+            "website": "https://vuessence.com/",
+            "keywords": [
+              "stroke diagnostics",
+              "molecular diagnostics",
+              "gene expression blood test",
+              "blood biomarker testing",
+              "ischemic stroke detection"
+            ]
+          },
+          {
+            "slug": "waddle",
+            "name": "Waddle",
+            "district": "mobility-logistics",
+            "description": "Waddle is an iPhone app from Tampa studio DigiTaters that lets friends, family and coworkers share departure, ETA and arrival updates when meeting up, without sharing their location.",
+            "website": "https://www.digitaters.com/",
+            "keywords": [
+              "ETA sharing",
+              "group meetups",
+              "privacy-first location",
+              "iPhone app",
+              "arrival notifications"
+            ]
+          },
+          {
+            "slug": "wildlifeos-crocalarm",
+            "name": "WildlifeOS™ (CrocAlarm™)",
+            "district": "hardware",
+            "description": "WildlifeOS builds AI systems to detect wildlife risks near people. Its first product, CrocAlarm, is a sonar-based edge AI system in development to detect alligators and crocodiles for HOAs, municipalities and resorts.",
+            "website": "https://crocalarm.com/",
+            "keywords": [
+              "wildlife threat detection",
+              "alligator detection",
+              "imaging sonar",
+              "edge AI sensors",
+              "waterfront safety alerts"
+            ]
+          },
+          {
+            "slug": "women-in-tech-entrepreneurship",
+            "name": "Women in Tech & Entrepreneurship",
+            "district": "community",
+            "description": "Women in Tech & Entrepreneurship (WTE) is a Tampa-based, dues-free community that supports women in technology and entrepreneurship through near-peer mentorship, educational programs and events across Florida.",
+            "website": "https://wte.network/",
+            "keywords": [
+              "women in tech",
+              "women founders",
+              "near-peer mentorship",
+              "networking events",
+              "entrepreneur community"
+            ]
+          },
+          {
+            "slug": "wrench-node",
+            "name": "Wrench Node",
+            "district": "mobility-logistics",
+            "description": "Wrench Node makes cloud shop management software for independent auto repair shops, covering repair orders, estimates, digital inspections, scheduling and payments, with AI that drafts estimates and answers calls.",
+            "website": "https://www.wrenchnode.com/",
+            "keywords": [
+              "auto repair shop software",
+              "digital vehicle inspections",
+              "AI phone answering",
+              "repair estimates",
+              "parts ordering",
+              "English and Spanish"
+            ]
+          },
+          {
+            "slug": "wytebox",
+            "name": "Wytebox",
+            "district": "enterprise-software",
+            "description": "Wytebox uses a desktop agent to build an operational data layer from observed work activity and makes that context available to enterprise AI agents through MCP.",
+            "website": "https://www.wytebox.ai/",
+            "keywords": [
+              "enterprise context layer",
+              "AI agent context",
+              "MCP",
+              "operational intelligence",
+              "automated project documentation",
+              "SaaS usage visibility"
+            ]
+          },
+          {
+            "slug": "ybor-ai",
+            "name": "Ybor.ai",
+            "district": "enterprise-software",
+            "description": "Ybor.ai sells an enterprise platform that automates software delivery, including Kubernetes and cloud infrastructure provisioning, app scaffolding and CI/CD, AI agent workflows and preconfigured developer environments.",
+            "website": "https://www.ybor.ai/",
+            "keywords": [
+              "platform engineering",
+              "Kubernetes provisioning",
+              "CI/CD automation",
+              "developer environments",
+              "AI agent workflows",
+              "infrastructure as code"
+            ]
+          }
+        ],
+        "updated": "2026-10-10"
+      },
+      "logoFile": "instances/embarc-collective.png",
+      "proof": "domain",
+      "problems": []
+    },
+    {
+      "entry": {
+        "id": "example-collective",
+        "name": "Example Collective",
+        "url": "https://wearenexus.xyz/example",
+        "joined": "2026-10-09",
+        "maintainer": "fritzhand",
+        "ownerConfirmedBy": "fritzhand"
+      },
+      "status": "verified",
+      "checked": "2026-10-10",
+      "manifest": {
+        "protocol": "portfolio-map/1",
+        "id": "example-collective",
+        "name": "Example Collective",
+        "publisher": {
+          "name": "Example Collective",
+          "website": "https://example.org"
+        },
+        "url": "https://wearenexus.xyz/example",
+        "tagline": "A fictional startup community, mapped in 3D.",
+        "logo": "https://wearenexus.xyz/example/brand/logo.svg",
+        "accent": "#0c7a8c",
+        "nexus": "https://wearenexus.xyz",
+        "framework": {
+          "name": "portfolio-map-3d",
+          "version": "0.1.0"
+        },
+        "labels": {
+          "company": "company",
+          "companies": "companies",
+          "district": "district",
+          "districts": "districts",
+          "people": "coaches"
+        },
+        "counts": {
+          "companies": 29,
+          "people": 6,
+          "districts": 6
+        },
+        "districts": [
+          {
+            "slug": "health",
+            "label": "Health & Life Sciences",
+            "color": "#e34948",
+            "count": 5
+          },
+          {
+            "slug": "ai-data",
+            "label": "AI & Data",
+            "color": "#00a3b4",
+            "count": 5
+          },
+          {
+            "slug": "climate",
+            "label": "Climate & Energy",
+            "color": "#7a9a01",
+            "count": 5
+          },
+          {
+            "slug": "fintech",
+            "label": "Fintech",
+            "color": "#2a78d6",
+            "count": 5
+          },
+          {
+            "slug": "hardware",
+            "label": "Hardware & Robotics",
+            "color": "#c2185b",
+            "count": 4
+          },
+          {
+            "slug": "commerce",
+            "label": "Consumer & Commerce",
+            "color": "#eda100",
+            "count": 5
+          }
+        ],
+        "companies": [
+          {
+            "slug": "brightpath-care",
+            "name": "Brightpath Care",
+            "district": "health",
+            "description": "Brightpath Care schedules home visits for nurses and tracks each patient's care plan in one shared calendar.",
+            "website": "https://brightpath-care.example",
+            "keywords": [
+              "home health",
+              "care coordination",
+              "scheduling"
+            ]
+          },
+          {
+            "slug": "cellwise-labs",
+            "name": "Cellwise Labs",
+            "district": "health",
+            "description": "Cellwise Labs builds bench-top assays that let small research labs measure cell health without a flow cytometer.",
+            "website": "https://cellwise-labs.example",
+            "keywords": [
+              "assays",
+              "lab tools",
+              "cell biology"
+            ]
+          },
+          {
+            "slug": "quietmind",
+            "name": "Quietmind",
+            "district": "health",
+            "description": "Quietmind is a sleep-coaching app that pairs short nightly lessons with a wearable sleep tracker.",
+            "website": "https://quietmind.example",
+            "keywords": [
+              "sleep",
+              "wellness",
+              "wearables"
+            ]
+          },
+          {
+            "slug": "tidewater-diagnostics",
+            "name": "Tidewater Diagnostics",
+            "district": "health",
+            "description": "Tidewater Diagnostics makes a rapid saliva test for dehydration in athletes and outdoor workers.",
+            "website": "https://tidewater-diagnostics.example",
+            "keywords": [
+              "diagnostics",
+              "hydration",
+              "occupational health"
+            ]
+          },
+          {
+            "slug": "ledgerline-health",
+            "name": "Ledgerline Health",
+            "district": "health",
+            "description": "Ledgerline Health reconciles insurance claims for independent clinics and flags denials before they are filed.",
+            "website": "https://ledgerline-health.example",
+            "keywords": [
+              "revenue cycle",
+              "claims",
+              "billing"
+            ]
+          },
+          {
+            "slug": "signalforge",
+            "name": "Signalforge",
+            "district": "ai-data",
+            "description": "Signalforge turns support tickets and call notes into a weekly report of what customers ask for most.",
+            "website": "https://signalforge.example",
+            "keywords": [
+              "customer insights",
+              "text analytics",
+              "support"
+            ]
+          },
+          {
+            "slug": "datadock",
+            "name": "Datadock",
+            "district": "ai-data",
+            "description": "Datadock moves spreadsheets and app exports into one clean database that a small team can query.",
+            "website": "https://datadock.example",
+            "keywords": [
+              "data integration",
+              "ETL",
+              "reporting"
+            ]
+          },
+          {
+            "slug": "parsewell",
+            "name": "Parsewell",
+            "district": "ai-data",
+            "description": "Parsewell reads invoices, receipts and contracts and fills in the fields an accounting system needs.",
+            "website": "https://parsewell.example",
+            "keywords": [
+              "document AI",
+              "OCR",
+              "invoices"
+            ]
+          },
+          {
+            "slug": "lumen-grid-ai",
+            "name": "Lumen Grid AI",
+            "district": "ai-data",
+            "description": "Lumen Grid AI forecasts electricity demand for municipal utilities hour by hour, a week ahead.",
+            "website": "https://lumen-grid-ai.example",
+            "keywords": [
+              "forecasting",
+              "utilities",
+              "machine learning"
+            ]
+          },
+          {
+            "slug": "contextual",
+            "name": "Contextual",
+            "district": "ai-data",
+            "description": "Contextual is a search tool for company wikis that answers questions with links to the pages it read.",
+            "website": "https://contextual.example",
+            "keywords": [
+              "enterprise search",
+              "knowledge management"
+            ]
+          },
+          {
+            "slug": "greenrow-farms",
+            "name": "Greenrow Farms",
+            "district": "climate",
+            "description": "Greenrow Farms grows leafy greens in stacked indoor beds lit by solar-charged batteries.",
+            "website": "https://greenrow-farms.example",
+            "keywords": [
+              "vertical farming",
+              "agriculture",
+              "solar"
+            ]
+          },
+          {
+            "slug": "ampshare",
+            "name": "Ampshare",
+            "district": "climate",
+            "description": "Ampshare lets apartment residents subscribe to a share of a nearby community solar array.",
+            "website": "https://ampshare.example",
+            "keywords": [
+              "community solar",
+              "renewables",
+              "subscriptions"
+            ]
+          },
+          {
+            "slug": "retrofit-works",
+            "name": "Retrofit Works",
+            "district": "climate",
+            "description": "Retrofit Works audits small commercial buildings and plans the insulation and heat-pump upgrades that pay back fastest.",
+            "website": "https://retrofit-works.example",
+            "keywords": [
+              "energy audits",
+              "heat pumps",
+              "retrofits"
+            ]
+          },
+          {
+            "slug": "saltmarsh-carbon",
+            "name": "Saltmarsh Carbon",
+            "district": "climate",
+            "description": "Saltmarsh Carbon restores coastal wetlands and measures the carbon they store with drone surveys.",
+            "website": "https://saltmarsh-carbon.example",
+            "keywords": [
+              "blue carbon",
+              "wetlands",
+              "drones"
+            ]
+          },
+          {
+            "slug": "coldchain-zero",
+            "name": "Coldchain Zero",
+            "district": "climate",
+            "description": "Coldchain Zero rents battery-powered refrigerated containers to food distributors.",
+            "website": "https://coldchain-zero.example",
+            "keywords": [
+              "cold chain",
+              "refrigeration",
+              "electrification"
+            ]
+          },
+          {
+            "slug": "fernway-pay",
+            "name": "Fernway Pay",
+            "district": "fintech",
+            "description": "Fernway Pay lets contractors send an invoice by text message and get paid by card or bank transfer.",
+            "website": "https://fernway-pay.example",
+            "keywords": [
+              "payments",
+              "invoicing",
+              "contractors"
+            ]
+          },
+          {
+            "slug": "keel-capital-tools",
+            "name": "Keel Capital Tools",
+            "district": "fintech",
+            "description": "Keel Capital Tools keeps a startup's cap table, option grants and investor updates in one place.",
+            "website": "https://keel-capital-tools.example",
+            "keywords": [
+              "cap table",
+              "equity management",
+              "investor updates"
+            ]
+          },
+          {
+            "slug": "roundup-savings",
+            "name": "Roundup Savings",
+            "district": "fintech",
+            "description": "Roundup Savings rounds up card purchases and moves the change into a savings goal the user picks.",
+            "website": "https://roundup-savings.example",
+            "keywords": [
+              "savings",
+              "personal finance",
+              "budgeting"
+            ]
+          },
+          {
+            "slug": "claimcraft",
+            "name": "Claimcraft",
+            "district": "fintech",
+            "description": "Claimcraft gives small insurance agencies a portal where clients file and follow their claims.",
+            "website": "https://claimcraft.example",
+            "keywords": [
+              "insurtech",
+              "claims",
+              "client portal"
+            ]
+          },
+          {
+            "slug": "ledgerly",
+            "name": "Ledgerly",
+            "district": "fintech",
+            "description": "Ledgerly is a bookkeeping service for nonprofits that closes the books every month and prepares grant reports.",
+            "website": "https://ledgerly.example",
+            "keywords": [
+              "bookkeeping",
+              "nonprofit accounting",
+              "grant reporting"
+            ]
+          },
+          {
+            "slug": "tern-robotics",
+            "name": "Tern Robotics",
+            "district": "hardware",
+            "description": "Tern Robotics builds a shelf-scanning robot that counts stock in warehouses overnight.",
+            "website": "https://tern-robotics.example",
+            "keywords": [
+              "robotics",
+              "inventory",
+              "computer vision"
+            ]
+          },
+          {
+            "slug": "ferrous-print",
+            "name": "Ferrous Print",
+            "district": "hardware",
+            "description": "Ferrous Print 3D-prints replacement parts in metal for factories whose machines are no longer made.",
+            "website": "https://ferrous-print.example",
+            "keywords": [
+              "additive manufacturing",
+              "spare parts",
+              "metal printing"
+            ]
+          },
+          {
+            "slug": "pocket-sensor",
+            "name": "Pocket Sensor",
+            "district": "hardware",
+            "description": "Pocket Sensor makes coin-sized wireless sensors that report temperature and humidity in storage rooms.",
+            "website": "https://pocket-sensor.example",
+            "keywords": [
+              "IoT",
+              "sensors",
+              "monitoring"
+            ]
+          },
+          {
+            "slug": "harborview-drones",
+            "name": "Harborview Drones",
+            "district": "hardware",
+            "description": "Harborview Drones inspects bridges and ship hulls with tethered underwater drones.",
+            "website": "https://harborview-drones.example",
+            "keywords": [
+              "drones",
+              "inspection",
+              "maritime"
+            ]
+          },
+          {
+            "slug": "shelfmate",
+            "name": "Shelfmate",
+            "district": "commerce",
+            "description": "Shelfmate helps independent grocers sell online with same-day pickup from their own shelves.",
+            "website": "https://shelfmate.example",
+            "keywords": [
+              "grocery",
+              "e-commerce",
+              "pickup"
+            ]
+          },
+          {
+            "slug": "threadloop",
+            "name": "Threadloop",
+            "district": "commerce",
+            "description": "Threadloop runs resale shops for clothing brands, taking back worn items and selling them again under the brand's name.",
+            "website": "https://threadloop.example",
+            "keywords": [
+              "resale",
+              "circular fashion",
+              "apparel"
+            ]
+          },
+          {
+            "slug": "tablecraft",
+            "name": "Tablecraft",
+            "district": "commerce",
+            "description": "Tablecraft is an ordering and loyalty app for neighborhood restaurants.",
+            "website": "https://tablecraft.example",
+            "keywords": [
+              "restaurants",
+              "loyalty",
+              "online ordering"
+            ]
+          },
+          {
+            "slug": "pawprint-supply",
+            "name": "Pawprint Supply",
+            "district": "commerce",
+            "description": "Pawprint Supply delivers pet food on a schedule set by how much each pet eats.",
+            "website": "https://pawprint-supply.example",
+            "keywords": [
+              "pets",
+              "subscriptions",
+              "delivery"
+            ]
+          },
+          {
+            "slug": "local-loop-events",
+            "name": "Local Loop Events",
+            "district": "commerce",
+            "description": "Local Loop Events organizes weekend makers' markets and sells booth space to local brands.",
+            "website": "https://local-loop-events.example",
+            "keywords": [
+              "markets",
+              "events",
+              "local brands"
+            ]
+          }
+        ],
+        "updated": "2026-10-10"
+      },
+      "logoFile": "instances/example-collective.svg",
+      "proof": "maintainer",
+      "problems": []
+    }
+  ]
+}

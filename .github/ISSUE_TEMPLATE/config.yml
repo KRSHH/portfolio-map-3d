@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How the network works
+    url: https://github.com/fritzhand/portfolio-map-3d/blob/main/docs/network.md
+    about: The linking handshake, and what the Nexus checks before a map appears.
+  - name: Have your map built for you
+    url: https://wearenexus.xyz/#built-for-you
+    about: The paid setup service (setup, a custom walk world, care). Requests go by email from the landing page, not through issues.

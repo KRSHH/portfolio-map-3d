@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>The Nexus · portfolio-map-3d</title>
+    <meta name="description" content="portfolio-map-3d is an open source framework for publishing your companies as a 3D globe, a walkable world and a directory. Every map built with it links into the Nexus, a shared world where every map appears." />
+    <meta name="theme-color" content="#05060f" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content="The Nexus · portfolio-map-3d" />
+    <meta property="og:description" content="Every portfolio, one shared world. An open source framework for 3D portfolio maps, and the shared world every map links into." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Nexus" />
+    <!-- Filled in at build time from federation/protocol.ts (NEXUS_URL). -->
+    <meta property="og:url" content="__NEXUS_URL__/" />
+    <!-- The link-preview image: public/og.png, 1200 x 630 (nexus/README.md says how it was made). -->
+    <meta property="og:image" content="__NEXUS_URL__/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Nexus: every portfolio, one shared world. The maps in the network as worlds around a glowing core." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Nexus · portfolio-map-3d" />
+    <meta name="twitter:description" content="Every portfolio, one shared world. An open source framework for 3D portfolio maps, and the shared world every map links into." />
+    <meta name="twitter:image" content="__NEXUS_URL__/og.png" />
+    <link rel="canonical" href="__NEXUS_URL__/" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; color: #eef1ff; background: #05060f; padding: 24px; margin: 0">
+        The Nexus needs JavaScript for its 3D world and its network list. The list of maps it reads is
+        <a href="%BASE_URL%network.json" style="color: #3be8ff">network.json</a>. The framework's source is at
+        <a href="https://github.com/fritzhand/portfolio-map-3d" style="color: #3be8ff">github.com/fritzhand/portfolio-map-3d</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

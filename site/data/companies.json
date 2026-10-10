@@ -1,0 +1,1574 @@
+{
+  "_about": "The companies on the map (docs/data-contract.md). EXAMPLE DATA: every company, person and connection in this file is fictional, written for the framework's demo; websites use the reserved .example domain. Replace this file with your own records (by hand, or with `npm run import -- companies.csv`). Each record keeps its sources; the live map does not show them.",
+  "companies": [
+    {
+      "slug": "brightpath-care",
+      "name": "Brightpath Care",
+      "district": "health",
+      "secondaryDistricts": [],
+      "tags": [
+        "Healthcare"
+      ],
+      "website": "https://brightpath-care.example",
+      "description": "Brightpath Care schedules home visits for nurses and tracks each patient's care plan in one shared calendar.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Maya Ortiz",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Daniel Reyes",
+          "title": "CTO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "healthcare-delivery",
+        "software-development"
+      ],
+      "servesIndustries": [
+        "healthcare"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "home health",
+        "care coordination",
+        "scheduling"
+      ],
+      "providerPitch": "Scheduling and care-plan software for home health agencies.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "cellwise-labs",
+      "name": "Cellwise Labs",
+      "district": "health",
+      "secondaryDistricts": [],
+      "tags": [
+        "Life Sciences"
+      ],
+      "website": "https://cellwise-labs.example",
+      "description": "Cellwise Labs builds bench-top assays that let small research labs measure cell health without a flow cytometer.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Priya Natarajan",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [],
+      "servesIndustries": [],
+      "businessModel": "B2B",
+      "keywords": [
+        "assays",
+        "lab tools",
+        "cell biology"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "quietmind",
+      "name": "Quietmind",
+      "district": "health",
+      "secondaryDistricts": [],
+      "tags": [
+        "Healthcare",
+        "Consumer"
+      ],
+      "website": "https://quietmind.example",
+      "description": "Quietmind is a sleep-coaching app that pairs short nightly lessons with a wearable sleep tracker.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Jordan Blake",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Lena Fischer",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "wellness-benefits"
+      ],
+      "servesIndustries": [
+        "enterprise",
+        "small-business"
+      ],
+      "businessModel": "B2B2C",
+      "keywords": [
+        "sleep",
+        "wellness",
+        "wearables"
+      ],
+      "providerPitch": "A sleep program employers offer as a benefit.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "tidewater-diagnostics",
+      "name": "Tidewater Diagnostics",
+      "district": "health",
+      "secondaryDistricts": [
+        "hardware"
+      ],
+      "tags": [
+        "Healthcare",
+        "Hardware"
+      ],
+      "website": "https://tidewater-diagnostics.example",
+      "description": "Tidewater Diagnostics makes a rapid saliva test for dehydration in athletes and outdoor workers.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [],
+      "servesIndustries": [],
+      "businessModel": "B2B",
+      "keywords": [
+        "diagnostics",
+        "hydration",
+        "occupational health"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "ledgerline-health",
+      "name": "Ledgerline Health",
+      "district": "health",
+      "secondaryDistricts": [
+        "fintech"
+      ],
+      "tags": [
+        "Healthcare",
+        "Fintech"
+      ],
+      "website": "https://ledgerline-health.example",
+      "description": "Ledgerline Health reconciles insurance claims for independent clinics and flags denials before they are filed.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Samuel Okafor",
+          "title": "CEO and Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "finance-operations",
+        "data-analytics"
+      ],
+      "servesIndustries": [
+        "healthcare"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "revenue cycle",
+        "claims",
+        "billing"
+      ],
+      "providerPitch": "Claims reconciliation for independent clinics.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "signalforge",
+      "name": "Signalforge",
+      "district": "ai-data",
+      "secondaryDistricts": [],
+      "tags": [
+        "AI",
+        "B2B"
+      ],
+      "website": "https://signalforge.example",
+      "description": "Signalforge turns support tickets and call notes into a weekly report of what customers ask for most.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Hannah Cho",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Marcus Webb",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "ai-automation",
+        "data-analytics",
+        "sales-cx"
+      ],
+      "servesIndustries": [
+        "cross-industry",
+        "startups"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "customer insights",
+        "text analytics",
+        "support"
+      ],
+      "providerPitch": "Weekly customer-insight reports from support tickets and call notes.",
+      "connections": [
+        {
+          "with": "brightpath-care",
+          "kind": "customer",
+          "summary": "Brightpath Care uses Signalforge to review patient-support requests (example connection).",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "datadock",
+      "name": "Datadock",
+      "district": "ai-data",
+      "secondaryDistricts": [],
+      "tags": [
+        "AI",
+        "B2B"
+      ],
+      "website": "https://datadock.example",
+      "description": "Datadock moves spreadsheets and app exports into one clean database that a small team can query.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Ines Duarte",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "data-analytics",
+        "cloud-it"
+      ],
+      "servesIndustries": [
+        "small-business",
+        "nonprofits"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "data integration",
+        "ETL",
+        "reporting"
+      ],
+      "providerPitch": "A managed data warehouse for small teams.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "parsewell",
+      "name": "Parsewell",
+      "district": "ai-data",
+      "secondaryDistricts": [],
+      "tags": [
+        "AI",
+        "Fintech"
+      ],
+      "website": "https://parsewell.example",
+      "description": "Parsewell reads invoices, receipts and contracts and fills in the fields an accounting system needs.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Tomás Herrera",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "ai-automation",
+        "finance-operations"
+      ],
+      "servesIndustries": [
+        "financial-services",
+        "small-business"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "document AI",
+        "OCR",
+        "invoices"
+      ],
+      "providerPitch": "Document extraction for accounting teams.",
+      "connections": [
+        {
+          "with": "fernway-pay",
+          "kind": "partnership",
+          "summary": "Parsewell and Fernway Pay offer a joint invoice-to-payment workflow (example connection).",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "lumen-grid-ai",
+      "name": "Lumen Grid AI",
+      "district": "ai-data",
+      "secondaryDistricts": [
+        "climate"
+      ],
+      "tags": [
+        "AI",
+        "Energy"
+      ],
+      "website": "https://lumen-grid-ai.example",
+      "description": "Lumen Grid AI forecasts electricity demand for municipal utilities hour by hour, a week ahead.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [
+        "ai-automation",
+        "energy-sustainability"
+      ],
+      "servesIndustries": [
+        "energy-utilities",
+        "government-defense"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "forecasting",
+        "utilities",
+        "machine learning"
+      ],
+      "providerPitch": "Demand forecasting for municipal utilities.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "contextual",
+      "name": "Contextual",
+      "district": "ai-data",
+      "secondaryDistricts": [],
+      "tags": [
+        "AI",
+        "B2B"
+      ],
+      "website": "https://contextual.example",
+      "description": "Contextual is a search tool for company wikis that answers questions with links to the pages it read.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Rafael Silva",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Grace Liu",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "ai-automation",
+        "software-development"
+      ],
+      "servesIndustries": [
+        "technology",
+        "enterprise"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "enterprise search",
+        "knowledge management"
+      ],
+      "providerPitch": "Question answering over a company's own documents.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "greenrow-farms",
+      "name": "Greenrow Farms",
+      "district": "climate",
+      "secondaryDistricts": [],
+      "tags": [
+        "Agriculture"
+      ],
+      "website": "https://greenrow-farms.example",
+      "description": "Greenrow Farms grows leafy greens in stacked indoor beds lit by solar-charged batteries.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Elena Park",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [],
+      "servesIndustries": [],
+      "businessModel": "B2C",
+      "keywords": [
+        "vertical farming",
+        "agriculture",
+        "solar"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "ampshare",
+      "name": "Ampshare",
+      "district": "climate",
+      "secondaryDistricts": [],
+      "tags": [
+        "Energy"
+      ],
+      "website": "https://ampshare.example",
+      "description": "Ampshare lets apartment residents subscribe to a share of a nearby community solar array.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Noah Grant",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "energy-sustainability"
+      ],
+      "servesIndustries": [
+        "real-estate",
+        "consumers"
+      ],
+      "businessModel": "B2B2C",
+      "keywords": [
+        "community solar",
+        "renewables",
+        "subscriptions"
+      ],
+      "providerPitch": "Community solar subscriptions for apartment buildings.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "retrofit-works",
+      "name": "Retrofit Works",
+      "district": "climate",
+      "secondaryDistricts": [],
+      "tags": [
+        "Energy",
+        "Proptech"
+      ],
+      "website": "https://retrofit-works.example",
+      "description": "Retrofit Works audits small commercial buildings and plans the insulation and heat-pump upgrades that pay back fastest.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Aisha Bello",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "energy-sustainability",
+        "real-estate-construction",
+        "research-advisory"
+      ],
+      "servesIndustries": [
+        "real-estate",
+        "small-business"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "energy audits",
+        "heat pumps",
+        "retrofits"
+      ],
+      "providerPitch": "Energy audits and retrofit plans for small commercial buildings.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "saltmarsh-carbon",
+      "name": "Saltmarsh Carbon",
+      "district": "climate",
+      "secondaryDistricts": [],
+      "tags": [
+        "Energy",
+        "Agriculture"
+      ],
+      "website": "https://saltmarsh-carbon.example",
+      "description": "Saltmarsh Carbon restores coastal wetlands and measures the carbon they store with drone surveys.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [
+        "research-advisory"
+      ],
+      "servesIndustries": [
+        "government-defense",
+        "enterprise"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "blue carbon",
+        "wetlands",
+        "drones"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "coldchain-zero",
+      "name": "Coldchain Zero",
+      "district": "climate",
+      "secondaryDistricts": [],
+      "tags": [
+        "Energy",
+        "Supply Chain"
+      ],
+      "website": "https://coldchain-zero.example",
+      "description": "Coldchain Zero rents battery-powered refrigerated containers to food distributors.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Victor Mensah",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "logistics-supply-chain",
+        "energy-sustainability"
+      ],
+      "servesIndustries": [
+        "hospitality-food",
+        "logistics-transportation"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "cold chain",
+        "refrigeration",
+        "electrification"
+      ],
+      "providerPitch": "Electric refrigerated containers for food distribution.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "fernway-pay",
+      "name": "Fernway Pay",
+      "district": "fintech",
+      "secondaryDistricts": [],
+      "tags": [
+        "Fintech"
+      ],
+      "website": "https://fernway-pay.example",
+      "description": "Fernway Pay lets contractors send an invoice by text message and get paid by card or bank transfer.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Olivia Brooks",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Ethan Moore",
+          "title": "CTO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "payments-lending",
+        "finance-operations"
+      ],
+      "servesIndustries": [
+        "construction",
+        "small-business"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "payments",
+        "invoicing",
+        "contractors"
+      ],
+      "providerPitch": "Text-message invoicing and payments for contractors.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "keel-capital-tools",
+      "name": "Keel Capital Tools",
+      "district": "fintech",
+      "secondaryDistricts": [],
+      "tags": [
+        "Fintech",
+        "B2B"
+      ],
+      "website": "https://keel-capital-tools.example",
+      "description": "Keel Capital Tools keeps a startup's cap table, option grants and investor updates in one place.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Benjamin Ruiz",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "finance-operations",
+        "legal-compliance"
+      ],
+      "servesIndustries": [
+        "startups"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "cap table",
+        "equity management",
+        "investor updates"
+      ],
+      "providerPitch": "Cap table and equity management for early-stage startups.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "roundup-savings",
+      "name": "Roundup Savings",
+      "district": "fintech",
+      "secondaryDistricts": [],
+      "tags": [
+        "Fintech",
+        "Consumer"
+      ],
+      "website": "https://roundup-savings.example",
+      "description": "Roundup Savings rounds up card purchases and moves the change into a savings goal the user picks.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Chloe Adams",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Isaac Kim",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [],
+      "servesIndustries": [],
+      "businessModel": "B2C",
+      "keywords": [
+        "savings",
+        "personal finance",
+        "budgeting"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "claimcraft",
+      "name": "Claimcraft",
+      "district": "fintech",
+      "secondaryDistricts": [],
+      "tags": [
+        "Fintech"
+      ],
+      "website": "https://claimcraft.example",
+      "description": "Claimcraft gives small insurance agencies a portal where clients file and follow their claims.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [
+        "software-development",
+        "sales-cx"
+      ],
+      "servesIndustries": [
+        "insurance"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "insurtech",
+        "claims",
+        "client portal"
+      ],
+      "providerPitch": "Client claims portals for independent insurance agencies.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "ledgerly",
+      "name": "Ledgerly",
+      "district": "fintech",
+      "secondaryDistricts": [],
+      "tags": [
+        "Fintech",
+        "Community Partner"
+      ],
+      "website": "https://ledgerly.example",
+      "description": "Ledgerly is a bookkeeping service for nonprofits that closes the books every month and prepares grant reports.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Fatima Haddad",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "finance-operations"
+      ],
+      "servesIndustries": [
+        "nonprofits"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "bookkeeping",
+        "nonprofit accounting",
+        "grant reporting"
+      ],
+      "providerPitch": "Monthly bookkeeping and grant reporting for nonprofits.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "tern-robotics",
+      "name": "Tern Robotics",
+      "district": "hardware",
+      "secondaryDistricts": [],
+      "tags": [
+        "Hardware",
+        "Supply Chain"
+      ],
+      "website": "https://tern-robotics.example",
+      "description": "Tern Robotics builds a shelf-scanning robot that counts stock in warehouses overnight.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Lucas Meyer",
+          "title": "CEO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Sofia Rossi",
+          "title": "CTO and Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "hardware-iot",
+        "logistics-supply-chain"
+      ],
+      "servesIndustries": [
+        "logistics-transportation",
+        "retail-ecommerce"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "robotics",
+        "inventory",
+        "computer vision"
+      ],
+      "providerPitch": "Overnight inventory counts by robot.",
+      "connections": [
+        {
+          "with": "signalforge",
+          "kind": "shared-founder",
+          "summary": "Signalforge's co-founder Marcus Webb advises Tern Robotics (example connection).",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "ferrous-print",
+      "name": "Ferrous Print",
+      "district": "hardware",
+      "secondaryDistricts": [],
+      "tags": [
+        "Hardware"
+      ],
+      "website": "https://ferrous-print.example",
+      "description": "Ferrous Print 3D-prints replacement parts in metal for factories whose machines are no longer made.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Kwame Asante",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "hardware-iot"
+      ],
+      "servesIndustries": [
+        "manufacturing-industrial"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "additive manufacturing",
+        "spare parts",
+        "metal printing"
+      ],
+      "providerPitch": "Metal replacement parts printed on demand.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "pocket-sensor",
+      "name": "Pocket Sensor",
+      "district": "hardware",
+      "secondaryDistricts": [],
+      "tags": [
+        "Hardware"
+      ],
+      "website": "https://pocket-sensor.example",
+      "description": "Pocket Sensor makes coin-sized wireless sensors that report temperature and humidity in storage rooms.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [
+        "hardware-iot",
+        "data-analytics"
+      ],
+      "servesIndustries": [
+        "hospitality-food",
+        "life-sciences",
+        "manufacturing-industrial"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "IoT",
+        "sensors",
+        "monitoring"
+      ],
+      "providerPitch": "Wireless temperature and humidity monitoring.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "harborview-drones",
+      "name": "Harborview Drones",
+      "district": "hardware",
+      "secondaryDistricts": [],
+      "tags": [
+        "Hardware",
+        "Government + Intelligence"
+      ],
+      "website": "https://harborview-drones.example",
+      "description": "Harborview Drones inspects bridges and ship hulls with tethered underwater drones.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Owen Fitzgerald",
+          "title": "CEO and Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "hardware-iot",
+        "research-advisory"
+      ],
+      "servesIndustries": [
+        "maritime",
+        "government-defense"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "drones",
+        "inspection",
+        "maritime"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "shelfmate",
+      "name": "Shelfmate",
+      "district": "commerce",
+      "secondaryDistricts": [],
+      "tags": [
+        "eCommerce",
+        "Marketplace"
+      ],
+      "website": "https://shelfmate.example",
+      "description": "Shelfmate helps independent grocers sell online with same-day pickup from their own shelves.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Zoe Bennett",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        },
+        {
+          "name": "Arjun Mehta",
+          "title": "Co-Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "marketplace-sourcing",
+        "software-development"
+      ],
+      "servesIndustries": [
+        "retail-ecommerce",
+        "small-business"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "grocery",
+        "e-commerce",
+        "pickup"
+      ],
+      "providerPitch": "Online ordering and pickup for independent grocers.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "threadloop",
+      "name": "Threadloop",
+      "district": "commerce",
+      "secondaryDistricts": [],
+      "tags": [
+        "Consumer",
+        "eCommerce"
+      ],
+      "website": "https://threadloop.example",
+      "description": "Threadloop runs resale shops for clothing brands, taking back worn items and selling them again under the brand's name.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Camille Laurent",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "marketplace-sourcing",
+        "logistics-supply-chain"
+      ],
+      "servesIndustries": [
+        "retail-ecommerce"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "resale",
+        "circular fashion",
+        "apparel"
+      ],
+      "providerPitch": "Branded resale programs for apparel companies.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "tablecraft",
+      "name": "Tablecraft",
+      "district": "commerce",
+      "secondaryDistricts": [],
+      "tags": [
+        "Consumer",
+        "Marketing + Advertising"
+      ],
+      "website": "https://tablecraft.example",
+      "description": "Tablecraft is an ordering and loyalty app for neighborhood restaurants.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [],
+      "leaders": [],
+      "services": [
+        "software-development",
+        "marketing-advertising",
+        "sales-cx"
+      ],
+      "servesIndustries": [
+        "hospitality-food"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "restaurants",
+        "loyalty",
+        "online ordering"
+      ],
+      "providerPitch": "Ordering and loyalty for neighborhood restaurants.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "pawprint-supply",
+      "name": "Pawprint Supply",
+      "district": "commerce",
+      "secondaryDistricts": [],
+      "tags": [
+        "Consumer",
+        "Home + Pet"
+      ],
+      "website": "https://pawprint-supply.example",
+      "description": "Pawprint Supply delivers pet food on a schedule set by how much each pet eats.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Mia Thompson",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [],
+      "servesIndustries": [],
+      "businessModel": "B2C",
+      "keywords": [
+        "pets",
+        "subscriptions",
+        "delivery"
+      ],
+      "providerPitch": null,
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "local-loop-events",
+      "name": "Local Loop Events",
+      "district": "commerce",
+      "secondaryDistricts": [],
+      "tags": [
+        "Consumer",
+        "Marketplace"
+      ],
+      "website": "https://local-loop-events.example",
+      "description": "Local Loop Events organizes weekend makers' markets and sells booth space to local brands.",
+      "descriptionSource": {
+        "kind": "org-records",
+        "title": "Example data written for the portfolio-map-3d demo (fictional)",
+        "retrieved": "2026-10-09"
+      },
+      "location": null,
+      "linkedin": null,
+      "founders": [
+        {
+          "name": "Diego Alvarez",
+          "title": "Founder",
+          "source": {
+            "kind": "org-records",
+            "title": "Example data written for the portfolio-map-3d demo (fictional)",
+            "retrieved": "2026-10-09"
+          }
+        }
+      ],
+      "leaders": [],
+      "services": [
+        "events-engagement",
+        "marketing-advertising"
+      ],
+      "servesIndustries": [
+        "retail-ecommerce",
+        "small-business"
+      ],
+      "businessModel": "B2B",
+      "keywords": [
+        "markets",
+        "events",
+        "local brands"
+      ],
+      "providerPitch": "Makers' markets and booth sales for local brands.",
+      "connections": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    }
+  ]
+}

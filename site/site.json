@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema/site.schema.json",
+  "network": {
+    "id": "example-collective",
+    "shareDescriptions": true
+  },
+  "org": {
+    "name": "Example Collective",
+    "website": "https://example.org",
+    "logo": "brand/logo.svg",
+    "logoOnDark": "brand/logo-on-dark.svg"
+  },
+  "map": {
+    "title": "Example Collective Map",
+    "tagline": "A fictional startup community, mapped in 3D.",
+    "description": "The companies of Example Collective, a fictional startup community, on a rotating globe by district, in a walkable world and in a searchable directory. A demo of the portfolio-map-3d framework.",
+    "url": "https://wearenexus.xyz/example",
+    "directoryUrl": null,
+    "notice": "Example data: every company and person on this map is fictional."
+  },
+  "labels": {
+    "company": "company",
+    "companies": "companies",
+    "district": "district",
+    "districts": "districts",
+    "person": "coach",
+    "people": "coaches",
+    "hub": "Example Collective"
+  },
+  "theme": {
+    "accent": "#0c7a8c",
+    "cta": "#ff3a61",
+    "ctaText": "#1d1f24",
+    "ink": "#1d1f24"
+  },
+  "live": {
+    "enabled": false,
+    "channel": "example-collective-walk"
+  }
+}

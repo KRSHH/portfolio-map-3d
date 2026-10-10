@@ -1,0 +1,177 @@
+/* ============================================================
+   tokens.css — the interface's skin. Every color/font literal for
+   the UI chrome lives here. District colors live in
+   site/taxonomy.json (checked as a set) and are read from data,
+   never retyped.
+
+   The brand tokens (--brand-ink, --brand-accent, --brand-cta, and
+   --cta, --cta-text, --accent, --focus, --link that follow them)
+   are defaults: the site plugin (vite.config.ts) overrides them
+   from site/site.json "theme", so a map is themed without
+   editing this file. Type: Instrument Sans + Instrument Serif.
+   ============================================================ */
+:root {
+  --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --speed: 180ms;
+  --topbar-h: 60px;
+  --sheet-h: 0px; /* set live by the detail sheet */
+  --glass-blur: 16px;
+
+  --brand-ink: #1d1f24;
+  --brand-ink-deep: #04070c;
+  --brand-cta: #ff3a61;
+  --brand-accent: #0c7a8c;
+  --brand-navy: #2d4a65;
+  --on-district: #ffffff; /* icon and monogram ink on district-color fills */
+  /* The one ring color of every person badge (3D badges and DOM headshots). Neutral on purpose:
+     people belong to no industry, so it is not a district color. */
+  --person: #3b4a5a;
+}
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --person-ring: #3b4a5a; /* person headshot ring in the interface (the 3D scenes use --person) */
+  --bg: #f4f6f7;
+  --surface: #ffffff;
+  --surface-alt: #f1f4f5;
+  --surface-sunken: #e6ebee;
+  --border: #dde3e7;
+  --border-strong: #c3ccd2;
+  --text: #1d1f24;
+  --text-muted: #4a525c;
+  --text-faint: #5f6873; /* 4.5:1+ on surface */
+  --link: #0c6f80;
+  --cta: #ff3a61;
+  /* Ink label on the pink: 4.73:1 at rest, 5.55:1 on the lighter hover/pressed fill.
+     White on #ff3a61 is only 3.48:1, and ink on a darker pink falls below 4.5:1. */
+  --cta-hover: #ff5c7c;
+  --cta-text: #1d1f24;
+  --accent: #0c7a8c;
+  --accent-tint: #e3f3f5;
+  --focus: #0c7a8c;
+  --scrim: rgb(13 17 22 / 0.42);
+  --glass-bg: rgb(255 255 255 / 0.78);
+  --glass-border: rgb(255 255 255 / 0.7);
+  --shadow-1: 0 1px 2px rgb(16 24 32 / 0.06), 0 1px 3px rgb(16 24 32 / 0.1);
+  --shadow-2: 0 6px 16px -6px rgb(16 24 32 / 0.18), 0 2px 6px -2px rgb(16 24 32 / 0.08);
+  --shadow-3: 0 20px 44px -14px rgb(16 24 32 / 0.32), 0 6px 14px -6px rgb(16 24 32 / 0.14);
+  --chip-bg: #eef2f4;
+  --chip-text: #2b323a;
+  --kbd-bg: #ffffff;
+  --warn-bg: #fff5df;
+  --warn-text: #7a4f00;
+  --danger: #b42318; /* ?debug probe: a finding that explains missing logos */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --person-ring: #8d9cac;
+    --bg: #0d1116;
+    --surface: #151a21;
+    --surface-alt: #1b222b;
+    --surface-sunken: #10151b;
+    --border: #2a333d;
+    --border-strong: #3a4552;
+    --text: #eef2f5;
+    --text-muted: #b6c0ca;
+    --text-faint: #9aa5b1;
+    --link: #5cc8d8;
+    --cta: #ff3a61;
+    --cta-hover: #ff5c7c;
+    --cta-text: #1d1f24;
+    --accent: #3fb3c4;
+    --accent-tint: #13303a;
+    --focus: #5cc8d8;
+    --scrim: rgb(0 0 0 / 0.55);
+    --glass-bg: rgb(21 26 33 / 0.8);
+    --glass-border: rgb(255 255 255 / 0.08);
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-2: 0 6px 16px -6px rgb(0 0 0 / 0.6);
+    --shadow-3: 0 20px 44px -14px rgb(0 0 0 / 0.7);
+    --chip-bg: #222b35;
+    --chip-text: #dbe3ea;
+    --kbd-bg: #1b222b;
+    --warn-bg: #3a2c0a;
+    --warn-text: #f6d58a;
+    --danger: #ff8b7f;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --person-ring: #8d9cac;
+  --bg: #0d1116;
+  --surface: #151a21;
+  --surface-alt: #1b222b;
+  --surface-sunken: #10151b;
+  --border: #2a333d;
+  --border-strong: #3a4552;
+  --text: #eef2f5;
+  --text-muted: #b6c0ca;
+  --text-faint: #9aa5b1;
+  --link: #5cc8d8;
+  --cta: #ff3a61;
+  --cta-hover: #ff5c7c;
+  --cta-text: #1d1f24;
+  --accent: #3fb3c4;
+  --accent-tint: #13303a;
+  --focus: #5cc8d8;
+  --scrim: rgb(0 0 0 / 0.55);
+  --glass-bg: rgb(21 26 33 / 0.8);
+  --glass-border: rgb(255 255 255 / 0.08);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 6px 16px -6px rgb(0 0 0 / 0.6);
+  --shadow-3: 0 20px 44px -14px rgb(0 0 0 / 0.7);
+  --chip-bg: #222b35;
+  --chip-text: #dbe3ea;
+  --kbd-bg: #1b222b;
+  --warn-bg: #3a2c0a;
+  --warn-text: #f6d58a;
+  --danger: #ff8b7f;
+}
+
+/* ---- 3D scene palette (both scenes are daylight; see README) ---- */
+:root {
+  --scene-sky-top: #9fd3ea;
+  --scene-sky-bottom: #eaf6f8;
+  --scene-sea: #3f9fbf;
+  --scene-sea-deep: #2a7fa3;
+  --scene-sand: #ecdcb0;
+  --scene-grass: #a9cf8a;
+  --scene-grass-dark: #8fbd72;
+  --scene-road: #efe6d2;
+  --scene-plaza: #f3eee4;
+  --scene-tree: #5f9f5a;
+  --scene-tree-dark: #3f7d46;
+  --scene-trunk: #8a6a4a;
+  --scene-rock: #b9b2a6;
+  /* The hub building (src/views/walk/hub.ts): light walls, a pale roof, dark frames, glass. */
+  --scene-paint: #ece8df;        /* walls and piers */
+  --scene-coping: #c8ccce;       /* parapet coping */
+  --scene-membrane: #a3aab0;     /* flat roofs */
+  --scene-roof-white: #eef1f0;   /* the upper volume, the canopy's top */
+  --scene-fascia: #3a3d42;       /* mullions, door frames, the canopy edge */
+  --scene-concrete: #b8b5ad;     /* the plinth and planters */
+  --scene-mulch: #4a3a2c;        /* planter beds */
+  --scene-glass: #22303a;
+  --scene-sign-panel: #f7f6f2;   /* the rooftop sign's light face */
+  --scene-person: #6f8296; /* the walk world's People area: its ground ring, landmark, arch and pin heads (a lighter tint of --person, which the badge rings keep) */
+  --mindmap-bg-top: #f7fafb;
+  --mindmap-bg-bottom: #e4eef2;
+  --mindmap-line: #9aa9b4;
+  --mindmap-provider: #eda100; /* potential fit: companies who could serve the selected one */
+  --mindmap-client: #2a78d6;   /* potential fit: companies the selected one could serve */
+  --mindmap-person-glass: #c3dbe2; /* the people globe's glass tint (one even tint, no regions) */
+  --mindmap-person-stem: #8a98a6;  /* stems and surface pins under the people's badges */
+  --live: #1f9a3a;             /* live-explorers status dot */
+}

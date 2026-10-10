@@ -1,0 +1,57 @@
+/* The ?debug probe panel (src/debug/DebugProbe.tsx). Loaded only with ?debug.
+   Colors come only from tokens.css variables.
+
+   Placement: top left, under the top bar and below the walk view's top-left row (live pill,
+   help, focus chip), above the 3D HUDs but under the shell's panels and the detail sheet.
+   Open, it stays clear of the walk minimap (top right) and of the bottom HUD rows. */
+.dbg {
+  --dbg-top: calc(var(--topbar-h) + 100px);
+  position: fixed; z-index: 24; left: 6px; top: var(--dbg-top);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  font: 11px/1.4 var(--font-mono); color: var(--text);
+  pointer-events: none;
+}
+.dbg > * { pointer-events: auto; }
+
+.dbg-chip {
+  display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 8px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font: inherit; font-weight: 700; box-shadow: var(--shadow-1); cursor: pointer;
+}
+.dbg-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); flex: none; }
+.dbg[data-level="warn"] .dbg-dot { background: var(--warn-text); }
+.dbg[data-level="bad"] .dbg-dot { background: var(--danger); }
+
+.dbg-body {
+  box-sizing: border-box; width: min(360px, calc(100vw - 172px)); padding: 8px;
+  max-height: calc(100vh - var(--dbg-top) - 30px - var(--sheet-h) - 150px);
+  max-height: calc(100dvh - var(--dbg-top) - 30px - var(--sheet-h) - 150px);
+  overflow: auto; overscroll-behavior: contain; touch-action: pan-y;
+  border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-2);
+}
+.dbg-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.dbg-btn {
+  height: 28px; padding: 0 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
+  background: var(--surface-alt); color: var(--text); font: inherit; font-weight: 700; cursor: pointer;
+}
+.dbg-btn:hover { background: var(--surface-sunken); }
+.dbg-btn:disabled { opacity: 0.6; cursor: progress; }
+.dbg-note { margin: 0 0 6px; color: var(--text-muted); }
+.dbg-manual { box-sizing: border-box; width: 100%; height: 120px; margin: 0 0 6px; font: inherit; color: var(--text); background: var(--surface-sunken); border: 1px solid var(--border); }
+
+.dbg-findings { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 4px; font-family: var(--font-sans); font-size: 12px; line-height: 1.35; }
+.dbg-findings li { padding: 4px 6px; border-left: 3px solid var(--live); background: var(--surface-alt); border-radius: 4px; }
+.dbg-findings li[data-level="warn"] { border-left-color: var(--warn-text); background: var(--warn-bg); color: var(--warn-text); }
+.dbg-findings li[data-level="bad"] { border-left-color: var(--danger); font-weight: 650; }
+
+.dbg-rows { margin: 0; display: grid; gap: 2px; }
+.dbg-rows > div { display: grid; grid-template-columns: 9ch 1fr; gap: 6px; padding: 1px 2px; border-radius: 3px; }
+.dbg-rows dt { color: var(--text-faint); }
+.dbg-rows dd { margin: 0; overflow-wrap: anywhere; }
+.dbg-rows .is-flagged { background: var(--warn-bg); color: var(--warn-text); }
+.dbg-rows .is-flagged dt { color: inherit; }
+
+.dbg-events { margin-top: 6px; }
+.dbg-events summary { cursor: pointer; color: var(--text-muted); }
+.dbg-events ol { margin: 4px 0 0; padding-left: 0; list-style: none; color: var(--text-muted); }
+.dbg-events li { overflow-wrap: anywhere; }

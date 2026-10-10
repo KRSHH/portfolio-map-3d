@@ -1,0 +1,129 @@
+{
+  "_about": "The people on the organization's own roster (site.json labels.people: coaches, mentors, advisors). EXAMPLE DATA: every person here is fictional. A person has no link to any company, district or industry on the map (docs/data-contract.md). Headshots go in site/people/<slug>.webp (or .jpg, .png); without one the map draws initials, never a stock face.",
+  "people": [
+    {
+      "slug": "ada-lindqvist",
+      "name": "Ada Lindqvist",
+      "title": "Fundraising Coach",
+      "summary": "I help founders plan a raise, build the investor list and practice the pitch.",
+      "bio": [
+        "I help founders plan a raise, build the investor list and practice the pitch.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [
+        "research-advisory"
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "marcus-oyelaran",
+      "name": "Marcus Oyelaran",
+      "title": "Go-to-Market Coach",
+      "summary": "I work with founders on their first sales hires, pricing and the sales process that gets them to repeatable revenue.",
+      "bio": [
+        "I work with founders on their first sales hires, pricing and the sales process that gets them to repeatable revenue.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [
+        "sales-cx"
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "renee-castillo",
+      "name": "Renée Castillo",
+      "title": "Product Coach",
+      "summary": "I help teams decide what to build next by talking to customers and testing small versions first.",
+      "bio": [
+        "I help teams decide what to build next by talking to customers and testing small versions first.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "hiro-tanaka",
+      "name": "Hiro Tanaka",
+      "title": "Engineering Coach",
+      "summary": "I help technical founders choose their stack, hire their first engineers and keep the codebase healthy as they grow.",
+      "bio": [
+        "I help technical founders choose their stack, hire their first engineers and keep the codebase healthy as they grow.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [
+        "software-development"
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "grace-whitfield",
+      "name": "Grace Whitfield",
+      "title": "People & Culture Coach",
+      "summary": "I help founders write their first job descriptions, set up hiring and build a team that stays.",
+      "bio": [
+        "I help founders write their first job descriptions, set up hiring and build a team that stays.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [
+        "hr-recruiting"
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "slug": "samir-qureshi",
+      "name": "Samir Qureshi",
+      "title": "Finance Coach",
+      "summary": "I help founders build a financial model, set a budget and read their numbers every month.",
+      "bio": [
+        "I help founders build a financial model, set a budget and read their numbers every month.",
+        "This is example text for the portfolio-map-3d demo. The person is fictional."
+      ],
+      "linkedin": null,
+      "focusAreas": [
+        "finance-operations"
+      ],
+      "sources": [
+        {
+          "kind": "org-records",
+          "title": "Example data written for the portfolio-map-3d demo (fictional)",
+          "retrieved": "2026-10-09"
+        }
+      ]
+    }
+  ]
+}

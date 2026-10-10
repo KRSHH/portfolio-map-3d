@@ -1,0 +1,55 @@
+{
+  "name": "portfolio-map-3d",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An open source framework for publishing an organization's companies as a 3D globe, a walkable world and a searchable directory, linked into the Portfolio Map Network's shared world, the Nexus.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fritzhand/portfolio-map-3d.git"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "validate": "node scripts/validate-site.mjs",
+    "prebuild": "node scripts/validate-site.mjs",
+    "build": "tsc -p . && tsc -p tsconfig.node.json && vite build",
+    "postbuild": "node scripts/check-bundle.mjs",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc -p . && tsc -p tsconfig.node.json",
+    "manifest": "node scripts/manifest.mjs",
+    "import": "node scripts/import-csv.mjs",
+    "new-site": "node scripts/new-site.mjs",
+    "registry:check": "node scripts/check-registry.mjs",
+    "join-check": "node scripts/join-check.mjs",
+    "network": "node scripts/build-network.mjs",
+    "nexus:dev": "vite --config nexus/vite.config.ts",
+    "nexus:build": "node scripts/build-network.mjs --keep-on-error && tsc -p nexus/tsconfig.json && vite build --config nexus/vite.config.ts",
+    "nexus:site": "npm run build && node scripts/build-network.mjs --keep-on-error --local example-collective=dist && tsc -p nexus/tsconfig.json && vite build --config nexus/vite.config.ts && rm -rf nexus/dist/example && cp -r dist nexus/dist/example",
+    "nexus:preview": "vite preview --config nexus/vite.config.ts"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
+    "@supabase/realtime-js": "2.117.2",
+    "lucide-react": "^1.51.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "three": "^0.180.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "5.9",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

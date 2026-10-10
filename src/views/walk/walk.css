@@ -1,0 +1,258 @@
+/* walk.css — HUD and projected labels for the walkable company world.
+   Chrome colors come from tokens.css variables; district colors arrive as
+   --d from data; the People area uses the person tokens. */
+
+.walk-view { overflow: hidden; background: var(--scene-sky-bottom); outline: none; user-select: none; -webkit-user-select: none; }
+.walk-view:focus { outline: none; }
+.walk-view [hidden] { display: none !important; }
+.walk-canvas { position: absolute !important; inset: 0; touch-action: none; }
+.walk-canvas canvas { touch-action: none; display: block; }
+
+/* ---------- shared HUD bits ---------- */
+.walk-hud { position: absolute; z-index: 6; pointer-events: none; }
+.walk-hud > * { pointer-events: auto; }
+.walk-card {
+  background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); color: var(--text);
+}
+.walk-row { display: flex; align-items: center; gap: 8px; }
+.walk-icon-btn {
+  display: inline-grid; place-items: center; width: 40px; height: 40px; flex: none; padding: 0;
+  border-radius: var(--radius-pill); border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text);
+  backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); box-shadow: var(--shadow-1);
+}
+.walk-icon-btn:hover { background: var(--surface); }
+.walk-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px var(--surface); }
+.walk-muted { color: var(--text-muted); font-size: 12.5px; }
+
+/* ---------- top left ---------- */
+/* An open popover rises above the top-right controls it may overlap on phones. */
+.walk-hud-tl:has(.walk-pop) { z-index: 9; }
+.walk-hud-tl { top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.walk-intro { position: relative; padding: 16px 18px 16px; width: 100%; }
+.walk-intro h2 { margin: 2px 0 6px; font-size: 19px; line-height: 1.22; padding-right: 22px; }
+.walk-intro p { margin: 0 0 10px; color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+.walk-eyebrow { margin: 0 !important; font-size: 11.5px !important; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent) !important; }
+.walk-keys { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 5px; font-size: 13px; color: var(--text-muted); }
+.walk-keys kbd { margin: 0 1px; }
+.walk-intro-go { height: 36px; }
+.walk-intro .walk-touch-hint { display: none; }
+@media (pointer: coarse) {
+  .walk-intro .walk-touch-hint { display: block; }
+}
+.walk-card-x {
+  position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 30px; height: 30px;
+  border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted);
+}
+.walk-card-x:hover { background: var(--surface-alt); color: var(--text); }
+
+/* live pill + popover */
+.walk-live { position: relative; }
+.walk-pill {
+  display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 14px 0 12px;
+  border-radius: var(--radius-pill); border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text);
+  backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); box-shadow: var(--shadow-1);
+  font-weight: 600; font-size: 13.5px; white-space: nowrap;
+}
+.walk-pill:hover { background: var(--surface); }
+.walk-pill-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text-faint); flex: none; }
+.walk-pill.is-live .walk-pill-dot { background: var(--live, #1f9a3a); box-shadow: 0 0 0 3px color-mix(in srgb, var(--live, #1f9a3a) 25%, transparent); animation: walk-pulse 2s ease-in-out infinite; }
+.walk-pill.is-pending .walk-pill-dot { background: var(--warn-text); }
+.walk-pill.is-pending { color: var(--warn-text); }
+.walk-pill.is-off { color: var(--text-muted); }
+@keyframes walk-pulse { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--live, #1f9a3a) 0%, transparent); } }
+.walk-pop {
+  position: absolute; z-index: 8; top: calc(100% + 8px); left: 0; width: min(340px, calc(100vw - 24px));
+  padding: 14px 16px 12px; background: var(--surface); backdrop-filter: none; font-size: 13.5px;
+}
+.walk-pop:focus { outline: none; }
+.walk-pop:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.walk-pop-me { display: flex; align-items: center; gap: 10px; }
+.walk-pop-me > div { flex: 1; min-width: 0; line-height: 1.35; }
+.walk-pop-reroll { height: 32px; padding: 0 11px; font-size: 13px; gap: 5px; }
+.walk-pop-reason { margin: 10px 0 0; padding: 8px 10px; border-radius: var(--radius-md); background: var(--surface-alt); color: var(--text-muted); }
+.walk-pop-h { margin: 12px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); }
+.walk-pop-list { list-style: none; margin: 0; padding: 0; max-height: 180px; overflow: auto; }
+.walk-pop-list li { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.walk-pop-name { font-weight: 600; }
+.walk-pop-list .walk-muted { margin-left: auto; text-align: right; }
+.walk-check { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-weight: 600; cursor: pointer; }
+.walk-check input { width: 16px; height: 16px; accent-color: var(--accent); }
+.walk-pop-note { margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-faint); line-height: 1.45; }
+.walk-swatch { position: relative; display: inline-block; width: 30px; height: 30px; flex: none; border-radius: 50%; border: 4px solid; box-shadow: 0 0 0 1px var(--border); }
+.walk-swatch > span { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; }
+.walk-swatch.is-small { width: 18px; height: 18px; border-width: 3px; }
+.walk-swatch.is-small > span { width: 6px; height: 6px; margin: -3px 0 0 -3px; }
+
+.walk-focus-chip {
+  display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 4px 0 12px; font-size: 13px;
+  border-radius: var(--radius-pill); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-1);
+}
+.walk-chip-x { display: grid; place-items: center; width: 26px; height: 26px; border: 0; border-radius: 50%; background: var(--surface-alt); color: var(--text-muted); }
+.walk-chip-x:hover { color: var(--text); }
+
+/* ---------- top right ---------- */
+.walk-hud-tr { top: 12px; right: 12px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.walk-minimap { padding: 6px; border-radius: var(--radius-lg); background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--shadow-2); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
+.walk-minimap-toggle {
+  display: flex; align-items: center; gap: 6px; width: 100%; height: 28px; padding: 0 6px; border: 0; background: none;
+  font-weight: 650; font-size: 13px; color: var(--text); border-radius: var(--radius-sm);
+}
+.walk-minimap-toggle > span { flex: 1; text-align: left; }
+.walk-minimap-toggle:hover { background: var(--surface-alt); }
+.walk-minimap-body { position: relative; margin-top: 4px; border-radius: 12px; overflow: hidden; }
+.walk-minimap-body canvas { display: block; }
+.walk-minimap-hit { position: absolute; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
+.walk-minimap-hit:hover { box-shadow: inset 0 0 0 2px var(--surface); }
+.walk-minimap-hit:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; }
+.walk-cam-btns { display: flex; flex-direction: column; gap: 6px; }
+@media (min-width: 761px) {
+  /* A row under the minimap keeps the right edge clear for the D-pad when the details sheet is open. */
+  .walk-cam-btns { flex-direction: row; }
+}
+
+/* ---------- projected labels ---------- */
+.walk-labels { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.walk-labels > button, .walk-tag { position: absolute; left: 0; top: 0; will-change: transform; }
+.walk-district-label {
+  display: flex; align-items: center; gap: 9px; padding: 6px 14px 6px 6px; pointer-events: auto; transform-origin: 50% 100%;
+  border-radius: var(--radius-pill); border: 2px solid var(--d); background: var(--surface); color: var(--text);
+  box-shadow: var(--shadow-2); white-space: nowrap; text-align: left;
+}
+.walk-district-label:hover { background: var(--surface-alt); }
+.walk-district-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--d); color: #fff; flex: none; }
+.walk-district-text { display: flex; flex-direction: column; line-height: 1.15; }
+.walk-district-text strong { font-size: 15px; font-weight: 700; }
+.walk-district-text span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.walk-company-label {
+  pointer-events: auto; max-width: 200px; padding: 4px 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  border-radius: var(--radius-pill); border: 1px solid var(--border); border-bottom: 3px solid var(--d);
+  background: var(--surface); color: var(--text); font-size: 13px; font-weight: 650; box-shadow: var(--shadow-1);
+  transition: opacity var(--speed) var(--ease);
+}
+.walk-company-label:hover { background: var(--surface-alt); }
+.walk-company-label.is-near { box-shadow: 0 0 0 3px var(--d), var(--shadow-2); }
+/* The People area and its name labels: the one person color, never a district color. --person-ring
+   is the interface ring (lighter in dark mode); the icon disc stays --person under a white glyph. */
+.walk-district-label.is-people, .walk-banner.is-people, .walk-person-label { --d: var(--person-ring); }
+.walk-district-label.is-people .walk-district-icon, .walk-banner.is-people .walk-district-icon { background: var(--person); }
+.walk-tag-layer { position: absolute; inset: 0; pointer-events: none; }
+.walk-tags { position: absolute; inset: 0; }
+.walk-tag {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; white-space: nowrap;
+  border-radius: var(--radius-pill); background: var(--brand-ink); color: #fff; font-size: 12px; font-weight: 650;
+  box-shadow: var(--shadow-1); opacity: 0.92;
+}
+.walk-tag-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 0 2px rgb(255 255 255 / 0.85); flex: none; }
+
+/* ---------- transient ---------- */
+.walk-banner {
+  position: absolute; z-index: 7; top: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 8px; border-radius: var(--radius-pill);
+  background: var(--surface); border: 2px solid var(--d); box-shadow: var(--shadow-3); white-space: nowrap; font-size: 15px;
+  animation: walk-banner 2.6s var(--ease) forwards; pointer-events: none;
+}
+.walk-banner small { display: block; font-size: 11.5px; color: var(--text-faint); font-weight: 600; line-height: 1.2; }
+@keyframes walk-banner {
+  0% { opacity: 0; transform: translate(-50%, -10px); }
+  12%, 82% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -6px); }
+}
+.walk-hint {
+  position: absolute; z-index: 7; left: 50%; bottom: calc(var(--sheet-h) + 76px); transform: translateX(-50%);
+  max-width: min(440px, calc(100% - 32px)); padding: 9px 14px; border-radius: var(--radius-md);
+  background: var(--brand-ink); color: #fff; font-size: 13.5px; text-align: center; box-shadow: var(--shadow-2); pointer-events: none;
+}
+.walk-fade { position: absolute; inset: 0; z-index: 5; background: var(--scene-sky-bottom); opacity: 0; pointer-events: none; transition: opacity 170ms ease; }
+.walk-fade.is-on { opacity: 1; }
+
+/* ---------- bottom ---------- */
+.walk-hud-bottom { left: 50%; bottom: calc(var(--sheet-h) + 16px); transform: translateX(-50%); display: flex; justify-content: center; }
+.walk-prompt {
+  display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 10px 0 16px; max-width: min(520px, calc(100vw - 32px));
+  border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font-size: 15px; box-shadow: var(--shadow-3); white-space: nowrap; animation: walk-prompt-in 200ms var(--ease);
+}
+.walk-prompt > span:not(.walk-dot) { overflow: hidden; text-overflow: ellipsis; }
+.walk-prompt:hover { background: var(--surface-alt); }
+@keyframes walk-prompt-in { from { opacity: 0; transform: translateY(8px); } }
+
+.walk-pad {
+  right: 16px; bottom: calc(var(--sheet-h) + 16px);
+  display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 44px); gap: 6px;
+}
+.walk-pad.is-tucked { visibility: hidden; }
+.walk-pad-btn {
+  display: grid; place-items: center; padding: 0; border-radius: var(--radius-md); border: 1px solid var(--glass-border);
+  background: var(--glass-bg); color: var(--text); box-shadow: var(--shadow-1); touch-action: none;
+  backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+.walk-pad-btn:active { background: var(--surface); transform: translateY(1px); }
+.walk-pad-btn.is-up { grid-column: 2; grid-row: 1; }
+.walk-pad-btn.is-left { grid-column: 1; grid-row: 2; }
+.walk-pad-btn.is-down { grid-column: 2; grid-row: 2; }
+.walk-pad-btn.is-right { grid-column: 3; grid-row: 2; }
+
+.walk-stick { position: absolute; z-index: 5; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+.walk-stick::before {
+  content: ""; position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%;
+  background: rgb(255 255 255 / 0.22); border: 2px solid rgb(255 255 255 / 0.7);
+}
+.walk-stick-knob { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; background: rgb(255 255 255 / 0.9); box-shadow: var(--shadow-2); }
+
+/* ---------- fallback ---------- */
+.walk-fallback { display: grid; place-items: center; padding: 16px; background: var(--bg); }
+.walk-fallback-card { max-width: 420px; padding: 22px 24px; background: var(--surface); }
+.walk-fallback-card h2 { margin: 0 0 8px; font-size: 20px; }
+.walk-fallback-card p { margin: 0 0 14px; color: var(--text-muted); }
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  .walk-hud-tl { top: 10px; left: 10px; width: calc(100% - 20px - 104px); }
+  .walk-intro { padding: 12px 14px; }
+  .walk-intro h2 { font-size: 16px; }
+  .walk-intro p { font-size: 13px; margin-bottom: 8px; }
+  .walk-keys { display: none; }
+  .walk-hud-tr { top: 10px; right: 10px; }
+  .walk-minimap { padding: 4px; }
+  .walk-pill { height: 36px; padding: 0 11px 0 10px; font-size: 12.5px; }
+  .walk-icon-btn { width: 38px; height: 38px; }
+  .walk-hud-bottom { bottom: calc(var(--sheet-h) + 120px); }
+  .walk-pad { right: 12px; bottom: calc(var(--sheet-h) + 12px); grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(2, 46px); }
+  .walk-banner { top: 100px; font-size: 14px; max-width: calc(100% - 24px); }
+  .walk-hint { bottom: calc(var(--sheet-h) + 176px); }
+  .walk-district-label { padding: 4px 10px 4px 4px; gap: 6px; }
+  .walk-district-icon { width: 26px; height: 26px; }
+  .walk-district-text strong { font-size: 13px; }
+  .walk-district-text span { font-size: 11px; }
+}
+@media (pointer: fine) and (min-width: 761px) {
+  .walk-pad { grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(2, 40px); gap: 5px; opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .walk-banner { animation: none; }
+  .walk-fade { transition: none; }
+  .walk-pill.is-live .walk-pill-dot { animation: none; }
+}
+
+/* ---- the Nexus portal: its prompt, and the way through (src/views/walk/portal.ts) ---- */
+.walk-portal-prompt { text-decoration: none; border-color: color-mix(in srgb, #3ee6ff 55%, var(--border)); }
+.walk-portal-prompt svg { color: #8b5cf6; flex: none; }
+.walk-portal-departure {
+  position: absolute; inset: 0; z-index: 40; display: grid; place-items: center; padding: 16px;
+  background: radial-gradient(circle at 50% 50%, rgb(62 230 255 / 0.55), rgb(139 92 246 / 0.6) 45%, rgb(8 6 24 / 0.92) 80%);
+  animation: walk-portal-in 700ms var(--ease) both;
+}
+.walk-portal-departure.is-still { animation: none; }
+@keyframes walk-portal-in { from { opacity: 0; transform: scale(1.08); } }
+.walk-portal-card {
+  max-width: 420px; padding: 22px 22px 18px; border-radius: var(--radius-lg); text-align: center;
+  background: rgb(10 8 30 / 0.82); color: #fff; border: 1px solid rgb(62 230 255 / 0.5); box-shadow: var(--shadow-3);
+}
+.walk-portal-card > svg { color: #3ee6ff; }
+.walk-portal-card p { margin: 8px 0 0; }
+.walk-portal-what { color: #d7d3ff; font-size: 14px; }
+.walk-portal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.walk-portal-actions .btn { text-decoration: none; min-height: 44px; }
+.walk-portal-actions .btn-quiet { color: #fff; border-color: rgb(255 255 255 / 0.4); background: transparent; }
+@media (prefers-reduced-motion: reduce) { .walk-portal-departure { animation: none; } }

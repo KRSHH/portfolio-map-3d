@@ -1,0 +1,29 @@
+name: Nexus refresh
+
+# The Nexus (https://wearenexus.xyz, with the example map at /example/) is deployed by Vercel from
+# main: nexus/vercel.json, docs/deploying.md#the-nexus. Every build re-checks every map in the
+# registry (scripts/build-network.mjs), so a daily rebuild keeps the world current: maps that join
+# appear, maps that break the handshake drop out. This workflow asks Vercel for that rebuild
+# through a deploy hook (the Nexus project → Settings → Git → Deploy Hooks, branch main), stored
+# as the repository secret NEXUS_DEPLOY_HOOK. Without the secret it does nothing.
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Vercel to rebuild the Nexus
+        env:
+          HOOK: ${{ secrets.NEXUS_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::NEXUS_DEPLOY_HOOK is not set, so nothing was rebuilt (docs/deploying.md#the-nexus)."
+            exit 0
+          fi
+          curl --fail --silent --show-error --output /dev/null -X POST "$HOOK"
+          echo "Rebuild requested."

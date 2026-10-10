@@ -1,0 +1,46 @@
+name: Join the network
+description: Ask a maintainer to add your map to the Portfolio Map Network (if you'd rather not open a pull request yourself).
+title: "Join the network: <your organization>"
+labels: ["join-network"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not include email addresses, phone numbers or anything you would not put on your website.
+        Before you apply, run `npm run join-check -- https://your-map` against your deployed map: it checks the whole handshake (docs/network.md).
+  - type: input
+    id: url
+    attributes:
+      label: Your map's address
+      description: https, as deployed (its manifest is at <address>/portfolio-map.json).
+      placeholder: https://map.yourorg.com
+    validations:
+      required: true
+  - type: input
+    id: org
+    attributes:
+      label: Organization
+      description: Who publishes the map, and its website.
+      placeholder: Acme Ventures, https://acme.vc
+    validations:
+      required: true
+  - type: dropdown
+    id: proof
+    attributes:
+      label: How your organization vouches for the map
+      options:
+        - The map is on our own domain (or a subdomain of it)
+        - Our homepage links to the map
+        - A DNS TXT record (_portfolio-map.<our domain>)
+        - None of these fits; please confirm with us another way
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: The network's terms (NETWORK.md)
+      options:
+        - label: We publish our own organization's companies, and keep the data contract (sources kept, nothing invented, no personal contact data).
+          required: true
+        - label: Our map keeps its link to the Nexus (the portal, the Nexus link and the meta tag).
+          required: true

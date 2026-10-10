@@ -1,0 +1,851 @@
+/* The world mode: the Nexus full screen, a glass HUD over it. Sizes come from lib/hud.ts
+   through custom properties (--top-h, --rail-w, --panel-w, --sheet-h, --inset-*), so the 3D
+   scene and the HUD agree on the space left between them. */
+
+.world {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.world-main,
+.world-scene {
+  position: absolute;
+  inset: 0;
+}
+
+.world-scene:focus-visible {
+  outline-offset: -3px;
+}
+
+.glass {
+  border: 1px solid var(--border);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+/* ---------- Top bar ---------- */
+
+.hud-top {
+  position: absolute;
+  z-index: 20;
+  top: var(--gap);
+  right: var(--gap);
+  left: var(--gap);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 4px 4px 4px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+}
+
+.hud-brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-brand-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hud-actions {
+  display: flex;
+  flex: none;
+  gap: 2px;
+}
+
+.hud-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--touch);
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.hud-btn:hover {
+  background: var(--hover);
+}
+
+.hud-btn[aria-expanded="true"] {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.hud-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Search ---------- */
+
+.search {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  min-height: var(--touch);
+  padding: 0 44px 0 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-deep);
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-faint);
+}
+
+.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-clear {
+  position: absolute;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: var(--touch);
+  height: var(--touch);
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.search-clear:hover {
+  color: var(--text);
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: max(100%, min(500px, calc(100vw - 24px)));
+  max-height: min(70vh, calc(100dvh - var(--top-h) - 24px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.search-summary {
+  padding: 4px 8px 8px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.search-empty {
+  padding: 14px;
+  color: var(--text-muted);
+}
+
+.sr-group + .sr-group {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.sr-world {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: var(--touch);
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sr-world-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.sr-world-meta {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.sr-companies {
+  margin: 0;
+  padding: 0 0 0 20px;
+  list-style: none;
+}
+
+.sr-company {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+
+.sr-company-main {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 10px;
+  min-width: 0;
+  min-height: var(--touch);
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sr-company-name {
+  overflow: hidden;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-desc {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-open {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--touch);
+  border-radius: 10px;
+  color: var(--text-muted);
+}
+
+.sr-world:hover,
+.sr-company-main:hover,
+.sr-open:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.sr-more {
+  min-height: var(--touch);
+  margin: 0 0 2px 20px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--link);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sr-more:hover {
+  background: var(--hover);
+}
+
+/* ---------- List of worlds ---------- */
+
+.rail {
+  position: absolute;
+  z-index: 15;
+  top: var(--top-h);
+  bottom: var(--gap);
+  left: var(--gap);
+  display: flex;
+  flex-direction: column;
+  width: var(--rail-w);
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  animation: from-left 0.25s var(--ease);
+}
+
+.rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.rail-head h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.wl {
+  flex: 1;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+
+.wl-empty {
+  padding: 16px;
+  color: var(--text-muted);
+}
+
+.wl-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.wl-item:hover {
+  background: var(--hover);
+}
+
+.wl-item[aria-current="true"] {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.wl-text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.wl-name {
+  overflow: hidden;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wl-meta {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.wl-status {
+  color: var(--unreachable);
+  font-size: 12.5px;
+}
+
+/* ---------- A world's panel ---------- */
+
+.panel {
+  position: absolute;
+  z-index: 16;
+  top: var(--top-h);
+  right: var(--gap);
+  bottom: var(--gap);
+  display: flex;
+  flex-direction: column;
+  width: var(--panel-w);
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+  animation: from-right 0.28s var(--ease);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 6px 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-title h2 {
+  font-size: 20px;
+}
+
+/* The heading takes focus when the panel opens (for screen readers); it is not a control. */
+.panel-title h2:focus {
+  outline: none;
+}
+
+.panel-host {
+  color: var(--text-muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.panel-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.panel-tagline {
+  color: var(--text-muted);
+}
+
+.panel-counts {
+  font-weight: 600;
+}
+
+.panel-h {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-list-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.panel-list-count {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.co-list {
+  display: grid;
+  gap: 2px;
+  margin: 0 -8px;
+  padding: 0;
+  list-style: none;
+}
+
+.co {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 10px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.co:hover {
+  background: var(--hover);
+}
+
+.co.is-hl {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+.co-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 30px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.co-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.co-link:hover .co-name {
+  text-decoration: underline;
+}
+
+.co-ext {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.co-desc {
+  display: -webkit-box;
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 13.5px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.panel-foot {
+  margin-top: 4px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+@media (pointer: coarse) {
+  .co-link {
+    min-height: var(--touch);
+  }
+}
+
+/* ---------- Toast, notes, portal ---------- */
+
+.toast-region {
+  position: absolute;
+  z-index: 25;
+  top: var(--top-h);
+  left: calc(var(--inset-l) + (100% - var(--inset-l) - var(--inset-r)) / 2);
+  width: min(540px, calc(100% - var(--inset-l) - var(--inset-r) - 24px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  display: grid;
+  gap: 4px;
+  padding: 12px 6px 4px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--accent-line);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  animation: from-top 0.3s var(--ease);
+}
+
+.toast-neutral {
+  padding-bottom: 6px;
+  border-color: var(--border-strong);
+}
+
+.toast-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.toast-row p {
+  padding-top: 2px;
+}
+
+.toast-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toast .text-link {
+  min-height: var(--touch);
+}
+
+.world-note {
+  position: absolute;
+  z-index: 5;
+  bottom: 24px;
+  left: 50%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: 14px;
+  transform: translateX(-50%);
+}
+
+.world-card {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(var(--inset-b) + 20px);
+  left: calc(var(--inset-l) + (100% - var(--inset-l) - var(--inset-r)) / 2);
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  width: min(440px, calc(100% - var(--inset-l) - var(--inset-r) - 24px));
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass-strong);
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+}
+
+.world-empty .empty {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* Centered on the arrival world: the middle of the space the HUD leaves. */
+.portal {
+  --cx: calc(var(--inset-l) + (100% - var(--inset-l) - var(--inset-r)) / 2);
+  --cy: calc(var(--inset-t) + (100% - var(--inset-t) - var(--inset-b)) / 2);
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--cx) var(--cy), var(--flash) 0%, var(--accent-glow) 22%, var(--scrim-clear) 62%);
+  animation: portal-flash 1.6s ease-out forwards;
+}
+
+.portal-ring {
+  position: absolute;
+  top: var(--cy);
+  left: var(--cx);
+  width: 36vmin;
+  height: 36vmin;
+  margin: -18vmin 0 0 -18vmin;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  box-shadow:
+    0 0 40px var(--accent-glow),
+    inset 0 0 40px var(--accent-glow);
+  animation: portal-ring 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.portal-ring-2 {
+  border-color: var(--violet);
+  opacity: 0;
+  animation-delay: 0.16s;
+}
+
+@keyframes portal-ring {
+  from {
+    opacity: 1;
+    transform: scale(0.08);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.4);
+  }
+}
+
+@keyframes portal-flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes from-right {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+
+@keyframes from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+
+@keyframes from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+/* ---------- Phones: two-row top bar, bottom sheets ---------- */
+
+.world.is-phone .hud-top {
+  top: 8px;
+  right: 8px;
+  left: 8px;
+  flex-wrap: wrap;
+  row-gap: 6px;
+  padding: 6px;
+}
+
+.world.is-phone .hud-brand {
+  flex: 1;
+  order: 1;
+  padding-left: 8px;
+}
+
+.world.is-phone .hud-actions {
+  order: 2;
+}
+
+.world.is-phone .search {
+  flex-basis: 100%;
+  order: 3;
+  max-width: none;
+}
+
+.world.is-phone .search-results {
+  width: 100%;
+  max-height: calc(100dvh - var(--top-h) - 16px);
+}
+
+.world.is-phone .hud-btn {
+  justify-content: center;
+  width: var(--touch);
+  padding: 0;
+}
+
+.world.is-phone .hud-btn .hud-count,
+.world.is-phone .hud-btn-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.world.is-phone .panel,
+.world.is-phone .rail {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: var(--sheet-h);
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  animation: from-bottom 0.28s var(--ease);
+}
+
+.world.is-phone .rail {
+  z-index: 17;
+}
+
+.world.is-phone .panel::before,
+.world.is-phone .rail::before {
+  content: "";
+  align-self: center;
+  flex: none;
+  width: 40px;
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: var(--border-strong);
+}
+
+.world.is-phone .panel-head {
+  padding-top: 8px;
+}
+
+.world.is-phone .toast-region {
+  top: calc(var(--top-h) - 4px);
+}
+
+/* ---------- No WebGL: the network as a list ---------- */
+
+.world-fallback {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.fallback-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px var(--gutter);
+  border-bottom: 1px solid var(--border);
+}
+
+.fallback-main {
+  display: grid;
+  gap: 18px;
+  padding-block: 32px 64px;
+}
+
+.fallback-main h1 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.world-fallback .toast-region {
+  position: static;
+  width: auto;
+  transform: none;
+}

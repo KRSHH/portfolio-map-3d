@@ -1,0 +1,288 @@
+{
+  "_about": "Controlled vocabularies for this map (docs/configuration.md). Districts group companies; on the globe each district is a region, in the walk world a neighborhood on the ring around the hub. They are groupings, never addresses. `industries` says which industries a district's companies belong to as customers (the provider finder matches them against what other companies serve). Services, industries served and connection kinds are the provider finder's and the connections' vocabularies. The demo's districts are fictional; the services and industries lists are a general-purpose starting set you can keep or edit.",
+  "districts": [
+    {
+      "slug": "health",
+      "label": "Health & Life Sciences",
+      "short": "Health",
+      "color": "#e34948",
+      "icon": "heart-pulse",
+      "industries": [
+        "healthcare",
+        "life-sciences"
+      ]
+    },
+    {
+      "slug": "ai-data",
+      "label": "AI & Data",
+      "short": "AI & Data",
+      "color": "#00a3b4",
+      "icon": "sparkles",
+      "industries": [
+        "technology"
+      ]
+    },
+    {
+      "slug": "climate",
+      "label": "Climate & Energy",
+      "short": "Climate",
+      "color": "#7a9a01",
+      "icon": "leaf",
+      "industries": [
+        "energy-utilities",
+        "agriculture"
+      ]
+    },
+    {
+      "slug": "fintech",
+      "label": "Fintech",
+      "short": "Fintech",
+      "color": "#2a78d6",
+      "icon": "landmark",
+      "industries": [
+        "financial-services",
+        "insurance"
+      ]
+    },
+    {
+      "slug": "hardware",
+      "label": "Hardware & Robotics",
+      "short": "Hardware",
+      "color": "#c2185b",
+      "icon": "cpu",
+      "industries": [
+        "manufacturing-industrial"
+      ]
+    },
+    {
+      "slug": "commerce",
+      "label": "Consumer & Commerce",
+      "short": "Commerce",
+      "color": "#eda100",
+      "icon": "shopping-bag",
+      "industries": [
+        "retail-ecommerce",
+        "consumers"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "slug": "software-development",
+      "label": "Custom software & app development"
+    },
+    {
+      "slug": "ai-automation",
+      "label": "AI, machine learning & automation"
+    },
+    {
+      "slug": "data-analytics",
+      "label": "Data, analytics & business intelligence"
+    },
+    {
+      "slug": "cybersecurity",
+      "label": "Cybersecurity & security awareness"
+    },
+    {
+      "slug": "cloud-it",
+      "label": "Cloud, DevOps & IT infrastructure"
+    },
+    {
+      "slug": "marketing-advertising",
+      "label": "Marketing, advertising & brand"
+    },
+    {
+      "slug": "sales-cx",
+      "label": "Sales enablement & customer experience"
+    },
+    {
+      "slug": "hr-recruiting",
+      "label": "Hiring, HR & workforce"
+    },
+    {
+      "slug": "training-education",
+      "label": "Training, education & upskilling"
+    },
+    {
+      "slug": "payments-lending",
+      "label": "Payments, lending & banking"
+    },
+    {
+      "slug": "finance-operations",
+      "label": "Accounting, invoicing & finance operations"
+    },
+    {
+      "slug": "legal-compliance",
+      "label": "Legal, regulatory & compliance"
+    },
+    {
+      "slug": "healthcare-delivery",
+      "label": "Clinical care & patient engagement"
+    },
+    {
+      "slug": "wellness-benefits",
+      "label": "Employee wellness & benefits"
+    },
+    {
+      "slug": "real-estate-construction",
+      "label": "Real estate, construction & facilities"
+    },
+    {
+      "slug": "logistics-supply-chain",
+      "label": "Logistics, procurement & supply chain"
+    },
+    {
+      "slug": "hardware-iot",
+      "label": "Hardware, devices & IoT"
+    },
+    {
+      "slug": "energy-sustainability",
+      "label": "Energy & sustainability"
+    },
+    {
+      "slug": "events-engagement",
+      "label": "Events, community & engagement"
+    },
+    {
+      "slug": "media-content",
+      "label": "Video, media & content production"
+    },
+    {
+      "slug": "research-advisory",
+      "label": "Research, consulting & advisory"
+    },
+    {
+      "slug": "marketplace-sourcing",
+      "label": "Marketplaces & vendor sourcing"
+    }
+  ],
+  "industriesServed": [
+    {
+      "slug": "cross-industry",
+      "label": "Any industry"
+    },
+    {
+      "slug": "healthcare",
+      "label": "Healthcare providers & payers"
+    },
+    {
+      "slug": "life-sciences",
+      "label": "Life sciences & biotech"
+    },
+    {
+      "slug": "insurance",
+      "label": "Insurance"
+    },
+    {
+      "slug": "financial-services",
+      "label": "Banks, lenders & financial services"
+    },
+    {
+      "slug": "real-estate",
+      "label": "Real estate & property management"
+    },
+    {
+      "slug": "construction",
+      "label": "Construction & architecture"
+    },
+    {
+      "slug": "government-defense",
+      "label": "Government, defense & public safety"
+    },
+    {
+      "slug": "education",
+      "label": "Schools, universities & learners"
+    },
+    {
+      "slug": "retail-ecommerce",
+      "label": "Retail, consumer brands & e-commerce"
+    },
+    {
+      "slug": "hospitality-food",
+      "label": "Restaurants, hospitality & food"
+    },
+    {
+      "slug": "travel-tourism",
+      "label": "Travel & tourism"
+    },
+    {
+      "slug": "sports-entertainment",
+      "label": "Sports, entertainment & events"
+    },
+    {
+      "slug": "media-marketing",
+      "label": "Media, agencies & marketing teams"
+    },
+    {
+      "slug": "manufacturing-industrial",
+      "label": "Manufacturing & industrial"
+    },
+    {
+      "slug": "logistics-transportation",
+      "label": "Logistics & transportation"
+    },
+    {
+      "slug": "energy-utilities",
+      "label": "Energy & utilities"
+    },
+    {
+      "slug": "agriculture",
+      "label": "Agriculture"
+    },
+    {
+      "slug": "maritime",
+      "label": "Maritime & marine"
+    },
+    {
+      "slug": "technology",
+      "label": "Software & technology companies"
+    },
+    {
+      "slug": "nonprofits",
+      "label": "Nonprofits & community organizations"
+    },
+    {
+      "slug": "small-business",
+      "label": "Small & mid-sized businesses"
+    },
+    {
+      "slug": "enterprise",
+      "label": "Large enterprises"
+    },
+    {
+      "slug": "startups",
+      "label": "Startups & founders"
+    },
+    {
+      "slug": "consumers",
+      "label": "Consumers & households"
+    }
+  ],
+  "connectionKinds": [
+    {
+      "slug": "partnership",
+      "label": "Documented partnership"
+    },
+    {
+      "slug": "customer",
+      "label": "Documented customer relationship"
+    },
+    {
+      "slug": "shared-founder",
+      "label": "Shared founder or leader"
+    },
+    {
+      "slug": "investment",
+      "label": "Documented investment"
+    },
+    {
+      "slug": "acquisition",
+      "label": "Documented acquisition"
+    },
+    {
+      "slug": "other",
+      "label": "Other documented relationship"
+    }
+  ],
+  "_palette": "District colors are checked as a ring in this order (health, ai-data, climate, fintech, hardware, commerce), with the first color repeated at the end, by validate_palette.js from the dataviz skill bundled with Claude Code (--mode light, 09-Oct-2026): lightness band, chroma floor, adjacent CVD separation and the normal-vision floor all pass. Two hues sit below 3:1 on the light surface (ai-data #00a3b4 at 2.97:1, commerce #eda100 at 2.11:1), so every district always shows its label and icon beside its color (relief rule). Hardware was #9085e9 until it failed the normal-vision floor against fintech's blue (dE 12.7); #c2185b passes."
+}

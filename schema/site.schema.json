@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fritzhand/portfolio-map-3d/schema/site.schema.json",
+  "title": "portfolio-map-3d site config (site/site.json)",
+  "description": "Who publishes the map and what it calls things. scripts/validate-site.mjs checks this file before every build; docs/configuration.md explains every field.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "network",
+    "org",
+    "map",
+    "labels",
+    "theme",
+    "live"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "shareDescriptions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9]|-(?=[a-z0-9])){1,47}$",
+          "description": "The map's id in the Portfolio Map Network: registry/instances/<id>.json."
+        },
+        "shareDescriptions": {
+          "type": "boolean",
+          "description": "Share company descriptions in the public manifest the Nexus reads (its cross-network search uses them)."
+        }
+      }
+    },
+    "org": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "website",
+        "logo",
+        "logoOnDark"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "The organization that publishes the map."
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri",
+          "description": "Its website; the top bar's logo links there."
+        },
+        "logo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^brand/[^/]+\\.(svg|png|webp|jpe?g|ico)$",
+          "description": "Its logo for light grounds, a file in site/brand/ (e.g. \"brand/logo.svg\"); null shows the name in type."
+        },
+        "logoOnDark": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^brand/[^/]+\\.(svg|png|webp|jpe?g|ico)$",
+          "description": "Its logo for dark grounds (the dark theme); null uses `logo`."
+        }
+      }
+    },
+    "map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "tagline",
+        "description",
+        "url",
+        "directoryUrl",
+        "notice"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "The map's name: the page title and the link-preview title."
+        },
+        "tagline": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 160,
+          "description": "One short line the Nexus shows under the map's name."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "One or two sentences for search engines and link previews."
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://",
+          "description": "The https address the map is deployed at, no trailing slash."
+        },
+        "directoryUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Where the full list lives without JavaScript (the noscript note)."
+        },
+        "notice": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 160,
+          "description": "A one-line notice in the About panel and above the list (e.g. \"Example data\")."
+        }
+      }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "companies",
+        "district",
+        "districts",
+        "person",
+        "people",
+        "hub"
+      ],
+      "properties": {
+        "company": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "One record, lowercase: \"company\", \"startup\", \"member\"."
+        },
+        "companies": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "Several records: \"companies\"."
+        },
+        "district": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "One grouping: \"district\", \"track\", \"sector\"."
+        },
+        "districts": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "Several groupings."
+        },
+        "person": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "One person on the roster: \"coach\", \"mentor\"."
+        },
+        "people": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "The roster: \"coaches\", \"mentors\"."
+        },
+        "hub": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "The name on the hub building at the center of the walk world."
+        }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accent",
+        "cta",
+        "ctaText",
+        "ink"
+      ],
+      "properties": {
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Links, focus rings, the second accent and the hub's band. 4.5:1 or more on white."
+        },
+        "cta": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Call-to-action fill."
+        },
+        "ctaText": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Text on the call-to-action fill: 4.5:1 or more against it."
+        },
+        "ink": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "The brand's dark ink: label text, the dark logo plate. 7:1 or more on white."
+        }
+      }
+    },
+    "live": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "channel"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Live explorers in the walk world (needs a Supabase project: docs/live-explorers.md)."
+        },
+        "channel": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9]|-(?=[a-z0-9])){1,47}$",
+          "description": "The Realtime channel's base name; production joins <channel>-v1, other builds <channel>-preview."
+        }
+      }
+    }
+  }
+}

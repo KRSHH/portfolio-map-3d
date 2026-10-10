@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="276" height="64" viewBox="0 0 276 64">
+  <title>Example Collective (fictional)</title>
+  <g fill="#1d1f24">
+    <rect x="0" y="6" width="22" height="22" rx="6"/>
+    <rect x="26" y="6" width="22" height="22" rx="11" fill="#0c7a8c"/>
+    <rect x="0" y="36" width="22" height="22" rx="11" fill="#ff3a61"/>
+    <rect x="26" y="36" width="22" height="22" rx="6"/>
+    <text x="62" y="30" font-family="Helvetica, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="-0.5">Example</text>
+    <text x="62" y="56" font-family="Helvetica, Arial, sans-serif" font-size="25" font-weight="400" letter-spacing="-0.5">Collective</text>
+  </g>
+</svg>

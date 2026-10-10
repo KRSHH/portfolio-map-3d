@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Every __SITE_*__ value comes from site/site.json (the site plugin in vite.config.ts). -->
+    <title>__SITE_TITLE__</title>
+    <meta name="description" content="__SITE_DESCRIPTION__" />
+    <meta name="theme-color" content="__SITE_INK__" />
+    <meta property="og:title" content="__SITE_TITLE__" />
+    <meta property="og:description" content="__SITE_DESCRIPTION__" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="__SITE_ORIGIN__/" />
+    <meta property="og:image" content="__SITE_OG_IMAGE__" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- The map's link into the Portfolio Map Network's shared world (docs/network.md). -->
+    <!--__NEXUS_META__-->
+    <link rel="icon" href="__SITE_FAVICON__" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <!--__SITE_THEME__-->
+    <script>
+      try { var t = localStorage.getItem("portfolio-map-theme"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript><!--__SITE_NOSCRIPT__--></noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

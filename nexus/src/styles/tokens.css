@@ -1,0 +1,67 @@
+/* The Nexus's design tokens: one dark theme, deep space. Every color the DOM uses is here;
+   tokens.test.ts checks the text pairs for WCAG AA. The 3D scene paints with the same values
+   (three/paint.ts and three/engine.ts repeat the few they need). */
+:root {
+  color-scheme: dark;
+
+  --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /* Grounds */
+  --bg: #05060f;
+  --bg-deep: #03040b;
+  --surface: #0d1124;
+  --surface-2: #141a33;
+  --surface-3: #1c2345;
+  --glass: rgba(8, 11, 26, 0.86);
+  --glass-strong: rgba(9, 12, 28, 0.94);
+  --hover: rgba(255, 255, 255, 0.07);
+  --logo-plate: #ffffff;
+  --scrim-strong: rgba(3, 4, 11, 0.88);
+  --scrim: rgba(3, 4, 11, 0.6);
+  --scrim-clear: rgba(3, 4, 11, 0);
+  --border: rgba(150, 165, 255, 0.16);
+  --border-strong: rgba(150, 165, 255, 0.34);
+
+  /* Text */
+  --text: #eef1ff;
+  --text-muted: #aeb6da;
+  --text-faint: #8f97bf;
+  --link: #6ff0ff;
+
+  /* The one accent: calls to action, links, focus */
+  --accent: #3be8ff;
+  --accent-hover: #8af2ff;
+  --accent-ink: #00141c;
+  --accent-soft: rgba(59, 232, 255, 0.13);
+  --accent-glow: rgba(59, 232, 255, 0.35);
+  --accent-line: rgba(59, 232, 255, 0.42);
+  --flash: rgba(200, 250, 255, 0.85);
+  --focus: #8af2ff;
+
+  /* Decoration only (never text) */
+  --violet: #9d7bff;
+  --violet-soft: rgba(157, 123, 255, 0.16);
+
+  /* States */
+  --warn: #ffc24b;
+  --warn-ink: #1d1400;
+  --problem: #ffa8a8;
+  --unreachable: #ffd27f;
+
+  /* Shape and space */
+  --radius-s: 8px;
+  --radius: 14px;
+  --radius-l: 22px;
+  --gutter: 16px;
+  --hud-gap: 12px;
+  --touch: 44px;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 32px;
+  }
+}
