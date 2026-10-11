@@ -57,7 +57,8 @@ export function islandHeight(layout: WorldLayout, x: number, z: number): number 
     flat = Math.max(flat, 1 - smoothstep(0, 10, dd));
   }
   flat = Math.max(flat, 1 - smoothstep(4.5, 8, distToSpokes(layout, x, z)));
-  flat = Math.max(flat, 1 - smoothstep(3.4, 6.5, Math.abs(r - 57.5)));
+  // Village ring band, wide enough for the market stalls beside the street.
+  flat = Math.max(flat, 1 - smoothstep(9, 13, Math.abs(r - 57.5)));
   const rolling = 1.0 + 1.3 * noise2(x * 0.03, z * 0.03) + 0.4 * noise2(x * 0.11 + 7, z * 0.11);
   const hills =
     smoothstep(-25, -75, x) * (5 + 3 * noise2(x * 0.02 + 3, z * 0.02)) +

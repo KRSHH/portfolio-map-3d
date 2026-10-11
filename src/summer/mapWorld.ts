@@ -22,14 +22,15 @@ import {
   InstancedBufferAttribute,
   Mesh,
   MeshLambertMaterial,
-  Object3D,
   Spherical,
   Vector3,
 } from 'three';
 import { gsap } from 'gsap';
 import { COMPANIES, DISTRICTS, PEOPLE } from '../data/catalog';
 import { layoutWorld, seededRandom, type WorldLayout } from '../data/layout';
-import { islandHeight, warehouseSpots, scatter, spokes } from './mapGround';
+import { islandHeight, scatter, spokes } from './mapGround';
+import { buildPavilion, buildStall, buildFingerpost, buildBeacon, buildBunting } from './mapProps';
+import { stallSpots, fingerpostSpots } from './mapLayout';
 import { client } from './core/client';
 import { events } from './core/events';
 import { clock } from './engine/clock';
@@ -47,10 +48,9 @@ import { buildMapOverlay } from './mapOverlay';
 import { cpuCanvas } from '../three/cpuCanvas';
 
 /** Paint the island canvas: grass, sand ring, plaza, spoke roads, district pads. */
-/** Half-extent of the ground canvas in world units. */
 const EXTENT = 175;
 const PX = 2048 / (EXTENT * 2);
-function paintGround(layout: WorldLayout): HTMLCanvasElement {
+function paintGround(layout: WorldLayout, colorBySlug: Map<string, string>): HTMLCanvasElement {
   const [canvas, ctx] = cpuCanvas(2048, 2048);
   const w = (x: number) => (x + EXTENT) * PX;
   const rand = seededRandom(7);
@@ -86,6 +86,23 @@ function paintGround(layout: WorldLayout): HTMLCanvasElement {
     ctx.lineTo(w(s.bx), w(s.bz));
     ctx.stroke();
   }
+  // Each spoke's edge lines take its district's color: follow the color home.
+  ctx.save();
+  ctx.globalAlpha = 0.85;
+  for (const d of layout.discs) {
+    const color = colorBySlug.get(d.slug) ?? '#888888';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 0.6 * PX;
+    const ux = Math.cos(d.angle);
+    const uz = Math.sin(d.angle);
+    for (const side of [-3.4, 3.4]) {
+      ctx.beginPath();
+      ctx.moveTo(w(ux * 46 - uz * side), w(uz * 46 + ux * side));
+      ctx.lineTo(w(d.x - ux * (d.r * 0.4) - uz * side), w(d.z - uz * (d.r * 0.4) + ux * side));
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
   ctx.lineWidth = 6.4 * PX;
   ctx.beginPath();
   ctx.arc(1024, 1024, 57.5 * PX, 0, Math.PI * 2);
@@ -99,6 +116,15 @@ function paintGround(layout: WorldLayout): HTMLCanvasElement {
   ctx.beginPath();
   ctx.arc(1024, 1024, 20 * PX, 0, Math.PI * 2);
   ctx.stroke();
+  // Radial ticks point down each spoke.
+  ctx.strokeStyle = 'rgba(120,110,90,0.65)';
+  ctx.lineWidth = 3;
+  for (const d of layout.discs) {
+    ctx.beginPath();
+    ctx.moveTo(1024 + Math.cos(d.angle) * 22 * PX, 1024 + Math.sin(d.angle) * 22 * PX);
+    ctx.lineTo(1024 + Math.cos(d.angle) * 44 * PX, 1024 + Math.sin(d.angle) * 44 * PX);
+    ctx.stroke();
+  }
   return canvas;
 }
 
@@ -121,6 +147,8 @@ export class MapScene extends BaseScene {
   declare overlay: { mountLayer(host: HTMLElement): void; setSelected(slug: string | null, isPerson: boolean): void };
   layout: WorldLayout;
   colliderBoxes: BoxCollider[] = [];
+  private propUpdates: Array<(time: number, camX: number, camZ: number) => void> = [];
+  private shiftDown = false;
 
   constructor() {
     super();
@@ -131,6 +159,15 @@ export class MapScene extends BaseScene {
   private async init() {
     this.setupCamera();
     this.audioController = new AudioController(this, 0.25);
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') this.shiftDown = true;
+    });
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') this.shiftDown = false;
+    });
+    window.addEventListener('blur', () => {
+      this.shiftDown = false;
+    });
     const sky = new Sky(this as any);
     const sea = new Sea(this as any);
     await Promise.all([sky.ready, sea.ready]);
@@ -213,7 +250,7 @@ export class MapScene extends BaseScene {
     geo.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2));
     geo.setIndex(index);
     geo.computeVertexNormals();
-    const tex = new CanvasTexture(paintGround(this.layout));
+    const tex = new CanvasTexture(paintGround(this.layout, new Map(DISTRICTS.map((d) => [d.slug, d.color]))));
     tex.anisotropy = 4;
     // flipY=false: canvas row 0 is v=0, matching the planar UV mapping below.
     tex.flipY = false;
@@ -261,9 +298,25 @@ export class MapScene extends BaseScene {
 
   private async scatterProps(): Promise<void> {
     const rand = seededRandom(1234);
-    const barns = warehouseSpots(this.layout);
-    const dummy = new Object3D();
-    void dummy;
+    const barns: Array<[number, number]> = [];
+    const placeProp = (build: { group: any; colliders: BoxCollider[]; update?: (t: number, cx: number, cz: number) => void }, x: number, z: number, ry = 0) => {
+      const gy = islandHeight(this.layout, x, z);
+      build.group.position.set(x, gy, z);
+      build.group.rotation.y = ry;
+      this.add(build.group);
+      for (const c of build.colliders) {
+        const cos = Math.cos(ry);
+        const sin = Math.sin(ry);
+        this.colliderBoxes.push({
+          w: c.w, h: c.h, d: c.d,
+          x: x + c.x * cos + c.z * sin,
+          y: gy,
+          z: z - c.x * sin + c.z * cos,
+          ry,
+        });
+      }
+      if (build.update) this.propUpdates.push((t) => build.update!(t, this.camera.position.x, this.camera.position.z));
+    };
     const instanceData = (pts: Array<[number, number]>, s0: number, s1: number) => {
       const g = new BufferGeometry();
       const n = pts.length;
@@ -323,58 +376,61 @@ export class MapScene extends BaseScene {
     }
     await scatterInstanced('lightpost.bin', { isLightPost: true }, lamps, 1, 1, 'lightposts');
 
-    // --- cloned buildings: recenter baked models on their footprint, then place ---
-    const placeClone = async (
-      file: string,
-      materialOptions: Record<string, boolean>,
-      tx: number,
-      tz: number,
-      ry: number,
-      collide: [number, number, number] | null,
-    ) => {
-      const geo = await geometryLoader.load(file);
-      geo.computeBoundingBox();
-      const box = geo.boundingBox!;
-      const cx = (box.min.x + box.max.x) / 2;
-      const cz = (box.min.z + box.max.z) / 2;
-      const ox = cx * Math.cos(ry) + cz * Math.sin(ry);
-      const oz = -cx * Math.sin(ry) + cz * Math.cos(ry);
-      const gy = islandHeight(this.layout, tx, tz);
-      const mesh = new Mesh(geo, phongMaterial(materialOptions as any));
-      mesh.position.set(tx - ox, gy - box.min.y - 0.05, tz - oz);
-      mesh.rotation.y = ry;
-      mesh.frustumCulled = false;
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      this.add(mesh);
-      if (collide) this.boxCollider(collide[0], collide[1], collide[2], tx, tz, ry);
-    };
-    // Village ring houses (town houses face the street).
-    const houseFiles: Array<[string, Record<string, boolean>]> = [
-      ['house1.bin', { isHouse: true }],
-      ['house2.bin', { isHouse2: true }],
-      ['house3.bin', { isHouse2: true }],
-    ];
-    for (let i = 0; i < 16; i++) {
-      const a = (i / 16) * Math.PI * 2 + 0.13;
-      const nearSpoke = this.layout.discs.some((d) => {
-        const dd = Math.atan2(Math.sin(a - d.angle), Math.cos(a - d.angle));
-        return Math.abs(dd) < 0.12;
-      });
-      if (nearSpoke) continue;
-      const [file, mat] = houseFiles[i % 3];
-      await placeClone(file, mat, Math.cos(a) * 68.5, Math.sin(a) * 68.5, -a + Math.PI / 2 + (i % 2 ? 0.15 : -0.15), [8, 7, 9]);
-    }
-    // District barns: one warehouse per district, outside its far edge.
-    const wh = ['warehouse1.bin', 'warehouse2.bin', 'warehouse3.bin'];
-    let wi = 0;
+    // --- district pavilions + beacons: one per neighborhood, in its color ---
+    const colorBySlug = new Map(DISTRICTS.map((d) => [d.slug, d.color]));
     for (const d of this.layout.discs) {
-      if (d.slug === 'people') continue;
-      const tx = d.x + Math.cos(d.angle) * (d.r + 8);
-      const tz = d.z + Math.sin(d.angle) * (d.r + 8);
-      await placeClone(wh[wi++ % 3], { isWarehouse: true }, tx, tz, -d.angle, [7, 5, 7]);
+      const color = d.slug === 'people' ? '#8a8f98' : (colorBySlug.get(d.slug) ?? '#888888');
+      const label = d.slug === 'people' ? 'People' : (DISTRICTS.find((dd) => dd.slug === d.slug)?.short ?? d.slug);
+      placeProp(buildPavilion(color, label, Math.atan2(-d.x, -d.z)), d.x, d.z);
+      placeProp(buildBeacon(color), d.x, d.z);
     }
-    // Workshop machines + beach parasols and castles (no collision: props).
+    // --- market stalls on the village ring ---
+    const stallColors = [...DISTRICTS.map((d) => d.color), '#f3e8cf'];
+    for (const s of stallSpots(this.layout, stallColors)) {
+      placeProp(buildStall(s.color), s.x, s.z, s.ry);
+    }
+    // --- fingerposts where spokes leave the plaza + the spawn totem ---
+    const fingers = fingerpostSpots(
+      this.layout,
+      DISTRICTS.map((dd) => ({ slug: dd.slug, label: dd.label, short: dd.short, color: dd.color })),
+    );
+    for (const f of fingers.posts) {
+      const g = buildFingerpost(f.arms);
+      g.group.position.set(f.x, islandHeight(this.layout, f.x, f.z), f.z);
+      this.add(g.group);
+    }
+    {
+      const t = fingers.totem;
+      const g = buildFingerpost(t.arms);
+      g.group.position.set(t.x, islandHeight(this.layout, t.x, t.z), t.z);
+      g.group.scale.setScalar(1.15);
+      this.add(g.group);
+      this.colliderBoxes.push({ w: 1, h: 5.5, d: 1, x: t.x, y: islandHeight(this.layout, t.x, t.z), z: t.z, ry: 0 });
+    }
+    // --- bunting between the plaza lamps ---
+    {
+      const tops: Array<[number, number, number]> = [];
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2 + 0.2;
+        const x = Math.cos(a) * 54;
+        const z = Math.sin(a) * 54;
+        tops.push([x, islandHeight(this.layout, x, z) + 7, z]);
+      }
+      const spans = tops.map(([ax, ay, az], i) => {
+        const [bx, by, bz] = tops[(i + 1) % tops.length];
+        return { ax, ay, az, bx, by, bz };
+      });
+      const bunting = buildBunting(spans, [...DISTRICTS.map((d) => d.color), '#f7f1e2']);
+      this.add(bunting.group);
+    }
+    this.beforeRenderCbs.push(() => {
+      const t = clock.time;
+      const cx = this.camera.position.x;
+      const cz = this.camera.position.z;
+      for (const u of this.propUpdates) u(t, cx, cz);
+    });
+
+    // --- beach props: town parasols and sandcastles, recentered on the sand ---
     await placeClone('machine.bin', { isMachine: true }, -64, 66, 0.6, null);
     await placeClone('machine.bin', { isMachine: true }, 66, -62, -0.4, null);
     await placeClone('parasol.bin', { isParasol: true }, 128, 18, 0.3, null);
@@ -448,6 +504,10 @@ export class MapScene extends BaseScene {
     this.add((mesh as any)._controls.circles);
     this.beforeRenderCbs.push(() => {
       (mesh as any).geometry.attributes.instanceSeed.needsUpdate = true;
+      // Hold Shift to run (ignored while typing in the page).
+      const ae = document.activeElement as HTMLElement | null;
+      const typing = !!ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable);
+      (mesh as any)._collisionPhysics._positionForce = this.shiftDown && !typing ? 0.036 : 0.02;
       (mesh as any).update();
       this.audioController?.updatePlayerPosition(
         (mesh as any)._localObject.position.toArray(),

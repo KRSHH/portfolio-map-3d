@@ -374,6 +374,15 @@ export function buildMapOverlay(scene: any): MapOverlay {
     soundBtn.textContent = muted ? 'Sound: off' : 'Sound: on';
   });
   layer.append(soundBtn);
+  // One-line explainer: chips hop, Shift runs. Fades to a whisper after a while.
+  const hint = document.createElement('div');
+  hint.className = 'walk-hint summer-hint';
+  hint.textContent = 'Tap a district to hop over · hold Shift to run · walk into a logo to meet them';
+  layer.append(hint);
+  window.setTimeout(() => {
+    hint.style.transition = 'opacity 1.5s';
+    hint.style.opacity = '0';
+  }, 18000);
 
   // ---- picking + per-frame updates ----
   const ndc = new Vector2();

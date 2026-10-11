@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { COMPANIES, DISTRICTS, PEOPLE } from "../data/catalog";
 import { layoutWorld } from "../data/layout";
-import { MONUMENT, planFromLayout } from "./mapLayout";
+import { MONUMENT, fingerpostSpots, planFromLayout, stallSpots } from "./mapLayout";
 
 const layout = layoutWorld(DISTRICTS.map((d) => d.slug), COMPANIES, PEOPLE);
 const display = DISTRICTS.map((d) => ({ slug: d.slug, label: d.label, short: d.short, color: d.color }));
@@ -56,5 +56,37 @@ describe("summer map layout", () => {
       expect(Math.hypot(p.x - plan.monument.x, p.z - plan.monument.z)).toBeCloseTo(9.5, 1);
       expect(p.z).toBeLessThan(plan.monument.z);
     }
+  });
+
+  it("rings market stalls between the spoke crossings, facing the street", () => {
+    const colors = DISTRICTS.map((d) => d.color);
+    const stalls = stallSpots(layout, colors);
+    expect(stalls).toHaveLength(6);
+    for (const s of stalls) {
+      expect(Math.hypot(s.x, s.z)).toBeCloseTo(66, 0);
+      // Front (+z local) points at the plaza.
+      const fx = Math.sin(s.ry);
+      const fz = Math.cos(s.ry);
+      const tx = -s.x / Math.hypot(s.x, s.z);
+      const tz = -s.z / Math.hypot(s.x, s.z);
+      expect(fx * tx + fz * tz).toBeGreaterThan(0.99);
+      // No spoke runs through a stall.
+      for (const d of layout.discs) {
+        const dd = Math.atan2(Math.sin(Math.atan2(s.z, s.x) - d.angle), Math.cos(Math.atan2(s.z, s.x) - d.angle));
+        expect(Math.abs(dd)).toBeGreaterThan(0.06);
+      }
+    }
+  });
+
+  it("posts wayfinding: spoke fingerposts face their district, the totem names all", () => {
+    const { posts, totem } = fingerpostSpots(layout, display);
+    expect(posts).toHaveLength(layout.discs.length);
+    expect(totem.arms).toHaveLength(layout.discs.length);
+    for (const f of posts) {
+      expect(Math.hypot(f.x, f.z)).toBeCloseTo(50, 0);
+      expect(f.arms).toHaveLength(2);
+    }
+    // Totem stands beside the spawn.
+    expect(Math.hypot(totem.x - layout.spawn.x, totem.z - layout.spawn.z)).toBeLessThan(10);
   });
 });
