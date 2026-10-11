@@ -1,21 +1,17 @@
 // @ts-nocheck
-// The map overlay: Ambition-style layout built on the generated island (mapWorld.ts).
+// The map overlay on the generated island (mapWorld.ts): the founding hub on the plaza (monument,
+// four lantern pylons, the Nexus portal), the pins of every district and the people area, and the
+// HUD on top of the canvas. Everything stands where the plan (mapLayout.ts) says, at the ground's
+// own height (mapGround.islandHeight via scene.groundY).
 //
-// A founding hub on the plaza (monument, four lantern pylons, the Nexus portal),
-// one neighborhood per district plus the people area (the layout's pins, arch signs
-// facing the monument), all positioned by the pure plan in mapLayout.ts.
+// The 3D pieces speak the town's language: flat-shaded Lambert stone, wood and bronze, boards
+// painted by labelTexture(), the companies' and people's own badges (src/three/logoTexture.ts).
+// The only shader is the portal's curtain (adapted from src/views/walk/portal.ts to three r148).
 //
-// New 3D assets are procedural but speak the town's language: flat-shaded
-// Lambert stone/wood/bronze (the town's sun, shadows and LUT grade them like
-// everything else), canvas-painted boards via cpuCanvas, and the companies'
-// real logo badges from src/three/logoTexture.ts. Standard three.js materials
-// pick up the town's cascaded-shadow rewrite automatically (materials.ts
-// patches the shared light chunk), so no custom shaders except the portal
-// curtain (adapted from src/views/walk/portal.ts to three r148).
-//
-// The overlay also owns its DOM: district chips (projected each frame),
-// a meet prompt near pins, the portal card, and a sound toggle. Built once
-// per page load, like the engine itself.
+// The HUD (summer.css): a chip over each district's mast that never stacks on another
+// (mapLabels.placeChips) and hops there on a click; the minimap (mapMinimap.ts), which hops too;
+// a pill naming the district you are in; the meet prompt near a pin; the portal card in front of
+// the portal; the sound toggle; a short hint. Words come from the site's labels (src/site.ts).
 
 import {
   CanvasTexture,
@@ -39,20 +35,27 @@ import {
   Vector2,
   Vector3,
 } from 'three';
+import { createElement } from 'react';
+import { flushSync } from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import { Users } from 'lucide-react';
+import { DistrictIcon } from '../components/bits';
 import { client } from './core/client';
 import { events } from './core/events';
 import { clock } from './engine/clock';
 import { companyBadge, personBadge, labelTexture } from '../three/logoTexture';
 import { cpuCanvas } from '../three/cpuCanvas';
-import { planFromLayout, type MapPlan } from './mapLayout';
+import { MAST_HEIGHT } from './mapProps';
+import { PORTAL_R, clusterAt, hopTargets, kidTheta, type ClusterPlan, type HopTarget, type MapPlan } from './mapLayout';
+import { VIEW_MARGIN, inkOn, placeChips, screenBox, type ChipInput, type Occluder, type Rect } from './mapLabels';
+import { buildMinimap } from './mapMinimap';
 import { frustumcullInstanced } from './scene/helpers';
-import { COMPANIES, DISTRICTS, PEOPLE } from '../data/catalog';
-import { SITE } from '../site';
+import { COMPANIES, PEOPLE } from '../data/catalog';
+import { L, count } from '../site';
 import { useStore } from '../state/store';
 import { PORTAL_HREF } from '../network';
 import type { Company, Person } from '../data/types';
-
-const DOWN = new Vector3(0, -1, 0);
+import './summer.css';
 
 interface Pin {
   slug: string;
@@ -61,8 +64,8 @@ interface Pin {
   x: number;
   y: number;
   z: number;
+  color: string;
   badge: Mesh;
-  headIndex: number;
 }
 
 const lambert = (color: string | number) => new MeshLambertMaterial({ color, flatShading: true });
@@ -77,12 +80,33 @@ function canvasTex(canvas: HTMLCanvasElement) {
   return srgb(t);
 }
 
+/** A district's icon (or the people icon) as static SVG markup, rendered once with the site's own icon set. */
+const iconCache = new Map<string, string>();
+function iconMarkup(c: Pick<ClusterPlan, 'slug' | 'isPeople'>, size: number): string {
+  const key = `${c.slug}|${size}`;
+  let html = iconCache.get(key);
+  if (html == null) {
+    const host = document.createElement('div');
+    const root = createRoot(host);
+    flushSync(() => root.render(c.isPeople ? createElement(Users, { size, 'aria-hidden': true, strokeWidth: 2.2 }) : createElement(DistrictIcon, { slug: c.slug, size })));
+    html = host.innerHTML;
+    root.unmount();
+    iconCache.set(key, html);
+  }
+  return html;
+}
+
+/** "12 companies" or "5 coaches", in the site's words. */
+const tally = (c: ClusterPlan) => (c.isPeople ? count(c.count, L.person, L.people) : count(c.count, L.company, L.companies));
+
 export interface MapOverlay {
   plan: MapPlan;
   /** Collision boxes for the hub pieces (monument, pylons, portal posts). */
   colliders: Array<{ w: number; h: number; d: number; x: number; z: number; ry: number }>;
   mountLayer(host: HTMLElement): void;
   setSelected(slug: string | null, isPerson: boolean): void;
+  /** Hop the kid to a district, the portal or the plaza (by hop target id). */
+  hop(id: string): void;
 }
 
 export function buildMapOverlay(scene: any): MapOverlay {
@@ -92,19 +116,12 @@ export function buildMapOverlay(scene: any): MapOverlay {
     onMeetPerson: (slug: string) => store.selectPerson(slug, { fly: false }),
     goNexus: () => window.location.assign(PORTAL_HREF),
   };
-  const districts = DISTRICTS.map((d) => ({ slug: d.slug, label: d.label, short: d.short, color: d.color }));
-  // The scene is the MapScene: same island, same coordinates as the plan.
-  const plan = planFromLayout(scene.layout, districts);
+  const plan: MapPlan = scene.plan;
+  const groundY = (x: number, z: number): number => scene.groundY(x, z);
   const companyBySlug = new Map(COMPANIES.map((c) => [c.slug, c]));
   const personBySlug = new Map(PEOPLE.map((p) => [p.slug, p]));
-  const colorByDistrict = new Map(DISTRICTS.map((d) => [d.slug, d.color]));
-
-  const raycaster = new Raycaster();
-  const groundY = (x: number, z: number): number => {
-    raycaster.set(new Vector3(x, 60, z), DOWN);
-    const hit = raycaster.intersectObject(scene.terrain.mesh, false)[0];
-    return hit ? hit.point.y : 0.4;
-  };
+  const clusterBySlug = new Map(plan.clusters.map((c) => [c.slug, c]));
+  const still = !!scene.still;
   const colliders: MapOverlay['colliders'] = [];
 
   const root = new Group();
@@ -122,6 +139,7 @@ export function buildMapOverlay(scene: any): MapOverlay {
   };
 
   // ---- founding hub: monument ----
+  const MONUMENT_TOP = 7.9;
   {
     const m = plan.monument;
     const gy = groundY(m.x, m.z);
@@ -138,19 +156,16 @@ export function buildMapOverlay(scene: any): MapOverlay {
     const shaft = add(g, shadowed(new Mesh(new CylinderGeometry(0.55, 1.05, 5.4, 4), stone)), 0, 1.53 + 2.7, 0);
     shaft.rotation.y = Math.PI / 4;
     add(g, shadowed(new Mesh(new ConeGeometry(0.78, 0.9, 4), lambert('#8a6a3a'))), 0, 1.53 + 5.4 + 0.45, 0).rotation.y = Math.PI / 4;
-    // Plaque with the publisher's name, facing the spawn.
-    const badge = labelTexture(SITE.org.name, { bg: '#3a3630', color: '#f5ead0', size: 64, weight: 600 });
-    const board = new Mesh(
-      new PlaneGeometry(2.6, (2.6 / badge.aspect) * 1.0),
-      new MeshBasicMaterial({ map: srgb(badge.texture), transparent: true, toneMapped: false }),
-    );
-    // The group faces the spawn (+z), so the plaque sits on its local +z face.
+    // Plaque with the publisher's name, facing the arrival.
+    const badge = labelTexture(L.org, { bg: '#3a3630', color: '#f5ead0', size: 64, weight: 600 });
+    const board = new Mesh(new PlaneGeometry(2.6, 2.6 / badge.aspect), new MeshBasicMaterial({ map: srgb(badge.texture), transparent: true, toneMapped: false }));
+    // The group faces the arrival (+z), so the plaque sits on its local +z face.
     board.position.set(0, 1.0, 1.53);
     g.add(board);
     colliders.push({ w: 3.2, h: 7, d: 3.2, x: m.x, z: m.z, ry: 0 });
   }
 
-  // ---- pylons: four lantern pillars on the monument's north arc ----
+  // ---- pylons: four lantern pillars on the monument's far side ----
   for (const p of plan.pylons) {
     const gy = groundY(p.x, p.z);
     const g = new Group();
@@ -158,18 +173,14 @@ export function buildMapOverlay(scene: any): MapOverlay {
     root.add(g);
     add(g, shadowed(new Mesh(new BoxGeometry(1.1, 0.4, 1.1), lambert('#a89a7c'))), 0, 0.2, 0);
     add(g, shadowed(new Mesh(new BoxGeometry(0.7, 3.0, 0.7), lambert('#cfc0a0'))), 0, 1.9, 0);
-    const lampGlass = new Mesh(
-      new BoxGeometry(0.55, 0.6, 0.55),
-      new MeshBasicMaterial({ color: '#ffd9a0', toneMapped: false }),
-    );
-    add(g, lampGlass, 0, 3.7, 0);
+    add(g, new Mesh(new BoxGeometry(0.55, 0.6, 0.55), new MeshBasicMaterial({ color: '#ffd9a0', toneMapped: false })), 0, 3.7, 0);
     add(g, shadowed(new Mesh(new BoxGeometry(1.0, 0.3, 1.0), lambert('#8a6a3a'))), 0, 4.15, 0);
     colliders.push({ w: 1, h: 4.3, d: 1, x: p.x, z: p.z, ry: 0 });
   }
 
-  // ---- Nexus portal (Ambition's ring, town-dressed) ----
-  const PORTAL_R = 3.4;
+  // ---- the Nexus portal: a stone-and-bronze ring with a warm curtain ----
   let curtainUniforms = { uTime: { value: 0 } };
+  const PORTAL_TOP = 2 * PORTAL_R + 1.5;
   {
     const p = plan.portal;
     const gy = groundY(p.x, p.z);
@@ -180,11 +191,7 @@ export function buildMapOverlay(scene: any): MapOverlay {
     const cy = PORTAL_R + 0.24;
     const frame = lambert('#4a4238');
     add(g, shadowed(new Mesh(new TorusGeometry(PORTAL_R, 0.18, 8, 64).translate(0, cy, 0), frame)));
-    const inner = new Mesh(
-      new TorusGeometry(PORTAL_R - 0.12, 0.03, 6, 64).translate(0, cy, 0.1),
-      new MeshBasicMaterial({ color: '#ffd1a3', toneMapped: false }),
-    );
-    g.add(inner);
+    g.add(new Mesh(new TorusGeometry(PORTAL_R - 0.12, 0.03, 6, 64).translate(0, cy, 0.1), new MeshBasicMaterial({ color: '#ffd1a3', toneMapped: false })));
     const stone = lambert('#8f8468');
     add(g, shadowed(new Mesh(new BoxGeometry(PORTAL_R * 2 + 1.8, 0.35, 1.9).translate(0, 0.17, 0), stone)));
     add(g, shadowed(new Mesh(new CylinderGeometry(0.2, 0.3, cy, 8).translate(-PORTAL_R - 0.15, cy / 2, 0), stone)));
@@ -226,42 +233,26 @@ export function buildMapOverlay(scene: any): MapOverlay {
     grad.addColorStop(1, 'rgba(238,171,117,0)');
     gctx.fillStyle = grad;
     gctx.fillRect(0, 0, 128, 128);
-    const glow = new Mesh(
-      new PlaneGeometry(PORTAL_R * 2.4, PORTAL_R * 1.7).rotateX(-Math.PI / 2),
-      new MeshBasicMaterial({ map: canvasTex(gc), transparent: true, depthWrite: false, toneMapped: false }),
-    );
-    add(g, glow, 0, 0.08, 0);
+    add(g, new Mesh(new PlaneGeometry(PORTAL_R * 2.4, PORTAL_R * 1.7).rotateX(-Math.PI / 2), new MeshBasicMaterial({ map: canvasTex(gc), transparent: true, depthWrite: false, toneMapped: false })), 0, 0.08, 0);
     const words = labelTexture('Nexus', { bg: '#3a3630', color: '#ffd9a8', size: 72, weight: 600 });
     const plateH = 2.2 / words.aspect;
     const plateY = cy + PORTAL_R + 0.18 + plateH / 2;
     add(g, shadowed(new Mesh(new BoxGeometry(2.5, plateH + 0.2, 0.16), stone)), 0, plateY, 0);
-    const plate = new Mesh(
-      new PlaneGeometry(2.2, plateH),
-      new MeshBasicMaterial({ map: srgb(words.texture), transparent: true, toneMapped: false }),
-    );
-    add(g, plate, 0, plateY, 0.1);
+    add(g, new Mesh(new PlaneGeometry(2.2, plateH), new MeshBasicMaterial({ map: srgb(words.texture), transparent: true, toneMapped: false })), 0, plateY, 0.1);
     // Portal posts collide (walk through the curtain, not the posts).
     for (const side of [-1, 1]) {
       const lx = side * (PORTAL_R + 0.15);
-      colliders.push({
-        w: 0.7, h: 3.8, d: 0.7,
-        x: p.x + lx * Math.cos(p.facing),
-        z: p.z - lx * Math.sin(p.facing),
-        ry: 0,
-      });
+      colliders.push({ w: 0.7, h: 3.8, d: 0.7, x: p.x + lx * Math.cos(p.facing), z: p.z - lx * Math.sin(p.facing), ry: 0 });
     }
   }
 
-  // ---- neighborhood pins: instanced posts + heads, individual logo badges ----
+  // ---- pins: instanced posts + heads in their district's color, a badge each ----
   const pins: Pin[] = [];
   const pickables: Object3D[] = [];
-  const slugByObject = new Map<number, Pin>();
+  const pinByObject = new Map<number, Pin>();
   const postGeo = new CylinderGeometry(0.09, 0.13, 1.9, 7).translate(0, 0.95, 0);
   const headGeo = new OctahedronGeometry(0.45).translate(0, 2.35, 0);
-  const allPins: Array<{ slug: string; district: string; isPerson: boolean; x: number; z: number }> = [];
-  for (const c of plan.clusters) {
-    for (const p of c.pins) allPins.push({ ...p, isPerson: c.slug === 'people' });
-  }
+  const allPins = plan.clusters.flatMap((c) => c.pins.map((p) => ({ ...p, isPerson: c.isPeople, color: c.color })));
   const posts = new InstancedMesh(postGeo, lambert('#7a5c3e'), allPins.length);
   const heads = new InstancedMesh(headGeo, lambert('#ffffff'), allPins.length);
   posts.castShadow = heads.castShadow = true;
@@ -270,31 +261,22 @@ export function buildMapOverlay(scene: any): MapOverlay {
   allPins.forEach((p, i) => {
     const gy = groundY(p.x, p.z);
     dummy.position.set(p.x, gy - 0.1, p.z);
-    dummy.rotation.set(0, 0, 0);
-    dummy.scale.setScalar(1);
     dummy.updateMatrix();
     posts.setMatrixAt(i, dummy.matrix);
     heads.setMatrixAt(i, dummy.matrix);
-    const color = p.isPerson ? '#6b7280' : (colorByDistrict.get(p.district) ?? '#888888');
-    heads.setColorAt(i, tmpColor.set(color));
-    // Badge plate above the head.
+    heads.setColorAt(i, tmpColor.set(p.color));
     const holder = p.isPerson ? personBySlug.get(p.slug) : companyBySlug.get(p.slug);
-    const badge = p.isPerson
-      ? personBadge(holder as Person)
-      : companyBadge(holder as Company, false);
+    const badge = p.isPerson ? personBadge(holder as Person) : companyBadge(holder as Company, false);
     srgb(badge.texture);
     const w = p.isPerson ? 2.3 : 3.1;
-    const mesh = new Mesh(
-      new PlaneGeometry(w, w / badge.aspect),
-      new MeshBasicMaterial({ map: badge.texture, transparent: true, toneMapped: false }),
-    );
+    const mesh = new Mesh(new PlaneGeometry(w, w / badge.aspect), new MeshBasicMaterial({ map: badge.texture, transparent: true, toneMapped: false }));
     mesh.position.set(p.x, gy + (p.isPerson ? 4.1 : 3.9), p.z);
     mesh.renderOrder = 3;
     root.add(mesh);
-    const pin: Pin = { slug: p.slug, district: p.district, isPerson: p.isPerson, x: p.x, y: gy, z: p.z, badge: mesh, headIndex: i };
+    const pin: Pin = { slug: p.slug, district: p.district, isPerson: p.isPerson, x: p.x, y: gy, z: p.z, color: p.color, badge: mesh };
     pins.push(pin);
     pickables.push(mesh);
-    slugByObject.set(mesh.id, pin);
+    pinByObject.set(mesh.id, pin);
   });
   posts.instanceMatrix.needsUpdate = true;
   heads.instanceMatrix.needsUpdate = true;
@@ -303,67 +285,101 @@ export function buildMapOverlay(scene: any): MapOverlay {
   frustumcullInstanced(heads);
   root.add(posts, heads);
 
-  // ---- arch signs: posts + beam + painted board facing the monument ----
-  for (const c of plan.clusters) {
-    const gy = groundY(c.sign.x, c.sign.z);
-    const g = new Group();
-    g.position.set(c.sign.x, gy, c.sign.z);
-    g.rotation.y = c.sign.facing;
-    root.add(g);
-    const wood = lambert('#6e5138');
-    add(g, shadowed(new Mesh(new CylinderGeometry(0.14, 0.17, 3.4, 7), wood)), -2.4, 1.7, 0);
-    add(g, shadowed(new Mesh(new CylinderGeometry(0.14, 0.17, 3.4, 7), wood)), 2.4, 1.7, 0);
-    add(g, shadowed(new Mesh(new BoxGeometry(5.6, 0.35, 0.35), new MeshLambertMaterial({ color: c.color, flatShading: true }))), 0, 3.5, 0);
-    const board = labelTexture(c.short, { bg: '#f3e8cf', color: '#3a352c', size: 56, weight: 600 });
-    const bw = 4.6;
-    const mesh = new Mesh(
-      new PlaneGeometry(bw, bw / board.aspect),
-      new MeshBasicMaterial({ map: srgb(board.texture), transparent: true, toneMapped: false }),
-    );
-    add(g, mesh, 0, 2.45, 0.05);
-  }
+  // ---- hopping ----
+  const targets = hopTargets(plan, { portal: 'Nexus portal', plaza: `${L.hub} plaza` });
+  const targetById = new Map(targets.map((t) => [t.id, t]));
+  const hop = (id: string) => {
+    const t = targetById.get(id);
+    const kid = scene.characters?.mesh;
+    if (!t || !kid) return;
+    const y = groundY(t.land.x, t.land.z) + 0.05;
+    kid.snap([t.land.x, y, t.land.z]);
+    const theta = kidTheta(t.land.facing);
+    kid._localObject.spherical.theta = theta;
+    kid._localObject.targetSpherical.theta = theta;
+    // The camera turns with the kid and jumps with it, rather than sweeping across the island.
+    const cam = scene.camera;
+    cam.spherical.theta = theta;
+    cam.sphericalTarget.theta = theta;
+    cam.baseTarget?.set(t.land.x, y + 1.1, t.land.z);
+    hint.classList.add('is-gone');
+  };
 
-  // ---- DOM: district chips, meet prompt, portal card (walk.css styles) ----
-  const clusterGroundY = new Map<string, number>();
-  for (const c of plan.clusters) clusterGroundY.set(c.slug, groundY(c.cx, c.cz));
+  // ---- DOM ----
   const layer = document.createElement('div');
   layer.className = 'summer-layer';
-  const chipEls = new Map<string, HTMLButtonElement>();
-  for (const c of plan.clusters) {
+  if (still) layer.classList.add('is-still');
+
+  // District chips over each mast.
+  const chips = plan.clusters.map((c) => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = `walk-district-label${c.slug === 'people' ? ' is-people' : ''}`;
-    if (c.slug !== 'people') b.style.setProperty('--d', c.color);
-    b.innerHTML = `<span class="walk-district-text"><strong></strong><span></span></span>`;
-    b.querySelector('strong')!.textContent = c.label;
-    b.querySelector('.walk-district-text > span')!.textContent =
-      `${c.count} ${c.count === 1 ? (c.slug === 'people' ? 'person' : 'company') : c.slug === 'people' ? 'people' : 'companies'}`;
-    b.addEventListener('click', () => {
-      scene.characters?.mesh?.snap?.([c.sign.x, 0, c.sign.z]);
-    });
-    b.style.opacity = '0';
+    b.className = `walk-district-label summer-chip${c.isPeople ? ' is-people' : ''}`;
+    b.style.setProperty('--d', c.color);
+    // Its full name, or on a phone its short one, over the count.
+    b.innerHTML = `<span class="walk-district-icon" aria-hidden="true"></span><span class="walk-district-text"><strong><span class="summer-long"></span><span class="summer-short"></span></strong><span></span></span>`;
+    const icon = b.querySelector('.walk-district-icon');
+    icon.innerHTML = iconMarkup(c, 17);
+    if (!c.isPeople) icon.style.color = inkOn(c.color);
+    b.querySelector('.summer-long').textContent = c.label;
+    b.querySelector('.summer-short').textContent = c.short;
+    b.querySelector('.walk-district-text > span').textContent = tally(c);
+    b.setAttribute('aria-label', `Hop to ${c.label}, ${tally(c)}`);
+    b.addEventListener('click', () => hop(c.slug));
     layer.append(b);
-    chipEls.set(c.slug, b);
-  }
+    return { c, el: b, w: 150, h: 44, shown: false, x: NaN, y: NaN };
+  });
+  const measureChips = () => {
+    for (const k of chips) {
+      k.w = k.el.offsetWidth || k.w;
+      k.h = k.el.offsetHeight || k.h;
+    }
+  };
+
+  // Where you are: the district you stand in.
+  const here = document.createElement('div');
+  here.className = 'summer-here';
+  here.setAttribute('role', 'status');
+  here.hidden = true;
+  layer.append(here);
+  const showHere = (c: ClusterPlan | null) => {
+    if (!c) {
+      here.hidden = true;
+      return;
+    }
+    here.style.setProperty('--d', c.color);
+    here.classList.toggle('is-people', c.isPeople);
+    here.innerHTML = `<span class="walk-district-icon" aria-hidden="true"></span><span class="walk-district-text"><strong></strong><span></span></span>`;
+    const icon = here.querySelector('.walk-district-icon');
+    icon.innerHTML = iconMarkup(c, 15);
+    if (!c.isPeople) icon.style.color = inkOn(c.color);
+    here.querySelector('strong').textContent = c.label;
+    here.querySelector('.walk-district-text > span').textContent = tally(c);
+    here.hidden = false;
+  };
+
   const prompt = document.createElement('button');
   prompt.type = 'button';
   prompt.className = 'walk-prompt summer-prompt';
   prompt.hidden = true;
   layer.append(prompt);
+
   const portalCard = document.createElement('div');
   portalCard.className = 'walk-portal-card summer-portal-card';
   portalCard.hidden = true;
-  portalCard.innerHTML = `<strong>Through the portal to the Nexus…</strong><p class="walk-portal-what">The shared world of every map in the network.</p><div class="walk-portal-actions"><button type="button" class="btn btn-primary">Go now</button><button type="button" class="btn btn-quiet">Stay here</button></div>`;
+  portalCard.innerHTML = `<strong>Through the portal to the Nexus</strong><p class="walk-portal-what">The shared world of every map in the network.</p><div class="walk-portal-actions"><button type="button" class="btn btn-primary">Go now</button><button type="button" class="btn btn-quiet">Stay here</button></div>`;
   const [goBtn, stayBtn] = portalCard.querySelectorAll('button');
   let portalCooldownUntil = 0;
+  let portalCardH = 200;
+  const narrow = window.matchMedia('(max-width: 760px)');
+  narrow.addEventListener?.('change', () => portalCard.style.removeProperty('transform'));
   goBtn.addEventListener('click', () => hooks.goNexus());
   stayBtn.addEventListener('click', () => {
     portalCard.hidden = true;
     portalCooldownUntil = performance.now() + 20000;
   });
-  const mountLayer = (host: HTMLElement) => {
-    if (layer.parentNode !== host) host.append(layer);
-  };
+  layer.append(portalCard);
+
   // Sound toggle (the town's audio starts on first interaction, muted).
   const soundBtn = document.createElement('button');
   soundBtn.type = 'button';
@@ -374,105 +390,243 @@ export function buildMapOverlay(scene: any): MapOverlay {
     soundBtn.textContent = muted ? 'Sound: off' : 'Sound: on';
   });
   layer.append(soundBtn);
-  // One-line explainer: chips hop, Shift runs. Fades to a whisper after a while.
+
+  // One-line explainer; it fades after a while, or at the first hop.
   const hint = document.createElement('div');
   hint.className = 'walk-hint summer-hint';
-  hint.textContent = 'Tap a district to hop over · hold Shift to run · walk into a logo to meet them';
+  hint.textContent =
+    client.device === 'mobile'
+      ? `Tap a ${L.district}'s name or the map to hop there · walk up to a pin to meet`
+      : `Click a ${L.district}'s name or the map to hop there · hold Shift to run · walk up to a pin to meet`;
   layer.append(hint);
-  window.setTimeout(() => {
-    hint.style.transition = 'opacity 1.5s';
-    hint.style.opacity = '0';
-  }, 18000);
+  window.setTimeout(() => hint.classList.add('is-gone'), 18000);
 
-  // ---- picking + per-frame updates ----
+  // The minimap.
+  const minimap = buildMinimap(plan, targets, {
+    title: 'Map',
+    hopLabel: (t: HopTarget) => (t.kind === 'district' ? `Hop to ${t.label}, ${tally(clusterBySlug.get(t.id))}` : `Hop to the ${t.label}`),
+    onHop: (t: HopTarget) => hop(t.id),
+  });
+  layer.append(minimap.el);
+
+  // A HUD button clicked with the mouse or a finger gives its focus back, so Enter keeps meeting
+  // pins (keyboard focus, from Tab, stays where it is).
+  layer.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest?.('button');
+    if (b && e.detail > 0) window.setTimeout(() => b.blur(), 0);
+  });
+
+  const mountLayer = (host: HTMLElement) => {
+    if (layer.parentNode !== host) host.append(layer);
+    measureChips();
+  };
+  window.addEventListener('resize', () => {
+    measureChips();
+    reservedAge = Infinity;
+  });
+
+  // ---- picking ----
+  const raycaster = new Raycaster();
   const ndc = new Vector2();
-  const projV = new Vector3();
   let nearPin: Pin | null = null;
   let selected: { slug: string; isPerson: boolean } | null = null;
   const playerPos = (): Vector3 | null => scene.characters?.mesh?._localObject?.position ?? null;
+  const meet = (p: Pin) => (p.isPerson ? hooks.onMeetPerson : hooks.onMeetCompany)(p.slug);
 
   events.on('touch_click', (touch: any) => {
     if (!touch || !scene.camera) return;
     ndc.set(touch.position01.x * 2 - 1, touch.position01.y * 2 - 1);
     raycaster.setFromCamera(ndc as any, scene.camera);
     const hit = raycaster.intersectObjects(pickables, false)[0];
-    const pin = hit ? slugByObject.get(hit.object.id) : undefined;
-    if (pin) (pin.isPerson ? hooks.onMeetPerson : hooks.onMeetCompany)(pin.slug);
+    const pin = hit ? pinByObject.get(hit.object.id) : undefined;
+    if (pin) meet(pin);
   });
 
   // Enter meets the nearby pin (the prompt's hint). Ignored while typing.
   events.on('keydown', (e: KeyboardEvent) => {
     if (e.key !== 'Enter' || !nearPin) return;
     const ae = document.activeElement as HTMLElement | null;
-    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable || ae.closest('.sheet, .panel'))) return;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'BUTTON' || ae.isContentEditable || ae.closest('.sheet, .panel'))) return;
     e.preventDefault();
-    (nearPin.isPerson ? hooks.onMeetPerson : hooks.onMeetCompany)(nearPin.slug);
+    meet(nearPin);
   });
 
-  const cssPos = (x: number, y: number, z: number): { x: number; y: number; visible: boolean } => {
+  // ---- per frame ----
+  const projV = new Vector3();
+  const project = (x: number, y: number, z: number) => {
     projV.set(x, y, z).project(scene.camera);
-    const behind = projV.z > 1;
-    return {
-      x: (projV.x * 0.5 + 0.5) * client.screen.w,
-      y: (-projV.y * 0.5 + 0.5) * client.screen.h,
-      visible: !behind && Math.abs(projV.x) < 1.1 && Math.abs(projV.y) < 1.1,
-    };
+    return { x: (projV.x * 0.5 + 0.5) * client.screen.w, y: (-projV.y * 0.5 + 0.5) * client.screen.h, front: projV.z < 1 && projV.z > -1, ndcX: projV.x, ndcY: projV.y };
   };
+  /** The corners of a box turned `facing` about its middle (cx, cz), `halfW` across, `halfD` deep, from y0 to y1, projected. */
+  const boxCorners = (cx: number, cz: number, facing: number, halfW: number, halfD: number, y0: number, y1: number) => {
+    const out = [];
+    const c = Math.cos(facing);
+    const s = Math.sin(facing);
+    for (const lx of [-halfW, halfW]) for (const lz of [-halfD, halfD]) for (const y of [y0, y1]) out.push(project(cx + lx * c + lz * s, y, cz - lx * s + lz * c));
+    return out;
+  };
+  const camDist = (x: number, y: number, z: number) => scene.camera.position.distanceTo(projV.set(x, y, z));
+  const monumentY = groundY(plan.monument.x, plan.monument.z);
+  const portalY = groundY(plan.portal.x, plan.portal.z);
+  const anchorY = new Map(plan.clusters.map((c) => [c.slug, groundY(c.mast.x, c.mast.z) + MAST_HEIGHT + 1.2]));
+
+  // The HUD's own boxes, which no chip covers; refreshed when they change, and now and then.
+  let reserved: Rect[] = [];
+  let reservedAge = Infinity;
+  // The engine draws at the window's size from the layer's top-left; the layer shows the part in view.
+  let viewSize = { w: client.screen.w, h: client.screen.h };
+  const refreshReserved = () => {
+    const base = layer.getBoundingClientRect();
+    if (base.width && base.height) viewSize = { w: Math.min(base.width, client.screen.w), h: Math.min(base.height, client.screen.h) };
+    reserved = [];
+    for (const el of [minimap.el, soundBtn, prompt, portalCard, here, hint]) {
+      if (el.hidden || el.classList.contains('is-gone') || !el.isConnected) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height) reserved.push({ x: r.left - base.left, y: r.top - base.top, w: r.width, h: r.height });
+    }
+    reservedAge = 0;
+  };
+  const watchHidden = new MutationObserver(() => {
+    reservedAge = Infinity;
+  });
+  for (const el of [minimap.el, prompt, portalCard, here, hint]) watchHidden.observe(el, { attributes: true, attributeFilter: ['hidden', 'class'], subtree: el === minimap.el });
+
+  let previous = new Map<string, number>();
+  let lastChips: unknown = null;
+  let currentCluster: ClusterPlan | null = null;
+  let frame = 0;
 
   scene.beforeRenderCbs.push(() => {
-    curtainUniforms.uTime.value = clock.time;
+    frame++;
+    if (!still) curtainUniforms.uTime.value = clock.time;
     // Badges face the camera.
     for (const p of pins) p.badge.quaternion.copy(scene.camera.quaternion);
     const player = playerPos();
+    const kid = scene.characters?.mesh?._localObject;
+
     // Nearest pin → meet prompt.
     let best: Pin | null = null;
     let bestD = 4.2;
     if (player) {
       for (const p of pins) {
         const d = Math.hypot(player.x - p.x, player.z - p.z);
-        if (d < bestD) { bestD = d; best = p; }
+        if (d < bestD) {
+          bestD = d;
+          best = p;
+        }
       }
     }
     if (best !== nearPin) {
       nearPin = best;
-      for (const p of pins) {
-        const on = p === nearPin || (selected && p.slug === selected.slug);
-        p.badge.scale.setScalar(on ? 1.18 : 1);
-      }
+      for (const p of pins) p.badge.scale.setScalar(p === nearPin || (selected && p.slug === selected.slug) ? 1.18 : 1);
       if (nearPin) {
         const holder = nearPin.isPerson ? personBySlug.get(nearPin.slug) : companyBySlug.get(nearPin.slug);
         prompt.innerHTML = '';
         const dot = document.createElement('span');
         dot.className = 'walk-dot';
-        dot.style.background = nearPin.isPerson ? '#6b7280' : (colorByDistrict.get(nearPin.district) ?? '#888');
-        prompt.append(dot, document.createTextNode(`Meet ${(holder as any)?.name ?? nearPin.slug}  `));
+        dot.style.background = nearPin.color;
+        const name = document.createElement('span');
+        name.textContent = `Meet ${(holder as any)?.name ?? nearPin.slug}`;
         const kbd = document.createElement('kbd');
         kbd.textContent = 'Enter';
-        prompt.append(kbd);
+        prompt.append(dot, name, kbd);
         prompt.hidden = false;
-        prompt.onclick = () => ((nearPin!.isPerson ? hooks.onMeetPerson : hooks.onMeetCompany)(nearPin!.slug));
+        const p = nearPin;
+        prompt.onclick = () => meet(p);
       } else {
         prompt.hidden = true;
         prompt.onclick = null;
       }
     }
-    // Portal card within range (with a cooldown after "Stay here").
+
     if (player) {
-      const d = Math.hypot(player.x - plan.portal.x, player.z - plan.portal.z);
-      const cool = performance.now() < portalCooldownUntil;
-      portalCard.hidden = cool || d > 7.5;
-      if (!portalCard.hidden) {
-        const s = cssPos(plan.portal.x, 6.5, plan.portal.z);
-        portalCard.style.transform = `translate(-50%,-100%) translate(${s.x.toFixed(1)}px,${s.y.toFixed(1)}px)`;
+      // Which district you stand in: its pill shows, its chip steps aside, the map rings it.
+      const inside = clusterAt(plan, player.x, player.z);
+      if (inside !== currentCluster) {
+        currentCluster = inside;
+        showHere(inside);
+        minimap.setCurrent(inside?.slug ?? null);
+      }
+      minimap.update(player.x, player.z, kid?.spherical?.theta ?? 0);
+
+      // The portal card, when you stand in front of the portal (and not just after "Stay here").
+      const q = plan.portal;
+      const dx = player.x - q.x;
+      const dz = player.z - q.z;
+      const ahead = dx * Math.sin(q.facing) + dz * Math.cos(q.facing);
+      const across = dx * Math.cos(q.facing) - dz * Math.sin(q.facing);
+      const inFront = ahead > -0.5 && ahead < 7.5 && Math.abs(across) < PORTAL_R + 2;
+      const show = inFront && performance.now() >= portalCooldownUntil;
+      if (portalCard.hidden === show) {
+        portalCard.hidden = !show;
+        if (show) portalCardH = portalCard.offsetHeight;
+      }
+      // Over the portal, kept inside the view; on a phone it docks at the bottom instead (summer.css).
+      if (show && !narrow.matches) {
+        const s = project(q.x, portalY + PORTAL_TOP + 0.6, q.z);
+        const half = Math.min(210, client.screen.w / 2 - 12);
+        const x = Math.min(Math.max(s.x, half + 12), client.screen.w - half - 12);
+        portalCard.style.transform = `translate(-50%,-100%) translate(${x.toFixed(1)}px,${Math.max(portalCardH + 12, s.y).toFixed(1)}px)`;
       }
     }
-    // District chips follow their neighborhoods.
+
+    // District chips: projected over each mast, placed so none stacks, skips the HUD or covers a nearer landmark.
+    if (reservedAge++ > 45) refreshReserved();
+    if (frame % 120 === 1) measureChips();
+    const view = viewSize;
+    const inputs: ChipInput[] = chips.map((k) => {
+      const c = k.c;
+      const y = anchorY.get(c.slug);
+      const s = project(c.mast.x, y, c.mast.z);
+      // The follow camera looks a little down, so a near mast's top can be above the view while
+      // the mast stands in it: its chip then waits at the top edge, right over the mast.
+      const inX = s.front && Math.abs(s.ndcX) < 1.02;
+      const top = VIEW_MARGIN + k.h;
+      const ay = inX && s.ndcY > 1 ? top : s.y;
+      const onScreen = inX && s.ndcY > -1.02 && c !== currentCluster;
+      return { id: c.slug, x: s.x, y: ay, depth: camDist(c.mast.x, y, c.mast.z), onScreen, w: k.w, h: k.h };
+    });
+    // Landmarks a chip from farther off must not cover: the monument's shaft and plinth, the portal's
+    // ring, and each mast's banner (its own chip included, so a chip never hides the name it repeats).
+    // A box reaching behind the camera is left out (it is beside the camera, not in the view).
+    const occluders: Occluder[] = [];
+    const occlude = (corners: ReturnType<typeof boxCorners>, depth: number) => {
+      if (!corners.every((p) => p.front)) return;
+      const box = screenBox(corners);
+      if (box) occluders.push({ ...box, depth });
+    };
+    const m = plan.monument;
+    const monDepth = camDist(m.x, monumentY + 3, m.z);
+    occlude(boxCorners(m.x, m.z, m.facing, 0.9, 0.9, monumentY + 1.5, monumentY + MONUMENT_TOP), monDepth);
+    occlude(boxCorners(m.x, m.z, m.facing, 2.7, 2.7, monumentY, monumentY + 1.6), monDepth);
+    const q = plan.portal;
+    occlude(boxCorners(q.x, q.z, q.facing, PORTAL_R + 0.3, 0.3, portalY, portalY + PORTAL_TOP), camDist(q.x, portalY + PORTAL_R, q.z));
     for (const c of plan.clusters) {
-      const el = chipEls.get(c.slug)!;
-      const s = cssPos(c.cx, (clusterGroundY.get(c.slug) ?? 0) + 7.5, c.cz);
-      el.style.transform = `translate(-50%,-100%) translate(${s.x.toFixed(1)}px,${s.y.toFixed(1)}px)`;
-      el.style.opacity = s.visible ? '1' : '0';
-      el.style.pointerEvents = s.visible ? 'auto' : 'none';
+      const top = anchorY.get(c.slug) - 1.2;
+      occlude(boxCorners(c.mast.x, c.mast.z, c.mast.facing, 1.8, 0.5, top - 6.6, top + 0.3), camDist(c.mast.x, top - 3, c.mast.z) - 1);
+    }
+    const spots = placeChips(inputs, { view, reserved, occluders, previous });
+    lastChips = { inputs, occluders, reserved, spots };
+    const placed = new Map(spots.map((s) => [s.id, s]));
+    previous = new Map(spots.map((s) => [s.id, s.slot]));
+    for (const k of chips) {
+      const s = placed.get(k.c.slug);
+      if (s) {
+        const x = Math.round(s.x * 2) / 2;
+        const y = Math.round(s.y * 2) / 2;
+        if (x !== k.x || y !== k.y) {
+          k.el.style.transform = `translate(${x}px,${y}px)`;
+          k.x = x;
+          k.y = y;
+        }
+      }
+      if (!!s !== k.shown) {
+        k.shown = !!s;
+        k.el.classList.toggle('is-shown', k.shown);
+        k.el.tabIndex = k.shown ? 0 : -1;
+        if (k.shown) k.el.removeAttribute('aria-hidden');
+        else k.el.setAttribute('aria-hidden', 'true');
+      }
     }
   });
 
@@ -480,12 +634,11 @@ export function buildMapOverlay(scene: any): MapOverlay {
     plan,
     colliders,
     mountLayer,
+    hop,
+    debugChips: () => lastChips,
     setSelected(slug, isPerson) {
       selected = slug ? { slug, isPerson } : null;
-      for (const p of pins) {
-        const on = p === nearPin || (selected && p.slug === selected.slug);
-        p.badge.scale.setScalar(on ? 1.18 : 1);
-      }
+      for (const p of pins) p.badge.scale.setScalar(p === nearPin || (selected && p.slug === selected.slug) ? 1.18 : 1);
     },
   };
   const syncSelection = () => {

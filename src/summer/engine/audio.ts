@@ -151,14 +151,17 @@ export class AudioController {
     });
   };
 
+  /** How much of the beach's sound to play at a world (x, z), 0 to 1; by default it rises with world x from 35 to 65. */
+  beachBlend: ((x: number, z: number) => number) | null = null;
+
   /** Called every frame with the player's world position + speed. */
   updatePlayerPosition(position: number[] = [0, 0, 0], speed = 0, onFloor = true) {
     if (!this._hasLoaded || !this._visibleState) return;
     this._syncAudioWithGsap();
     this._audios.song?.setVolume(0.5 * this._multiplierVolume);
 
-    // crossfade forest ↔ beach by world X position
-    const blend = fit(position[0], 35, 65, 0, 1);
+    // crossfade forest ↔ beach by where the player stands
+    const blend = this.beachBlend ? Math.min(1, Math.max(0, this.beachBlend(position[0], position[2]))) : fit(position[0], 35, 65, 0, 1);
     (['forest', 'beach'] as const).forEach((name, i) => {
       const audio = this._audios[name];
       const volume = (i === 0 ? 1 - blend : blend) * this._multiplierVolume;

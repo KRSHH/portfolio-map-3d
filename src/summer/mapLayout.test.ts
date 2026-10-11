@@ -1,92 +1,280 @@
 import { describe, expect, it } from "vitest";
 import { COMPANIES, DISTRICTS, PEOPLE } from "../data/catalog";
 import { layoutWorld } from "../data/layout";
-import { MONUMENT, fingerpostSpots, planFromLayout, stallSpots } from "./mapLayout";
+import type { Company, DistrictSlug } from "../data/types";
+import { distToSpokes } from "./mapGround";
+import {
+  DISTRICT_PAVING,
+  ENTRY_BACK,
+  MONUMENT_PAD,
+  PORTAL_HALF,
+  PORTAL_WALK_ROOM,
+  ROAD_W,
+  SPACING,
+  arrowTurn,
+  cameraAt,
+  clusterAt,
+  halfFov,
+  hopTargets,
+  kidTheta,
+  mapFrame,
+  mastsSeen,
+  nearestHop,
+  offAxis,
+  planFromLayout,
+  readerBearing,
+  segmentDistance,
+  walkSeconds,
+  type MapPlan,
+} from "./mapLayout";
 
-const layout = layoutWorld(DISTRICTS.map((d) => d.slug), COMPANIES, PEOPLE);
 const display = DISTRICTS.map((d) => ({ slug: d.slug, label: d.label, short: d.short, color: d.color }));
+const example = layoutWorld(DISTRICTS.map((d) => d.slug), COMPANIES, PEOPLE);
 
-describe("summer map layout", () => {
-  it("is deterministic and covers every company and person", () => {
-    const a = planFromLayout(layout, display);
-    const b = planFromLayout(layout, display);
-    expect(a).toEqual(b);
-    expect(a.clusters).toHaveLength(DISTRICTS.length + 1);
-    const pins = a.clusters.flatMap((c) => c.pins);
+/** A world of `n` districts with `each` companies apiece, to try the plan on maps unlike the example. */
+function worldOf(n: number, each: number) {
+  const order = Array.from({ length: n }, (_, i) => `d${i}` as DistrictSlug);
+  const companies = order.flatMap((d, i) => Array.from({ length: each }, (_, k) => ({ slug: `c${i}-${k}`, name: `C${i}-${k}`, district: d }) as unknown as Company));
+  return layoutWorld(order, companies, []);
+}
+
+const worlds = { example, two: worldOf(2, 8), four: worldOf(4, 5), many: worldOf(12, 12) };
+const plans = Object.fromEntries(Object.entries(worlds).map(([k, w]) => [k, planFromLayout(w, display)])) as Record<keyof typeof worlds, MapPlan>;
+const plan = plans.example;
+
+/** The walks from the arrival to each road's mouth and to the monument. */
+const walksOf = (p: MapPlan) => [...p.clusters.map((c) => ({ x: Math.cos(c.angle) * p.plaza.r, z: Math.sin(c.angle) * p.plaza.r })), { x: 0, z: 0 }];
+
+describe("the summer plan", () => {
+  it("is the same on every visit and carries every company and person over", () => {
+    expect(planFromLayout(example, display)).toEqual(plan);
+    const pins = plan.clusters.flatMap((c) => c.pins);
     expect(pins).toHaveLength(COMPANIES.length + PEOPLE.length);
     expect(new Set(pins.map((p) => p.slug)).size).toBe(pins.length);
+    expect(plan.clusters.find((c) => c.slug === "people")?.pins).toHaveLength(PEOPLE.length);
+    for (const d of DISTRICTS) expect(plan.clusters.find((c) => c.slug === d.slug)?.pins).toHaveLength(COMPANIES.filter((c) => c.district === d.slug).length);
   });
 
-  it("keeps every pin inside its own neighborhood", () => {
-    const plan = planFromLayout(layout, display);
+  it("calls the people area what the site calls it, in its own color", () => {
+    const named = planFromLayout(example, display, { label: "Coaches", color: "#3b4a5a" });
+    const people = named.clusters.find((c) => c.slug === "people")!;
+    expect(people.label).toBe("Coaches");
+    expect(people.color).toBe("#3b4a5a");
+    expect(people.isPeople).toBe(true);
+  });
+
+  for (const [name, p] of Object.entries(plans)) {
+    describe(name, () => {
+      it("moves each district whole: its pins keep their places inside it", () => {
+        const w = worlds[name as keyof typeof worlds];
+        for (const c of p.clusters) {
+          const disc = w.discs.find((d) => d.slug === c.slug)!;
+          for (const pin of c.pins) {
+            const before = w.pins.get(pin.slug)!;
+            expect(pin.x - c.cx).toBeCloseTo(before.x - disc.x, 1);
+            expect(pin.z - c.cz).toBeCloseTo(before.z - disc.z, 1);
+            expect(Math.hypot(pin.x - c.cx, pin.z - c.cz)).toBeLessThanOrEqual(c.r);
+          }
+        }
+      });
+
+      it("rings the districts outside the street, as close in as their neighbors leave room for", () => {
+        const ring = Math.hypot(p.clusters[0].cx, p.clusters[0].cz);
+        const streetEdge = p.street.r + p.street.width / 2;
+        for (const c of p.clusters) {
+          expect(Math.hypot(c.cx, c.cz)).toBeCloseTo(ring, 1);
+          expect(Math.hypot(c.cx, c.cz) - c.r - streetEdge).toBeGreaterThanOrEqual(SPACING.inset - 0.05);
+          for (const o of p.clusters) {
+            if (o === c) continue;
+            expect(Math.hypot(o.cx - c.cx, o.cz - c.cz) - o.r - c.r).toBeGreaterThanOrEqual(SPACING.between - 0.05);
+          }
+        }
+        // As close in as that allows: either the street or a pair of neighbors sets the ring.
+        const tight = Math.min(
+          ...p.clusters.map((c) => Math.hypot(c.cx, c.cz) - c.r - streetEdge - SPACING.inset),
+          ...p.clusters.flatMap((c) => p.clusters.filter((o) => o !== c).map((o) => Math.hypot(o.cx - c.cx, o.cz - c.cz) - o.r - c.r - SPACING.between)),
+        );
+        expect(tight).toBeLessThan(0.1);
+      });
+
+      it("has the arrival look straight at the monument from the plaza, its camera over the paving", () => {
+        const s = p.spawn;
+        expect(Math.hypot(s.x, s.z)).toBeCloseTo(SPACING.spawn, 1);
+        expect(offAxis(s, 0, 0)).toBeLessThan(0.01);
+        const cam = cameraAt(s);
+        expect(Math.hypot(cam.x, cam.z)).toBeLessThan(p.plaza.r);
+        expect(p.monument.facing).toBeCloseTo(Math.atan2(s.x, s.z), 6);
+      });
+
+      it("stands the portal on the plaza, fully in the arrival's view, clear of the monument, the pylons and every walk", () => {
+        const q = p.portal;
+        expect(Math.hypot(q.x, q.z) + PORTAL_HALF).toBeLessThan(p.plaza.r);
+        expect(Math.hypot(q.x, q.z) - PORTAL_HALF).toBeGreaterThan(MONUMENT_PAD + 1.5);
+        for (const y of p.pylons) expect(Math.hypot(q.x - y.x, q.z - y.z)).toBeGreaterThan(PORTAL_HALF + 2);
+        expect(offAxis(p.spawn, q.x, q.z, PORTAL_HALF)).toBeLessThan(halfFov());
+        for (const w of walksOf(p)) expect(segmentDistance(q.x, q.z, p.spawn.x, p.spawn.z, w.x, w.z)).toBeGreaterThanOrEqual(PORTAL_WALK_ROOM - 0.05);
+        // It faces the arrival.
+        expect(Math.cos(q.facing - Math.atan2(p.spawn.x - q.x, p.spawn.z - q.z))).toBeGreaterThan(0.999);
+      });
+
+      it("never hides a district's mast behind the monument", () => {
+        expect(mastsSeen(p.spawn, p.clusters.map((c) => c.mast)).hidden).toBe(0);
+      });
+
+      it("puts the Walking times board ahead of the arrival on the side away from the portal, facing it, listing every district left to right", () => {
+        const b = p.board;
+        const s = p.spawn;
+        const fx = Math.sin(s.facing);
+        const fz = Math.cos(s.facing);
+        const ahead = (b.x - s.x) * fx + (b.z - s.z) * fz;
+        const right = (b.x - s.x) * -fz + (b.z - s.z) * fx;
+        const portalRight = (p.portal.x - s.x) * -fz + (p.portal.z - s.z) * fx;
+        expect(ahead).toBeGreaterThan(6);
+        expect(Math.abs(right)).toBeGreaterThan(3);
+        expect(Math.sign(right)).toBe(-Math.sign(portalRight));
+        expect(offAxis(s, b.x, b.z, 1.7)).toBeLessThan(halfFov());
+        expect(Math.cos(b.facing - Math.atan2(s.x - b.x, s.z - b.z))).toBeGreaterThan(0.999);
+        expect(b.rows.map((r) => r.slug).sort()).toEqual(p.clusters.map((c) => c.slug).sort());
+        for (let i = 1; i < b.rows.length; i++) expect(b.rows[i].bearing).toBeGreaterThanOrEqual(b.rows[i - 1].bearing);
+        for (const row of b.rows) {
+          const c = p.clusters.find((k) => k.slug === row.slug)!;
+          expect(row.bearing).toBeCloseTo(readerBearing(b, c.cx, c.cz), 6);
+          expect(row.seconds).toBe(walkSeconds(b.x, b.z, c.entry.x, c.entry.z));
+        }
+      });
+
+      it("runs a road from inside the plaza onto each district's paving, short of its pins, with a fingerpost beside its mouth", () => {
+        for (const s of p.spokes) {
+          const c = p.clusters.find((k) => k.slug === s.slug)!;
+          expect(Math.hypot(s.ax, s.az)).toBeLessThan(p.plaza.r);
+          const end = Math.hypot(s.bx - c.cx, s.bz - c.cz);
+          expect(end).toBeLessThan(c.r + DISTRICT_PAVING);
+          expect(end).toBeGreaterThanOrEqual(c.r);
+          for (const pin of c.pins) expect(distToSpokes({ spokes: [s] }, pin.x, pin.z)).toBeGreaterThan(1);
+        }
+        expect(p.posts).toHaveLength(p.clusters.length);
+        p.posts.forEach((post, i) => {
+          const c = p.clusters[i];
+          expect(post.slug).toBe(c.slug);
+          const d = distToSpokes({ spokes: [p.spokes[i]] }, post.x, post.z);
+          expect(d).toBeGreaterThan(ROAD_W / 2 + 1);
+          expect(d).toBeLessThan(ROAD_W / 2 + 2.5);
+          expect(Math.abs(Math.hypot(post.x, post.z) - p.plaza.r)).toBeLessThan(5);
+          // It faces the plaza, and the arm (its local +x) points across the road's mouth.
+          expect(Math.cos(post.facing - Math.atan2(-Math.cos(c.angle), -Math.sin(c.angle)))).toBeGreaterThan(0.999);
+          const ax = Math.cos(post.facing);
+          const az = -Math.sin(post.facing);
+          const ahead = { x: post.x + ax * 2, z: post.z + az * 2 };
+          expect(distToSpokes({ spokes: [p.spokes[i]] }, ahead.x, ahead.z)).toBeLessThan(d);
+          expect(post.text).toBe(`${c.short} · ${walkSeconds(post.x, post.z, c.entry.x, c.entry.z)}s`);
+        });
+      });
+
+      it("keeps stalls and lamps off every road and out of the arrival's first view of the plaza", () => {
+        expect(p.stalls).toHaveLength(p.clusters.length);
+        for (const st of p.stalls) {
+          expect(Math.hypot(st.x, st.z)).toBeGreaterThan(p.street.r + p.street.width / 2 + 1);
+          expect(distToSpokes(p, st.x, st.z)).toBeGreaterThan(ROAD_W / 2 + 2.5);
+          // Front (+z local) toward the plaza.
+          expect(Math.sin(st.ry) * -st.x + Math.cos(st.ry) * -st.z).toBeGreaterThan(0.99 * Math.hypot(st.x, st.z));
+        }
+        const cam = cameraAt(p.spawn);
+        for (const l of [...p.lamps.plaza, ...p.lamps.roads, ...p.lamps.street]) {
+          expect(distToSpokes(p, l.x, l.z)).toBeGreaterThan(ROAD_W / 2 + 0.9);
+          expect(Math.hypot(l.x - cam.x, l.z - cam.z)).toBeGreaterThan(5);
+        }
+      });
+
+      it("ends the land past the farthest district, then the beach, the water and the seabed", () => {
+        for (const c of p.clusters) expect(Math.hypot(c.cx, c.cz) + c.r + 20).toBeLessThan(p.island.land);
+        expect(p.island.land).toBeLessThan(p.island.walk);
+        expect(p.island.walk).toBeLessThan(p.island.water);
+        expect(p.island.water).toBeLessThan(p.island.extent);
+      });
+    });
+  }
+
+  it("shows the example's arrival at least two districts' masts", () => {
+    expect(mastsSeen(plan.spawn, plan.clusters.map((c) => c.mast)).inFrame).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("hopping", () => {
+  const targets = hopTargets(plan, { portal: "Nexus portal", plaza: "Plaza" });
+
+  it("offers every district, the portal and the plaza", () => {
+    expect(targets.map((t) => t.id)).toEqual([...plan.clusters.map((c) => c.slug), "portal", "plaza"]);
+  });
+
+  it("lands on a district's road outside its arch, facing in", () => {
     for (const c of plan.clusters) {
-      for (const p of c.pins) {
-        expect(Math.hypot(p.x - c.cx, p.z - c.cz), p.slug).toBeLessThanOrEqual(c.r + 1);
-      }
+      const t = targets.find((k) => k.id === c.slug)!;
+      expect(t.land).toEqual(c.entry);
+      expect(distToSpokes(plan, c.entry.x, c.entry.z)).toBeLessThan(0.5);
+      expect(Math.hypot(c.entry.x - c.cx, c.entry.z - c.cz)).toBeCloseTo(c.r + ENTRY_BACK, 1);
+      // Far enough back that the camera, CAMERA.back behind, sees the arch: and the arch is still ahead on the road.
+      expect(Math.hypot(c.entry.x - c.sign.x, c.entry.z - c.sign.z)).toBeGreaterThan(4);
+      expect(Math.cos(c.entry.facing - Math.atan2(c.cx - c.entry.x, c.cz - c.entry.z))).toBeGreaterThan(0.999);
     }
   });
 
-  it("faces every sign at the monument and numbers pins by district", () => {
-    const plan = planFromLayout(layout, display);
-    for (const c of plan.clusters) {
-      const dx = plan.monument.x - c.sign.x;
-      const dz = plan.monument.z - c.sign.z;
-      expect(Math.atan2(dx, dz)).toBeCloseTo(c.sign.facing, 2);
-      const edge = Math.hypot(c.sign.x - c.cx, c.sign.z - c.cz);
-      expect(edge).toBeGreaterThan(c.r);
-      expect(edge).toBeLessThan(c.r + 5);
-    }
-    const byDistrict = new Map<string, number>();
-    for (const c of plan.clusters) byDistrict.set(c.slug, c.pins.length);
-    for (const d of DISTRICTS) {
-      expect(byDistrict.get(d.slug)).toBe(COMPANIES.filter((c) => c.district === d.slug).length);
-    }
-    expect(byDistrict.get("people")).toBe(PEOPLE.length);
+  it("lands in front of the portal facing it, and at the arrival for the plaza", () => {
+    const portal = targets.find((t) => t.id === "portal")!;
+    const d = Math.hypot(portal.land.x - plan.portal.x, portal.land.z - plan.portal.z);
+    expect(d).toBeGreaterThan(5);
+    expect(d).toBeLessThan(7);
+    expect(Math.cos(portal.land.facing - Math.atan2(plan.portal.x - portal.land.x, plan.portal.z - portal.land.z))).toBeGreaterThan(0.999);
+    expect(targets.find((t) => t.id === "plaza")!.land).toEqual(plan.spawn);
   });
 
-  it("lays the hub out Ambition-style: monument, portal, pylons, spawn", () => {
-    const plan = planFromLayout(layout, display);
-    expect(plan.monument.x).toBe(MONUMENT.x);
-    expect(plan.monument.z).toBe(MONUMENT.z);
-    // Portal beside the monument, spawn south of it, pylons on its north arc.
-    expect(plan.portal.x).toBeLessThan(plan.monument.x + 20);
-    expect(plan.spawn.z).toBeGreaterThan(plan.monument.z);
-    expect(plan.pylons).toHaveLength(4);
-    for (const p of plan.pylons) {
-      expect(Math.hypot(p.x - plan.monument.x, p.z - plan.monument.z)).toBeCloseTo(9.5, 1);
-      expect(p.z).toBeLessThan(plan.monument.z);
-    }
+  it("finds the place a click on the map was meant for, or nothing out in the hills", () => {
+    for (const c of plan.clusters) expect(nearestHop(targets, c.cx + c.r * 0.5, c.cz, 8)?.id).toBe(c.slug);
+    expect(nearestHop(targets, plan.portal.x, plan.portal.z, 8)?.id).toBe("portal");
+    expect(nearestHop(targets, 0, 2, 8)?.id).toBe("plaza");
+    expect(nearestHop(targets, plan.island.land - 4, 0, 4)).toBeNull();
   });
 
-  it("rings market stalls between the spoke crossings, facing the street", () => {
-    const colors = DISTRICTS.map((d) => d.color);
-    const stalls = stallSpots(layout, colors);
-    expect(stalls).toHaveLength(6);
-    for (const s of stalls) {
-      expect(Math.hypot(s.x, s.z)).toBeCloseTo(66, 0);
-      // Front (+z local) points at the plaza.
-      const fx = Math.sin(s.ry);
-      const fz = Math.cos(s.ry);
-      const tx = -s.x / Math.hypot(s.x, s.z);
-      const tz = -s.z / Math.hypot(s.x, s.z);
-      expect(fx * tx + fz * tz).toBeGreaterThan(0.99);
-      // No spoke runs through a stall.
-      for (const d of layout.discs) {
-        const dd = Math.atan2(Math.sin(Math.atan2(s.z, s.x) - d.angle), Math.cos(Math.atan2(s.z, s.x) - d.angle));
-        expect(Math.abs(dd)).toBeGreaterThan(0.06);
-      }
+  it("knows which district the kid stands in", () => {
+    const c = plan.clusters[2];
+    expect(clusterAt(plan, c.cx, c.cz)?.slug).toBe(c.slug);
+    expect(clusterAt(plan, 0, 0)).toBeNull();
+  });
+
+  it("turns the kid to face a spot's facing (theta 0 faces -z)", () => {
+    for (const f of [0, 0.7, -2.1, Math.PI]) {
+      const t = kidTheta(f);
+      expect(-Math.sin(t)).toBeCloseTo(Math.sin(f), 6);
+      expect(-Math.cos(t)).toBeCloseTo(Math.cos(f), 6);
+    }
+  });
+});
+
+describe("the minimap's frame", () => {
+  const frame = mapFrame(plan, 180);
+
+  it("maps the island inside the square, north (-z) up, and back again", () => {
+    const [x0, y0] = frame.toMap(0, -plan.island.water);
+    expect(x0).toBeCloseTo(90, 6);
+    expect(y0).toBeGreaterThan(0);
+    expect(y0).toBeLessThan(10);
+    for (const [x, z] of [[12, -40], [-70, 33], [0, 0]]) {
+      const [px, py] = frame.toMap(x, z);
+      const back = frame.toWorld(px, py);
+      expect(back.x).toBeCloseTo(x, 6);
+      expect(back.z).toBeCloseTo(z, 6);
     }
   });
 
-  it("posts wayfinding: spoke fingerposts face their district, the totem names all", () => {
-    const { posts, totem } = fingerpostSpots(layout, display);
-    expect(posts).toHaveLength(layout.discs.length);
-    expect(totem.arms).toHaveLength(layout.discs.length);
-    for (const f of posts) {
-      expect(Math.hypot(f.x, f.z)).toBeCloseTo(50, 0);
-      expect(f.arms).toHaveLength(2);
-    }
-    // Totem stands beside the spawn.
-    expect(Math.hypot(totem.x - layout.spawn.x, totem.z - layout.spawn.z)).toBeLessThan(10);
+  it("turns the arrow the way the kid faces: up for -z, right for +x", () => {
+    expect(arrowTurn(kidTheta(Math.PI))).toBeCloseTo(0, 6);
+    expect(Math.cos(arrowTurn(kidTheta(Math.PI / 2)) - Math.PI / 2)).toBeCloseTo(1, 6);
+  });
+});
+
+describe("walkSeconds", () => {
+  it("is the time at the kid's pace, to the nearest second, never under one", () => {
+    expect(walkSeconds(0, 0, 0, 0)).toBe(1);
+    expect(walkSeconds(0, 0, 45, 0)).toBe(3);
+    expect(walkSeconds(0, 0, 0, 52)).toBe(3);
   });
 });
