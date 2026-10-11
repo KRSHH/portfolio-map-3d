@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Texture loading with caching/fallbacks (port of `textureLoader`): one cache
-// keyed by `file<>mode`, KTX2 (Basis) + bitmap/exr/svg/video/image.
+// keyed by `file<>mode`, KTX2 (Basis) + bitmap/svg/video/image.
 
 import {
   CompressedTexture,
@@ -16,7 +16,6 @@ import {
 } from 'three';
 import type { WebGLRenderer } from 'three';
 import { KTX2Loader } from '../../vendor/jsm/loaders/KTX2Loader.js';
-import { EXRLoader } from '../../vendor/jsm/loaders/EXRLoader.js';
 import { deferred, type Deferred } from '../../core/deferred';
 import { SUMMER_BASE } from '../../base';
 
@@ -35,7 +34,6 @@ export interface LoadedTexture extends Texture {
 const asset = (path: string) => new URL(path, SUMMER_BASE).toString();
 const ktx2Loader = new KTX2Loader().setTranscoderPath(asset('libs/basis/'));
 const imageLoader = new ThreeTextureLoader();
-const exrLoader = new EXRLoader();
 const cache = new Map<string, LoadedTexture>();
 
 /** Must be called once with the renderer to enable compressed textures. */
@@ -57,8 +55,6 @@ export const textureLoader = {
       texture = (modeLower.includes('lut')
         ? new (Data3DTexture as any)()
         : new (CompressedTexture as any)()) as LoadedTexture;
-    } else if (ext.startsWith('exr')) {
-      texture = new (DataTexture as any)() as LoadedTexture;
     } else if (ext.startsWith('mp4') || ext.startsWith('webm')) {
       texture = new Texture() as LoadedTexture;
     } else {
@@ -77,7 +73,6 @@ export const textureLoader = {
       let loaded: Texture | null = null;
       try {
         if (ext.startsWith('ktx2')) loaded = await ktx2Loader.loadAsync(fullUrl);
-        else if (ext.startsWith('exr')) loaded = await exrLoader.loadAsync(fullUrl);
         else if (ext.startsWith('mp4') || ext.startsWith('webm')) { const video = document.createElement('video'); video.src = fullUrl; video.muted = true; video.loop = true; video.playsInline = true; await new Promise<void>((resolve, reject) => { video.addEventListener('loadeddata', () => resolve(), { once: true }); video.addEventListener('error', () => reject(new Error('video load failed')), { once: true }); video.load(); }); loaded = new VideoTexture(video); } else loaded = await imageLoader.loadAsync(fullUrl);
       } catch (err) {
         console.warn('Texture load:', err);
