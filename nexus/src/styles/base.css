@@ -596,8 +596,63 @@ code {
   width: 0.8em;
   padding: 4px 0;
   border-radius: 3px;
-  background: var(--surface-2);
+  /* The tile's color: its halves paint it (so its rounded corners are drawn once). */
+  --flap-bg: var(--surface-2);
+  perspective: 4.5em;
 }
+
+/* The digit's own text only sizes it: its halves draw it (from data-c), each on a face of its own,
+   so a turning digit can fold its upper half over the hinge (src/lib/splitFlap.ts). */
+.split-sizer { visibility: hidden; }
+
+.flap {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 50%;
+  overflow: hidden;
+  background: var(--flap-bg);
+}
+
+.flap::before {
+  content: attr(data-c);
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  height: 200%;
+}
+
+.flap-top,
+.flap-leaf-top {
+  top: 0;
+  border-radius: 3px 3px 0 0;
+}
+
+.flap-bottom,
+.flap-leaf-bottom {
+  top: 50%;
+  border-radius: 0 0 3px 3px;
+}
+
+.flap-top::before,
+.flap-leaf-top::before { top: 0; }
+
+.flap-bottom::before,
+.flap-leaf-bottom::before { top: -100%; }
+
+/* The leaves: the upper one falls over the hinge, the lower one lands on the old lower half. */
+.flap-leaf {
+  z-index: 2;
+  visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flap-leaf-top { transform-origin: 50% 100%; }
+.flap-leaf-bottom { transform-origin: 50% 0; }
+.split-digit.is-flipping .flap-leaf { visibility: visible; }
 
 .split-digit::after {
   content: "";
@@ -605,12 +660,13 @@ code {
   top: 50%;
   right: 0;
   left: 0;
+  z-index: 3;
   height: 1px;
   background: var(--bg);
 }
 
 .count-metric.is-inverted .split-digit {
-  background: #fafafa;
+  --flap-bg: #fafafa;
   color: #18181b;
 }
 

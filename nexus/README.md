@@ -103,7 +103,10 @@ and DM Mono for the count boards.
 (28–40px), body copy (16px), and detail labels (13px). On desktop these scale with the viewport,
 up to 60px, 24px and 19.5px at 2048px wide. Text contrast is checked by
 `tokens.test.ts`. World identity is a name-and-logo pill; network items show split-flap
-counts and links to the map and its publisher.
+counts and links to the map and its publisher. The counts turn like a departure board
+(`src/lib/splitFlap.ts`): a board flips in when it first comes into view, and every 12 seconds
+the boards on screen refresh in a cascade, in reading order, each digit folding over a few flaps
+and landing back on its value. Nothing turns with reduced motion.
 
 The landing universe supports orbiting and selecting worlds. Zoom and reset controls
 are available beside it. The wheel and vertical touch swipes scroll the page; horizontal
