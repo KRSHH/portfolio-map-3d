@@ -5,6 +5,7 @@
 import { Color, InstancedBufferAttribute, Mesh, Vector3 } from 'three';
 import { events } from '../core/events';
 import { geometryLoader } from '../engine/loaders/geometries';
+import { SUMMER_SPAWN } from '../mapPlan';
 import { Characters } from '../engine/characters';
 import { depthCharsMaterial, phongMaterial } from './materials';
 import { SceneModule } from './SceneModule';
@@ -36,7 +37,7 @@ export class CharactersModule extends SceneModule {
       floorDetectInclination: 0.8,
       positionForce: 0.005,
       damp: 0.92,
-      initialPosition: [12.2, 2.25, -58],
+      initialPosition: [SUMMER_SPAWN[0], 2.25, SUMMER_SPAWN[1]],
       initialRadius: 4,
       camera: this.scene.camera,
       relativeCameraPosition: new Vector3(0, 1, -5.75),

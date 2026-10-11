@@ -295,6 +295,17 @@
 .walk-travel-message { max-width: 200px; padding: 8px; border-radius: var(--radius-sm); color: var(--text); background: var(--surface); font: 400 13px/1.5 var(--font-sans); }
 @media (max-width: 760px) { .walk-travel-controls { left: 10px; bottom: calc(var(--sheet-h) + 12px); } }
 
+/* ---- the SummerTime town overlay (?summer=1): Ambition-style layout in the real town ---- */
+.summer-layer { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.summer-layer > .walk-district-label,
+.summer-layer > .walk-prompt,
+.summer-layer > .walk-portal-card { position: absolute; left: 0; top: 0; will-change: transform; }
+.summer-layer > .walk-district-label { pointer-events: auto; transform-origin: 50% 100%; }
+.summer-layer > .walk-prompt { pointer-events: auto; left: 50%; top: auto; bottom: 24px; transform: translateX(-50%); }
+.summer-layer > .walk-prompt[hidden] { display: none; }
+.summer-layer > .walk-portal-card { pointer-events: auto; }
+.summer-layer > .walk-portal-card[hidden] { display: none; }
+
 /* ---------- keepsakes, sound and the find toast ---------- */
 .walk-keepsakes { font-variant-numeric: tabular-nums; }
 .walk-keepsakes svg { color: var(--scene-flag); }
