@@ -430,13 +430,13 @@ export class MapScene extends BaseScene {
       colliderMesh,
       radiusPercentage: 0.2,
       floorDetectInclination: 0.8,
-      positionForce: 0.005,
+      positionForce: 0.02,
       damp: 0.92,
       initialPosition: [this.layout.spawn.x, 2, this.layout.spawn.z],
       initialRadius: 4,
       camera: this.camera,
-      // Spawn faces the plaza (-z): mirror the town's camera offsets.
-      relativeCameraPosition: new Vector3(0, 1, 5.75),
+      // Spawn faces the plaza (-z): mirror the town's camera offsets, a touch farther out.
+      relativeCameraPosition: new Vector3(0, 1.2, 6.9),
       lookatMeshOffset: new Vector3(0, 1.1, -0.5),
       initialData: { seed: 0 },
       customAttribUpdate: (local: any, _clientId: string, instanceId: number) => {
