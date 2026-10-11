@@ -265,11 +265,6 @@ export class MapScene extends BaseScene {
     (this as any).terrain = { mesh };
   }
 
-  private boxCollider(w: number, h: number, d: number, x: number, z: number, ry = 0): void {
-    if (w <= 0) return;
-    this.colliderBoxes.push({ w, h, d, x, y: islandHeight(this.layout, x, z), z, ry });
-  }
-
   private makeColliderGeometry(): BufferGeometry {
     const t = this.terrainMesh.geometry.index ? this.terrainMesh.geometry.toNonIndexed() : this.terrainMesh.geometry;
     const pos: number[] = [...(t.attributes.position.array as Float32Array)];
@@ -431,12 +426,33 @@ export class MapScene extends BaseScene {
     });
 
     // --- beach props: town parasols and sandcastles, recentered on the sand ---
-    await placeClone('machine.bin', { isMachine: true }, -64, 66, 0.6, null);
-    await placeClone('machine.bin', { isMachine: true }, 66, -62, -0.4, null);
-    await placeClone('parasol.bin', { isParasol: true }, 128, 18, 0.3, null);
-    await placeClone('parasol.bin', { isParasol: true }, 122, -32, -0.5, null);
-    await placeClone('sandcastles1.bin', { isCastles: true }, 132, 44, 0.2, null);
-    await placeClone('sandcastles2.bin', { isCastles: true }, 134, -8, -0.2, null);
+    const placeClone = async (
+      file: string,
+      materialOptions: Record<string, boolean>,
+      tx: number,
+      tz: number,
+      ry: number,
+    ) => {
+      const geo = await geometryLoader.load(file);
+      geo.computeBoundingBox();
+      const box = geo.boundingBox!;
+      const cx = (box.min.x + box.max.x) / 2;
+      const cz = (box.min.z + box.max.z) / 2;
+      const ox = cx * Math.cos(ry) + cz * Math.sin(ry);
+      const oz = -cx * Math.sin(ry) + cz * Math.cos(ry);
+      const gy = islandHeight(this.layout, tx, tz);
+      const mesh = new Mesh(geo, phongMaterial(materialOptions as any));
+      mesh.position.set(tx - ox, gy - box.min.y - 0.05, tz - oz);
+      mesh.rotation.y = ry;
+      mesh.frustumCulled = false;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      this.add(mesh);
+    };
+    await placeClone('parasol.bin', { isParasol: true }, 128, 18, 0.3);
+    await placeClone('parasol.bin', { isParasol: true }, 122, -32, -0.5);
+    await placeClone('sandcastles1.bin', { isCastles: true }, 132, 44, 0.2);
+    await placeClone('sandcastles2.bin', { isCastles: true }, 134, -8, -0.2);
   }
 
   private async addCritters(): Promise<void> {
