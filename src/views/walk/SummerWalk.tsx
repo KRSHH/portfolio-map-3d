@@ -1,21 +1,18 @@
-/* The walk world, running the vendored SummerTime scene (src/summer): the real town, the real kid,
-   the real camera, controls, light, LUT grade and sound — laid out like Ambition's map
-   (src/summer/mapOverlay.ts): a founding hub (monument, pylons, Nexus portal) at the town
-   center, one neighborhood per district plus the people area, spawn south of the monument.
+/* The walk world on the SummerTime engine (src/summer): the real kid, camera, controls,
+   light, LUT grade and sound — but the world itself is generated from the map's own
+   layout (src/summer/mapWorld.ts): a founding hub (monument, pylons, Nexus portal) on
+   the plaza, one neighborhood per district plus the people area, dressed with the
+   town's models.
 
-   This file only hosts the engine and the overlay: a div for the canvas, a loader while the
-   town boots. The engine is a module-level singleton (like the original): it boots once per
-   page load. A persistent host div owns the canvas and the input listeners, and each React
-   mount moves that div here, so StrictMode remounts and view switches keep working. */
+   This file only hosts the engine: a div for the canvas, a loader while the world
+   boots. The engine is a module-level singleton (like the original): it boots once per
+   page load. A persistent host div owns the canvas and the input listeners, and each
+   React mount moves that div here, so StrictMode remounts and view switches keep working. */
 import { useEffect, useRef, useState } from "react";
-import { DISTRICTS, PEOPLE, SITE, companiesByDistrict } from "../../data/catalog";
-import { PORTAL_HREF } from "../../network";
-import { useStore } from "../../state/store";
 
 interface Boot {
   engine: { active: boolean; render(time: number, delta: number): void };
-  controller: unknown;
-  overlay: { mountLayer(host: HTMLElement): void; setSelected(slug: string | null, isPerson: boolean): void };
+  mountLayer(host: HTMLElement): void;
 }
 
 let boot: Promise<Boot> | null = null;
@@ -36,6 +33,7 @@ function bootOnce(): Promise<Boot> {
       const { engine } = await import("../../summer/engine/globals");
       const { clock } = await import("../../summer/engine/clock");
       const { MainController } = await import("../../summer/scene/mainController");
+      const { MapScene } = await import("../../summer/mapWorld");
       persistentHost = document.createElement("div");
       persistentHost.style.position = "absolute";
       persistentHost.style.inset = "0";
@@ -48,33 +46,17 @@ function bootOnce(): Promise<Boot> {
         adaptiveDPR: true,
       });
       engine.active = true;
-      const controller = new MainController() as unknown as { environment: unknown; ready: Promise<void> };
+      const controller = new MainController(() => new MapScene()) as unknown as {
+        environment: { overlay: { mountLayer(host: HTMLElement): void } };
+        ready: Promise<void>;
+      };
       if (import.meta.env.DEV) (window as unknown as { __summer?: unknown }).__summer = { engine, controller };
       // Like the original main.ts: the loop runs from boot; readiness only releases the intro.
       clock.start((time, delta) => engine.render(time, delta));
       await controller.ready;
-      // This is what fades the white intro photo into the town (MainController.playIntro waits on it).
+      // This is what fades the white intro photo into the world (MainController.playIntro waits on it).
       engine.initialSceneLoaded.resolve();
-      // The map overlay: Ambition-style layout in the real town.
-      const { buildMapOverlay } = await import("../../summer/mapOverlay");
-      const store = useStore.getState();
-      const overlay = buildMapOverlay(controller.environment, {
-        orgName: SITE.org.name,
-        districts: DISTRICTS.map((d) => ({ ...d, companies: companiesByDistrict.get(d.slug) ?? [] })),
-        people: PEOPLE,
-      }, {
-        onMeetCompany: (slug) => store.select(slug, { fly: false }),
-        onMeetPerson: (slug) => store.selectPerson(slug, { fly: false }),
-        goNexus: () => window.location.assign(PORTAL_HREF),
-      });
-      const syncSelection = () => {
-        const s = useStore.getState();
-        overlay.setSelected(s.selected ?? s.person, s.selected == null && s.person != null);
-      };
-      syncSelection();
-      const off = useStore.subscribe(syncSelection);
-      if (import.meta.env.DEV) (window as unknown as { __summer?: unknown }).__summer = { engine, controller, overlay, off };
-      return { engine, controller, overlay };
+      return { engine, mountLayer: (host: HTMLElement) => controller.environment.overlay.mountLayer(host) };
     })();
     boot.catch(() => {
       boot = null;
@@ -99,7 +81,7 @@ export default function SummerWalk() {
         if (!alive) return;
         // Move the persistent canvas host here (first mount appends, remounts re-append).
         if (persistentHost && persistentHost.parentNode !== host) host.append(persistentHost);
-        b.overlay.mountLayer(host);
+        b.mountLayer(host);
         b.engine.active = true;
         setReady(true);
       } catch (err) {

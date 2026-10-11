@@ -13,7 +13,6 @@ import { RenderPass } from '../vendor/jsm/postprocessing/RenderPass.js';
 import { deferred, type Deferred } from '../core/deferred';
 import { events } from '../core/events';
 import { engine, globalUniforms } from '../engine/globals';
-import { EnvironmentScene } from './environmentScene';
 import { BaseShader, IntroShader } from './shaders-post';
 
 function createFullscreenTriangle(): Mesh {
@@ -32,24 +31,24 @@ export class MainController {
   private readonly mainMesh: Mesh;
   private readonly baseMaterial: BaseShader;
   private readonly introMaterial: IntroShader;
-  private environment!: EnvironmentScene;
+  private environment: any;
   private environmentComposer!: EffectComposer;
 
-  constructor() {
+  constructor(createScene: (c: MainController) => any) {
     this.baseMaterial = new BaseShader();
     this.introMaterial = new IntroShader();
     this.mainMesh = createFullscreenTriangle();
     this.mainMesh.frustumCulled = false;
     this.mainMesh.name = 'Main triangle mesh';
-    void this.init();
+    void this.init(createScene);
   }
 
-  private async init() {
+  private async init(createScene: (c: MainController) => any) {
     this.mainMesh.material = this.introMaterial;
     engine.mainScene.add(this.mainMesh);
     engine.mainScene.upload();
 
-    this.environment = new EnvironmentScene(this);
+    this.environment = createScene(this);
     this.environmentComposer = new EffectComposer(engine.renderer, createComposerTarget());
     this.environmentComposer.renderToScreen = false;
     this.environmentComposer.addPass(new RenderPass(this.environment, this.environment.camera));

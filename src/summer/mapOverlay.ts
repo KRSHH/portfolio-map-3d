@@ -1,9 +1,9 @@
 // @ts-nocheck
-// The map overlay: Ambition-style layout built inside the real SummerTime town.
+// The map overlay: Ambition-style layout built on the generated island (mapWorld.ts).
 //
-// A founding hub at the town center (monument, four pylons, the Nexus portal,
-// spawn), one neighborhood per district plus the people area (sunflower pin
-// clusters with arch signs), all positioned by the pure plan in mapPlan.ts.
+// A founding hub on the plaza (monument, four lantern pylons, the Nexus portal),
+// one neighborhood per district plus the people area (the layout's pins, arch signs
+// facing the monument), all positioned by the pure plan in mapLayout.ts.
 //
 // New 3D assets are procedural but speak the town's language: flat-shaded
 // Lambert stone/wood/bronze (the town's sun, shadows and LUT grade them like
@@ -14,8 +14,8 @@
 // curtain (adapted from src/views/walk/portal.ts to three r148).
 //
 // The overlay also owns its DOM: district chips (projected each frame),
-// a meet prompt near pins, and the portal card. Built once per page load,
-// like the engine itself.
+// a meet prompt near pins, the portal card, and a sound toggle. Built once
+// per page load, like the engine itself.
 
 import {
   CanvasTexture,
@@ -44,23 +44,15 @@ import { events } from './core/events';
 import { clock } from './engine/clock';
 import { companyBadge, personBadge, labelTexture } from '../three/logoTexture';
 import { cpuCanvas } from '../three/cpuCanvas';
-import { heightAt, planSummerMap, type MapPlan } from './mapPlan';
+import { planFromLayout, type MapPlan } from './mapLayout';
 import { frustumcullInstanced } from './scene/helpers';
+import { COMPANIES, DISTRICTS, PEOPLE } from '../data/catalog';
+import { SITE } from '../site';
+import { useStore } from '../state/store';
+import { PORTAL_HREF } from '../network';
 import type { Company, Person } from '../data/types';
 
 const DOWN = new Vector3(0, -1, 0);
-
-export interface OverlayCatalog {
-  orgName: string;
-  districts: Array<{ slug: string; label: string; short: string; color: string; companies: Company[] }>;
-  people: Person[];
-}
-
-export interface OverlayHooks {
-  onMeetCompany(slug: string): void;
-  onMeetPerson(slug: string): void;
-  goNexus(): void;
-}
 
 interface Pin {
   slug: string;
@@ -87,31 +79,33 @@ function canvasTex(canvas: HTMLCanvasElement) {
 
 export interface MapOverlay {
   plan: MapPlan;
+  /** Collision boxes for the hub pieces (monument, pylons, portal posts). */
+  colliders: Array<{ w: number; h: number; d: number; x: number; z: number; ry: number }>;
   mountLayer(host: HTMLElement): void;
   setSelected(slug: string | null, isPerson: boolean): void;
 }
 
-export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: OverlayHooks): MapOverlay {
-  const plan = planSummerMap(
-    catalog.districts.map((d) => ({
-      slug: d.slug,
-      label: d.label,
-      short: d.short,
-      color: d.color,
-      companies: d.companies.map((c) => ({ slug: c.slug, name: c.name })),
-    })),
-    catalog.people.map((p) => ({ slug: p.slug })),
-  );
-  const companyBySlug = new Map(catalog.districts.flatMap((d) => d.companies).map((c) => [c.slug, c]));
-  const personBySlug = new Map(catalog.people.map((p) => [p.slug, p]));
-  const colorByDistrict = new Map(catalog.districts.map((d) => [d.slug, d.color]));
+export function buildMapOverlay(scene: any): MapOverlay {
+  const store = useStore.getState();
+  const hooks = {
+    onMeetCompany: (slug: string) => store.select(slug, { fly: false }),
+    onMeetPerson: (slug: string) => store.selectPerson(slug, { fly: false }),
+    goNexus: () => window.location.assign(PORTAL_HREF),
+  };
+  const districts = DISTRICTS.map((d) => ({ slug: d.slug, label: d.label, short: d.short, color: d.color }));
+  // The scene is the MapScene: same island, same coordinates as the plan.
+  const plan = planFromLayout(scene.layout, districts);
+  const companyBySlug = new Map(COMPANIES.map((c) => [c.slug, c]));
+  const personBySlug = new Map(PEOPLE.map((p) => [p.slug, p]));
+  const colorByDistrict = new Map(DISTRICTS.map((d) => [d.slug, d.color]));
 
   const raycaster = new Raycaster();
   const groundY = (x: number, z: number): number => {
-    raycaster.set(new Vector3(x, 40, z), DOWN);
+    raycaster.set(new Vector3(x, 60, z), DOWN);
     const hit = raycaster.intersectObject(scene.terrain.mesh, false)[0];
-    return hit ? hit.point.y : heightAt(x, z);
+    return hit ? hit.point.y : 0.4;
   };
+  const colliders: MapOverlay['colliders'] = [];
 
   const root = new Group();
   root.name = 'map-overlay';
@@ -144,15 +138,16 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
     const shaft = add(g, shadowed(new Mesh(new CylinderGeometry(0.55, 1.05, 5.4, 4), stone)), 0, 1.53 + 2.7, 0);
     shaft.rotation.y = Math.PI / 4;
     add(g, shadowed(new Mesh(new ConeGeometry(0.78, 0.9, 4), lambert('#8a6a3a'))), 0, 1.53 + 5.4 + 0.45, 0).rotation.y = Math.PI / 4;
-    // Plaque with the publisher's name, facing the spawn (world -z).
-    const badge = labelTexture(catalog.orgName, { bg: '#3a3630', color: '#f5ead0', size: 64, weight: 600 });
+    // Plaque with the publisher's name, facing the spawn.
+    const badge = labelTexture(SITE.org.name, { bg: '#3a3630', color: '#f5ead0', size: 64, weight: 600 });
     const board = new Mesh(
       new PlaneGeometry(2.6, (2.6 / badge.aspect) * 1.0),
       new MeshBasicMaterial({ map: srgb(badge.texture), transparent: true, toneMapped: false }),
     );
-    // The group is rotated π (facing the spawn), so its local +z is world -z.
+    // The group faces the spawn (+z), so the plaque sits on its local +z face.
     board.position.set(0, 1.0, 1.53);
     g.add(board);
+    colliders.push({ w: 3.2, h: 7, d: 3.2, x: m.x, z: m.z, ry: 0 });
   }
 
   // ---- pylons: four lantern pillars on the monument's north arc ----
@@ -169,6 +164,7 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
     );
     add(g, lampGlass, 0, 3.7, 0);
     add(g, shadowed(new Mesh(new BoxGeometry(1.0, 0.3, 1.0), lambert('#8a6a3a'))), 0, 4.15, 0);
+    colliders.push({ w: 1, h: 4.3, d: 1, x: p.x, z: p.z, ry: 0 });
   }
 
   // ---- Nexus portal (Ambition's ring, town-dressed) ----
@@ -244,6 +240,16 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
       new MeshBasicMaterial({ map: srgb(words.texture), transparent: true, toneMapped: false }),
     );
     add(g, plate, 0, plateY, 0.1);
+    // Portal posts collide (walk through the curtain, not the posts).
+    for (const side of [-1, 1]) {
+      const lx = side * (PORTAL_R + 0.15);
+      colliders.push({
+        w: 0.7, h: 3.8, d: 0.7,
+        x: p.x + lx * Math.cos(p.facing),
+        z: p.z - lx * Math.sin(p.facing),
+        ry: 0,
+      });
+    }
   }
 
   // ---- neighborhood pins: instanced posts + heads, individual logo badges ----
@@ -358,6 +364,16 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
   const mountLayer = (host: HTMLElement) => {
     if (layer.parentNode !== host) host.append(layer);
   };
+  // Sound toggle (the town's audio starts on first interaction, muted).
+  const soundBtn = document.createElement('button');
+  soundBtn.type = 'button';
+  soundBtn.className = 'walk-pill summer-sound';
+  soundBtn.textContent = 'Sound: off';
+  soundBtn.addEventListener('click', () => events.emit('webgl_audio_mute_toggle'));
+  events.on('webgl_audio_update_mute', (muted: boolean) => {
+    soundBtn.textContent = muted ? 'Sound: off' : 'Sound: on';
+  });
+  layer.append(soundBtn);
 
   // ---- picking + per-frame updates ----
   const ndc = new Vector2();
@@ -451,8 +467,9 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
     }
   });
 
-  return {
+  const api: MapOverlay = {
     plan,
+    colliders,
     mountLayer,
     setSelected(slug, isPerson) {
       selected = slug ? { slug, isPerson } : null;
@@ -461,5 +478,12 @@ export function buildMapOverlay(scene: any, catalog: OverlayCatalog, hooks: Over
         p.badge.scale.setScalar(on ? 1.18 : 1);
       }
     },
-  } as MapOverlay;
+  };
+  const syncSelection = () => {
+    const s = useStore.getState();
+    api.setSelected(s.selected ?? s.person, s.selected == null && s.person != null);
+  };
+  syncSelection();
+  useStore.subscribe(syncSelection);
+  return api;
 }

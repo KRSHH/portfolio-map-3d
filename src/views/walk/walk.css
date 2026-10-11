@@ -305,6 +305,7 @@
 .summer-layer > .walk-prompt[hidden] { display: none; }
 .summer-layer > .walk-portal-card { pointer-events: auto; }
 .summer-layer > .walk-portal-card[hidden] { display: none; }
+.summer-layer > .summer-sound { position: absolute; right: 12px; bottom: 12px; pointer-events: auto; }
 
 /* ---------- keepsakes, sound and the find toast ---------- */
 .walk-keepsakes { font-variant-numeric: tabular-nums; }
