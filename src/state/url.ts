@@ -92,6 +92,8 @@ export function urlSearch(s: Shareable, current: string): string {
   if (cur.has("debug")) p.set("debug", "");
   // ?at=x,z[,heading[,distance]] starts the walk world's walker somewhere (development builds only; src/views/walk/engine.ts).
   if (import.meta.env.DEV && cur.has("at")) p.set("at", cur.get("at") ?? "");
+  // ?summer=1 runs the vendored SummerTime town instead of the procedural world (development only; src/views/walk/SummerWalk.tsx).
+  if (import.meta.env.DEV && cur.has("summer")) p.set("summer", cur.get("summer") ?? "");
   return p.toString();
 }
 

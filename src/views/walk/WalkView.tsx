@@ -35,6 +35,7 @@ import SearchChip from "../../components/SearchChip";
 import { AdaptiveDpr, budgetDpr } from "../../three/adaptiveDpr";
 import { watchContext } from "../../three/contextWatch";
 import { areaBySlug, countLabel, isPeopleArea, walkAreas } from "./areas";
+import SummerWalk from "./SummerWalk";
 import { FIND_KINDS, type FindProgress } from "./finds";
 import { WalkEngine, isTextField, type Overlay, type PortalState } from "./engine";
 import { arrivalFly } from "./nav";
@@ -109,6 +110,14 @@ export default function WalkView() {
     setGeneration((g) => g + 1);
   }, []);
   if (!webgl || generation > MAX_FRESH_CONTEXTS) return <WalkFallback />;
+  // ?summer=1 runs the vendored SummerTime town (SummerWalk.tsx) instead of the procedural world.
+  if (typeof location !== "undefined" && new URLSearchParams(location.search).has("summer")) {
+    return (
+      <WalkBoundary>
+        <SummerWalk />
+      </WalkBoundary>
+    );
+  }
   return (
     <WalkBoundary>
       <WalkWorld key={generation} onContextGiveUp={freshContext} />

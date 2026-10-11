@@ -188,6 +188,27 @@ export function sitePath(command: "build" | "serve", env: Record<string, string 
   return path === "//" ? "/" : path;
 }
 
+/**
+ * The walk world's vendored scene (src/summer) was written for three.js 0.148 and is not ported to
+ * the newer three.js the rest of the app uses: its imports of "three" resolve to a second copy
+ * (the "three-legacy" alias package). Only files under src/summer are affected.
+ */
+function legacyThree(): Plugin {
+  return {
+    name: "summer-legacy-three",
+    enforce: "pre",
+    async resolveId(source, importer, options) {
+      if (!importer || !/[\\/]src[\\/]summer[\\/]/.test(importer)) return null;
+      if (source === "three") return this.resolve("three-legacy", importer, { ...options, skipSelf: true });
+      if (source === "summer-iroh-unused") return { id: "\0summer-iroh-unused", moduleSideEffects: false };
+      return null;
+    },
+    load(id) {
+      return id === "\0summer-iroh-unused" ? "export const SummerNode = class {};" : null;
+    },
+  };
+}
+
 export default defineConfig(({ mode, command, isPreview }) => {
   // Tests run the Supabase transport against a mocked client (src/live/session.test.ts): a stand-in
   // project, never a real one. Every other mode reads the site's settings and the environment.
@@ -196,7 +217,7 @@ export default defineConfig(({ mode, command, isPreview }) => {
   return {
     // `vite preview` serves the build, so it takes the build's base.
     base: sitePath(isPreview ? "build" : command),
-    plugins: [publicDataPlugin(), react(), sitePlugin()],
+    plugins: [legacyThree(), publicDataPlugin(), react(), sitePlugin()],
     // No environment variable reaches the browser by prefix (Vite would otherwise expose every VITE_*
     // variable, all at once wherever code reads import.meta.env as an object). Nothing uses this prefix.
     envPrefix: "PORTFOLIO_MAP_CLIENT_ENV_DISABLED_",

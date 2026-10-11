@@ -37,10 +37,12 @@
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
     "@supabase/realtime-js": "2.117.2",
+    "gsap": "^3.11.3",
     "lucide-react": "^1.51.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "three": "^0.180.0",
+    "three-legacy": "npm:three@^0.148.0",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
