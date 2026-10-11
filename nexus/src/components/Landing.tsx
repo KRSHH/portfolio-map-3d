@@ -28,6 +28,8 @@ const EXAMPLE_MAP = `${import.meta.env.BASE_URL}example/`;
 /** The guides and the network's terms, in the repository. */
 const DOCS = `${FRAMEWORK_REPO}/tree/main/docs`;
 const JOINING = `${FRAMEWORK_REPO}/blob/main/docs/network.md#joining`;
+/** The local MCP server that lets an AI assistant build a map (mcp/). */
+const MCP_GUIDE = `${FRAMEWORK_REPO}/blob/main/docs/mcp.md`;
 const TERMS = `${FRAMEWORK_REPO}/blob/main/NETWORK.md`;
 
 /** Each audience's icon, by its id in AUDIENCES; an audience without one shows none. */
@@ -256,8 +258,14 @@ export function Landing({ route, net, engine, gl, onEnter, pickRef }: Props) {
               <div className="start-text">
                 <h2 id="start-title">Make your own map</h2>
                 <p>Add your companies. Publish a globe, walk view and directory.</p>
+                <p>
+                  Or let an AI assistant build it with the local MCP server in the repository. Claude Code offers it when you open the
+                  folder; Claude Desktop, Cursor and other MCP clients connect to <code>mcp/server.mjs</code>. Every change is checked
+                  against the data contract before it is written.
+                </p>
                 <div className="setup-links" id="how">
                   <a className="text-link" href={DOCS}>Setup guide <External size={16} /></a>
+                  <a className="text-link" href={MCP_GUIDE}>MCP builder <External size={16} /></a>
                   <a className="text-link" href={JOINING}>Join the network <External size={16} /></a>
                 </div>
               </div>

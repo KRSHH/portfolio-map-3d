@@ -111,8 +111,9 @@ and landing back on its value. Nothing turns with reduced motion.
 The landing universe supports orbiting and selecting worlds. Zoom and reset controls
 are available beside it. The wheel and vertical touch swipes scroll the page; horizontal
 swipes orbit the hero. The copy sits at the lower-left on desktop and below the framed
-universe on narrow screens. Below it are the map list, a short setup section and expandable
-service descriptions. A static star field continues behind the page.
+universe on narrow screens. Below it are the map list, a short setup section (the start command,
+and the local MCP server for building a map with an AI assistant) and expandable service
+descriptions. A static star field continues behind the page.
 
 A selected planet shows its districts as moons. Selecting a moon filters the directory;
 category controls update the selected moon. Categories use Lucide icons and short labels,
