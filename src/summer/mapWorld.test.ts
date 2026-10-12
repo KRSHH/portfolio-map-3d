@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { COMPANIES, DISTRICTS, PEOPLE } from "../data/catalog";
 import { layoutWorld, seededRandom } from "../data/layout";
-import { PAD_Y, SEA_Y, beachSpots, hillSide, islandHeight, plantable, scatter, seaSound, townRadius } from "./mapGround";
-import { hopTargets, planFromLayout } from "./mapLayout";
+import { readFileSync } from "node:fs";
+import { COVE, LAWN, PAD_Y, SEA_Y, ahead, beachSpots, coveAt, coveSand, hillSide, islandHeight, plantable, scatter, seaSound, swellLift, townRadius } from "./mapGround";
+import { hopTargets, pieceDistance, planFromLayout } from "./mapLayout";
 
 const layout = layoutWorld(DISTRICTS.map((d) => d.slug), COMPANIES, PEOPLE);
 const plan = planFromLayout(layout, DISTRICTS.map((d) => ({ slug: d.slug, label: d.label, short: d.short, color: d.color })));
@@ -42,9 +43,9 @@ describe("generated island ground", () => {
       for (let a = from; a <= to; a += 0.02) for (let r = townRadius(plan); r < plan.island.land; r += 1) top = Math.max(top, islandHeight(plan, Math.cos(a) * r, Math.sin(a) * r));
       return top;
     };
-    expect(highest(Math.PI * 0.8, Math.PI * 1.2)).toBeGreaterThan(4);
-    expect(highest(-Math.PI * 0.7, -Math.PI * 0.3)).toBeGreaterThan(4);
-    expect(highest(Math.PI * 0.3, Math.PI * 0.7)).toBeGreaterThan(4);
+    expect(highest(Math.PI * 0.8, Math.PI * 1.2)).toBeGreaterThan(3);
+    expect(highest(-Math.PI * 0.7, -Math.PI * 0.3)).toBeGreaterThan(3);
+    expect(highest(Math.PI * 0.3, Math.PI * 0.7)).toBeGreaterThan(3);
     expect(highest(-0.35, 0.35)).toBeLessThan(2.5);
   });
 
@@ -94,5 +95,95 @@ describe("generated island ground", () => {
       expect(hillSide(b.x, b.z)).toBe(0);
       expect(islandHeight(plan, b.x, b.z)).toBeGreaterThan(SEA_Y + 0.6);
     }
+  });
+
+  it("stands every set piece that needs it on level ground", () => {
+    for (const q of plan.pieces) {
+      if (!q.pad) continue;
+      const level = islandHeight(plan, q.x, q.z);
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+        for (const d of [q.pad * 0.5, q.pad]) {
+          const x = q.x + Math.cos(a) * d;
+          const z = q.z + Math.sin(a) * d;
+          // Toward the sea a coastal pad gives way to the beach before the walk's edge.
+          if (q.coast && Math.hypot(x, z) > plan.island.walk - 4) continue;
+          expect(Math.abs(islandHeight(plan, x, z) - level), `${q.kind} ${d}`).toBeLessThan(0.02);
+        }
+      }
+    }
+  });
+
+  it("opens the hills onto a level cove behind each coastal piece, sandy toward the beach", () => {
+    for (const q of plan.pieces.filter((k) => k.coast)) {
+      const c = Math.cos(q.wedge);
+      const s = Math.sin(q.wedge);
+      for (const back of [4, 7, 10]) {
+        const x = q.x - c * back;
+        const z = q.z - s * back;
+        expect(coveAt(plan, x, z)).toBeGreaterThan(0.99);
+        expect(Math.abs(islandHeight(plan, x, z) - COVE.level)).toBeLessThan(0.08);
+      }
+      expect(coveSand(plan, q.x - c * 5, q.z - s * 5)).toBeGreaterThan(0.9);
+      // Well inland of the cove, the hills (where there are hills) are back.
+      expect(coveAt(plan, q.x - c * 33, q.z - s * 33)).toBe(0);
+      // And the kid can walk up the bank into the hills: the engine stands it on ground whose normal
+      // is over 0.8 up (under about 37 degrees), so with a margin, under 1.35 of rise in 2 along the wedge.
+      for (let back = 0; back < 34; back += 1) {
+        const a = islandHeight(plan, q.x - c * back, q.z - s * back);
+        const b = islandHeight(plan, q.x - c * (back + 2), q.z - s * (back + 2));
+        expect(Math.abs(b - a), `${q.kind} ${back}`).toBeLessThan(1.35);
+      }
+    }
+  });
+
+  it("grows nothing through a set piece or on a cove's sand", () => {
+    const a = scatter(seededRandom(11), plan, 200, 1, () => true);
+    for (const [x, z] of a) {
+      for (const q of plan.pieces) expect(pieceDistance(q, x, z)).toBeGreaterThan(q.footprint + 2);
+      expect(coveSand(plan, x, z)).toBeLessThanOrEqual(0.3);
+    }
+    for (const [x, z] of beachSpots(seededRandom(5), plan, 18, plan.beach, 5)) for (const q of plan.pieces) expect(pieceDistance(q, x, z)).toBeGreaterThan(q.footprint + 3);
+  });
+
+  it("floats the boats on the sea shader's own swell", () => {
+    const shader = readFileSync(new URL("./scene/sea.ts", import.meta.url), "utf8");
+    expect(shader).toContain("float up = (sin(time * 0.5 + 23.124) + sin(time * 0.15 + 3213.32)) * 0.2;");
+    for (const t of [0, 1.7, 12.5, 100]) expect(swellLift(t)).toBeCloseTo((Math.sin(t * 0.5 + 23.124) + Math.sin(t * 0.15 + 3213.32)) * 0.2, 10);
+  });
+
+  it("keeps every bit of land above the sea's highest swell, coves and dips included", () => {
+    const L = plan.island.land;
+    for (let x = -L; x <= L; x += 1.5) {
+      for (let z = -L; z <= L; z += 1.5) {
+        if (Math.hypot(x, z) > L) continue;
+        expect(islandHeight(plan, x, z), `${x},${z}`).toBeGreaterThan(SEA_Y + 0.45);
+      }
+    }
+  });
+
+  it("leaves a lawn round each set piece, and the way to an inland one from the plaza open: no tree, bush or rock", () => {
+    for (const [x, z] of scatter(seededRandom(13), plan, 200, 1, () => true)) {
+      for (const q of plan.pieces) {
+        expect(pieceDistance(q, x, z)).toBeGreaterThan(q.footprint + LAWN.round + 1);
+        if (!q.coast) expect(ahead(q, x, z, LAWN.ahead, q.footprint + LAWN.side)).toBe(false);
+      }
+    }
+  });
+
+  it("lets the kid walk up every slope between the town and the beach", () => {
+    // The engine stands the kid on ground whose normal is over 0.8 up (under about 37 degrees).
+    const L = plan.island.land;
+    const step = 1.5;
+    let worst = 0;
+    for (let x = -L; x <= L; x += step) {
+      for (let z = -L; z <= L; z += step) {
+        if (Math.hypot(x, z) > L - 2) continue;
+        const h = islandHeight(plan, x, z);
+        const dx = (islandHeight(plan, x + 0.5, z) - h) / 0.5;
+        const dz = (islandHeight(plan, x, z + 0.5) - h) / 0.5;
+        worst = Math.max(worst, Math.hypot(dx, dz));
+      }
+    }
+    expect(1 / Math.sqrt(1 + worst * worst)).toBeGreaterThan(0.8);
   });
 });

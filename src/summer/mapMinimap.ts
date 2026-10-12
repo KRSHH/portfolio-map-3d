@@ -6,7 +6,7 @@
    goes by distance, not by whose button is on top. Each place also has a button for the keyboard
    and screen readers. The map folds away with its toggle, and remembers that. */
 import { cpuContext } from "../three/cpuCanvas";
-import { GROUND_COLORS, islandHeight, townRadius } from "./mapGround";
+import { GROUND_COLORS, coveSand, islandHeight, townRadius } from "./mapGround";
 import { inkOn, mapMarks } from "./mapLabels";
 import { MONUMENT_PAD, NEXUS_COLORS, PORTAL_R, ROAD_W, arrowTurn, mapFrame, nearestHop, type HopTarget, type MapFrame, type MapPlan } from "./mapLayout";
 
@@ -55,12 +55,19 @@ function drawIsland(ctx: CanvasRenderingContext2D, plan: MapPlan, frame: MapFram
   ctx.fillStyle = GROUND_COLORS.grass;
   ctx.fill();
 
-  // Hills: darker the higher the ground, sampled every 3 pixels.
+  // Hills, darker the higher the ground, and the coves' sand, sampled every 3 pixels.
   const cell = 3;
   for (let py = 0; py < S; py += cell) {
     for (let px = 0; px < S; px += cell) {
       const w = frame.toWorld(px + cell / 2, py + cell / 2);
-      if (Math.hypot(w.x, w.z) > plan.island.land - 2) continue;
+      if (Math.hypot(w.x, w.z) > plan.island.land - 1) continue;
+      const sand = coveSand(plan, w.x, w.z);
+      if (sand > 0.3) {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = GROUND_COLORS.sand;
+        ctx.fillRect(px, py, cell, cell);
+        continue;
+      }
       const h = islandHeight(plan, w.x, w.z);
       if (h < 1.6) continue;
       ctx.globalAlpha = Math.min(0.55, (h - 1.6) / 9);

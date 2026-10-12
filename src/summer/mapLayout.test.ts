@@ -21,10 +21,13 @@ import {
   mastsSeen,
   nearestHop,
   offAxis,
+  pieceDistance,
   planFromLayout,
   readerBearing,
   segmentDistance,
+  townRadius,
   walkSeconds,
+  wedgeKinds,
   type MapPlan,
 } from "./mapLayout";
 
@@ -185,6 +188,49 @@ describe("the summer plan", () => {
         }
       });
 
+      it("stands a set piece on the shore of every wedge, in its middle, a few steps up the beach and facing the sea", () => {
+        const wedges = p.pieces.filter((q) => q.coast);
+        expect(wedges).toHaveLength(p.clusters.length);
+        for (const q of wedges) {
+          const r = Math.hypot(q.x, q.z);
+          expect(r).toBeGreaterThan(p.island.land);
+          expect(r + 3).toBeLessThan(p.island.walk);
+          expect(Math.cos(Math.atan2(q.z, q.x) - q.wedge)).toBeGreaterThan(0.9999);
+          expect(Math.cos(q.facing - Math.atan2(Math.cos(q.wedge), Math.sin(q.wedge)))).toBeGreaterThan(0.9999);
+          expect(q.reach).toBe(q.kind === "pier" ? 34 : 0);
+        }
+      });
+
+      it("stands the hills' pieces clear of the town, every district, road, mast and animal, the beach and each other", () => {
+        const town = townRadius(p);
+        const masts = p.clusters.map((c) => c.mast);
+        const inland = p.pieces.filter((q) => !q.coast);
+        expect(inland.length).toBeLessThanOrEqual(p.clusters.length);
+        for (const q of inland) {
+          const fp = q.footprint;
+          const r = Math.hypot(q.x, q.z);
+          expect(r - fp).toBeGreaterThanOrEqual(town + 4 - 0.05);
+          expect(r + fp).toBeLessThanOrEqual(p.island.land - 8 + 0.05);
+          for (const c of p.clusters) expect(Math.hypot(q.x - c.cx, q.z - c.cz) - fp).toBeGreaterThanOrEqual(c.r + DISTRICT_PAVING + 7 - 0.05);
+          for (const m of masts) expect(Math.hypot(q.x - m.x, q.z - m.z) - fp).toBeGreaterThanOrEqual(4 - 0.05);
+          for (const k of [p.critters.cats, p.critters.sloth]) expect(Math.hypot(q.x - k.x, q.z - k.z) - fp).toBeGreaterThanOrEqual(4 - 0.05);
+          expect(distToSpokes(p, q.x, q.z) - fp).toBeGreaterThanOrEqual(ROAD_W / 2 + 3 - 0.05);
+          for (const o of p.pieces) if (o !== q) expect(pieceDistance(o, q.x, q.z) - o.footprint - fp).toBeGreaterThanOrEqual((o.coast ? 4 : 6) - 0.05);
+          // It faces the plaza.
+          expect(Math.cos(q.facing - Math.atan2(-q.x, -q.z))).toBeGreaterThan(0.9999);
+        }
+      });
+
+      it("hands each landmark out once at most, and keeps the parasols on the open east beach, clear of the shore's pieces", () => {
+        for (const kind of ["lighthouse", "pier", "windmill", "tower", "observatory"]) expect(p.pieces.filter((q) => q.kind === kind).length).toBeLessThanOrEqual(1);
+        expect(p.beach).toHaveLength(4);
+        for (const b of p.beach) {
+          expect(Math.abs(Math.atan2(b.z, b.x))).toBeLessThanOrEqual(0.551);
+          for (const q of p.pieces.filter((k) => k.coast)) expect(pieceDistance(q, b.x, b.z)).toBeGreaterThanOrEqual(q.footprint + 4 - 0.05);
+          for (const o of p.beach) if (o !== b) expect(Math.hypot(o.x - b.x, o.z - b.z)).toBeGreaterThanOrEqual(7 - 0.05);
+        }
+      });
+
       it("ends the land past the farthest district, then the beach, the water and the seabed", () => {
         for (const c of p.clusters) expect(Math.hypot(c.cx, c.cz) + c.r + 20).toBeLessThan(p.island.land);
         expect(p.island.land).toBeLessThan(p.island.walk);
@@ -193,6 +239,30 @@ describe("the summer plan", () => {
       });
     });
   }
+
+  it("puts all twelve kinds of set piece on the example's island, the lighthouse north, the pier east and the windmill west", () => {
+    expect(new Set(plan.pieces.map((q) => q.kind)).size).toBe(12);
+    const nearest = (bearing: number, coast: boolean) => {
+      const wedges = plan.pieces.filter((q) => q.coast === coast).map((q) => q.wedge);
+      return wedges.reduce((b, a) => (Math.abs(Math.atan2(Math.sin(a - bearing), Math.cos(a - bearing))) < Math.abs(Math.atan2(Math.sin(b - bearing), Math.cos(b - bearing))) ? a : b));
+    };
+    expect(plan.pieces.find((q) => q.kind === "lighthouse")!.wedge).toBe(nearest(-Math.PI / 2, true));
+    expect(plan.pieces.find((q) => q.kind === "pier")!.wedge).toBe(nearest(0, true));
+    expect(plan.pieces.find((q) => q.kind === "windmill")!.wedge).toBe(nearest(Math.PI, false));
+  });
+
+  it("hands the kinds out each once, then the ones that may repeat, by turns", () => {
+    const wedges = Array.from({ length: 9 }, (_, i) => -Math.PI + (i + 0.5) * ((2 * Math.PI) / 9));
+    const coast = wedgeKinds(wedges, true);
+    expect(new Set(coast).size).toBe(5);
+    expect(coast.filter((k) => k === "lighthouse" || k === "pier")).toHaveLength(2);
+    const inland = wedgeKinds(wedges, false);
+    expect(new Set(inland).size).toBe(7);
+    expect(inland.filter((k) => k === "windmill" || k === "tower" || k === "observatory")).toHaveLength(3);
+    // With two wedges the lighthouse takes the northern one and the pier the eastern; with one, the first in order takes it.
+    expect(wedgeKinds([0.1, -1.5], true)).toEqual(["pier", "lighthouse"]);
+    expect(wedgeKinds([0.1], true)).toEqual(["lighthouse"]);
+  });
 
   it("shows the example's arrival at least two districts' masts", () => {
     expect(mastsSeen(plan.spawn, plan.clusters.map((c) => c.mast)).inFrame).toBeGreaterThanOrEqual(2);

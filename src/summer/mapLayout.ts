@@ -12,6 +12,7 @@
 
    Pure data in, pure data out (no three.js, no DOM). mapLayout.test.ts checks every rule. */
 import type { WorldLayout } from "../data/layout";
+import { PIECE_INFO, PIECE_KINDS, type PieceKind } from "./pieces/kinds";
 
 /** The kid is about this tall; everything is sized from it. */
 export const KID = 1.8;
@@ -43,6 +44,11 @@ export const SPACING = {
 } as const;
 /** How far past the ring street's outer edge the market stalls stand; the town's flat ground ends a step behind them. */
 export const STALL_OUT = 3.4;
+
+/** The town's flat ground: the plaza, the ring street and the market stalls, out to a step behind them. */
+export function townRadius(shape: { street: { r: number; width: number } }): number {
+  return shape.street.r + shape.street.width / 2 + STALL_OUT + 3;
+}
 /** The lantern pylons on the monument's far side: their radius and bearings either side of the view. */
 const PYLONS = { r: 9.5, bearings: [-53, -19, 19, 53] } as const;
 /** The monument's paved pad. */
@@ -136,6 +142,19 @@ export interface IslandPlan {
   extent: number;
 }
 
+/** A set piece where it stands (what it looks like: pieces/models.ts). */
+export interface PiecePlan extends Facing {
+  kind: PieceKind;
+  coast: boolean;
+  /** The bearing of the wedge it stands in (radians, atan2(z, x)). */
+  wedge: number;
+  /** The ground it takes (a radius), and how far round it the ground is leveled for it (0 for none). */
+  footprint: number;
+  pad: number;
+  /** How far it reaches out along the way it faces beyond its footprint (the pier's deck over the water). */
+  reach: number;
+}
+
 export interface MapPlan {
   plaza: { r: number };
   street: { r: number; width: number };
@@ -150,8 +169,10 @@ export interface MapPlan {
   stalls: StallSpot[];
   posts: FingerpostSpot[];
   lamps: { plaza: Spot[]; roads: Spot[]; street: Spot[] };
-  /** Parasols and sandcastles on the east beach (where the sound turns to waves). */
+  /** Parasols and sandcastles on the east beach (where the sound turns to waves), clear of the coastal set pieces. */
   beach: Facing[];
+  /** The set pieces: one on the shore and one in the hills in each wedge between districts. */
+  pieces: PiecePlan[];
   critters: { cats: Facing; sloth: Facing };
 }
 
@@ -482,19 +503,17 @@ export function planFromLayout(layout: WorldLayout, districts: DisplayDistrict[]
   const water = round(land + SPACING.beach);
   const island: IslandPlan = { land, water, walk: round(water - 4), extent: round(water + 26) };
 
-  // Parasols and sandcastles on the east beach, between the grass and the water.
-  const beachR = (land + island.walk) / 2;
-  const beach: Facing[] = [-0.2, -0.07, 0.07, 0.2].map((a, i) => {
-    const p = spot(Math.cos(a) * beachR, Math.sin(a) * beachR);
-    return { ...p, facing: round(faceToward(p.x, p.z, 0, 0) + (i % 2 ? 0.3 : -0.3)) };
-  });
-
   // The cats sit beside the first stall; the sloth lounges on the grass in the gap nearest the west.
   const s0 = stalls[0] ?? { x: stallR, z: 0, ry: 0 };
   const catsXZ = spot(s0.x + Math.cos(s0.ry) * 3, s0.z - Math.sin(s0.ry) * 3);
   const west = gaps.reduce((b, a) => (Math.abs(wrapAngle(a - Math.PI)) < Math.abs(wrapAngle(b - Math.PI)) ? a : b), gaps[0] ?? Math.PI);
   const slothR = (streetR + SPACING.streetWidth / 2 + ring - clusters.reduce((m, c) => Math.max(m, c.r), 0)) / 2;
   const slothXZ = spot(Math.cos(west) * slothR, Math.sin(west) * slothR);
+
+  // The set pieces, one on the shore and one in the hills of each wedge; then the parasols and
+  // sandcastles on the east beach, between the grass and the water, clear of the shore's pieces.
+  const pieces = piecesFor({ gaps: gaps.map(wrapAngle), island, town: townRadius({ street: { r: streetR, width: SPACING.streetWidth } }), clusters, spokes, keepOff: [catsXZ, slothXZ] });
+  const beach = beachFor(island, pieces);
 
   return {
     plaza: { r: plazaR },
@@ -511,11 +530,150 @@ export function planFromLayout(layout: WorldLayout, districts: DisplayDistrict[]
     posts,
     lamps: { plaza: plazaLamps, roads: roadLamps, street: streetLamps },
     beach,
+    pieces,
     critters: {
       cats: { ...catsXZ, facing: faceToward(catsXZ.x, catsXZ.z, 0, 0) },
       sloth: { ...slothXZ, facing: faceToward(slothXZ.x, slothXZ.z, 0, 0) },
     },
   };
+}
+
+/* ---------------- set pieces ---------------- */
+
+/** How far up the beach from the grass's edge a coastal piece stands: room in front to walk along the water. */
+export const COAST_IN = 1.5;
+/** A cove behind a coastal piece (mapGround.coveAt): its size inland of the piece; its floor is level to FLAT of that, and its bank runs on to REACH. */
+export const COVE_BACK = 20;
+export const COVE_FLAT = 0.5;
+export const COVE_REACH = 1.6;
+/** How far the pier's deck reaches out to sea from where it stands. */
+const PIER_REACH = 34;
+
+/** How far (x, z) is from a piece: from its footprint's middle, or from its deck for one that reaches out to sea. */
+export function pieceDistance(p: Pick<PiecePlan, "x" | "z" | "facing" | "reach">, x: number, z: number): number {
+  if (!p.reach) return Math.hypot(x - p.x, z - p.z);
+  return segmentDistance(x, z, p.x, p.z, p.x + Math.sin(p.facing) * p.reach, p.z + Math.cos(p.facing) * p.reach);
+}
+
+/** The compass places of the landmarks: the lighthouse to the north (-z), the pier to the east, the windmill to the west. */
+const COMPASS: Partial<Record<PieceKind, number>> = { lighthouse: -Math.PI / 2, pier: 0, windmill: Math.PI };
+
+/**
+ * The kinds for the wedges at bearings `wedges`, coastal or inland: each landmark in the wedge nearest
+ * its compass point, then every other kind once in order, then the ones that may repeat, by turns.
+ */
+export function wedgeKinds(wedges: readonly number[], coast: boolean): (PieceKind | null)[] {
+  const kinds = PIECE_KINDS.filter((k) => PIECE_INFO[k].coast === coast);
+  const again = kinds.filter((k) => !PIECE_INFO[k].once);
+  const out: (PieceKind | null)[] = wedges.map(() => null);
+  for (const k of kinds) {
+    const bearing = COMPASS[k];
+    if (bearing === undefined) continue;
+    let best = -1;
+    wedges.forEach((a, i) => {
+      if (out[i] === null && (best < 0 || Math.abs(wrapAngle(a - bearing)) < Math.abs(wrapAngle(wedges[best] - bearing)))) best = i;
+    });
+    if (best >= 0) out[best] = k;
+  }
+  const rest = kinds.filter((k) => COMPASS[k] === undefined);
+  let next = 0;
+  let turn = 0;
+  const order = wedges.map((_, i) => i).sort((i, j) => wedges[i] - wedges[j]);
+  for (const i of order) {
+    if (out[i] !== null) continue;
+    if (next < rest.length) out[i] = rest[next++];
+    else if (again.length) out[i] = again[turn++ % again.length];
+  }
+  return out;
+}
+
+interface PieceGround {
+  gaps: readonly number[];
+  island: IslandPlan;
+  /** The town's flat ground's radius. */
+  town: number;
+  clusters: readonly ClusterPlan[];
+  spokes: readonly SpokePlan[];
+  /** Other things the inland pieces keep clear of (the animals). */
+  keepOff: readonly Spot[];
+}
+
+/**
+ * Where the set pieces stand. Each wedge between two districts gets one piece on the shore, in the
+ * middle of the wedge, a few steps up the beach and facing the sea, and one in the hills, facing the
+ * plaza: the spot along the wedge (or a little either side) with the most room, clear of the town,
+ * every district's paving, road and mast, the animals, the beach and every other piece. A wedge with
+ * no such spot goes without its inland piece.
+ */
+export function piecesFor(g: PieceGround): PiecePlan[] {
+  const { island } = g;
+  const out: PiecePlan[] = [];
+  const coastKinds = wedgeKinds(g.gaps, true);
+  g.gaps.forEach((a, i) => {
+    const kind = coastKinds[i];
+    if (!kind) return;
+    const r = island.land + COAST_IN;
+    const at = spot(Math.cos(a) * r, Math.sin(a) * r);
+    out.push({ ...at, facing: Math.atan2(Math.cos(a), Math.sin(a)), kind, coast: true, wedge: a, footprint: PIECE_INFO[kind].footprint, pad: PIECE_INFO[kind].pad, reach: kind === "pier" ? PIER_REACH : 0 });
+  });
+  const inlandKinds = wedgeKinds(g.gaps, false);
+  const masts = g.clusters.map((c) => c.mast);
+  g.gaps.forEach((a, i) => {
+    const kind = inlandKinds[i];
+    if (!kind) return;
+    const fp = PIECE_INFO[kind].footprint;
+    const want = island.land - 24;
+    let best: { x: number; z: number; score: number } | null = null;
+    for (let r = Math.ceil(g.town + 4 + fp); r <= island.land - 8 - fp; r += 1) {
+      for (const d of [0, 0.05, -0.05, 0.1, -0.1, 0.15, -0.15, 0.2, -0.2, 0.25, -0.25, 0.3, -0.3]) {
+        const b = a + d;
+        const x = Math.cos(b) * r;
+        const z = Math.sin(b) * r;
+        let room = Infinity;
+        for (const c of g.clusters) room = Math.min(room, Math.hypot(x - c.cx, z - c.cz) - c.r - DISTRICT_PAVING - 7);
+        for (const m of masts) room = Math.min(room, Math.hypot(x - m.x, z - m.z) - 4);
+        for (const s of g.spokes) room = Math.min(room, segmentDistance(x, z, s.ax, s.az, s.bx, s.bz) - ROAD_W / 2 - 3);
+        for (const k of g.keepOff) room = Math.min(room, Math.hypot(x - k.x, z - k.z) - 4);
+        for (const p of out) room = Math.min(room, pieceDistance(p, x, z) - p.footprint - (p.coast ? 4 : 6));
+        room -= fp;
+        if (room < 0) continue;
+        const score = Math.min(room, 4) - Math.abs(d) * 20 - Math.abs(r - want) * 0.1;
+        if (!best || score > best.score + 1e-9) best = { x, z, score };
+      }
+    }
+    if (!best) return;
+    const at = spot(best.x, best.z);
+    out.push({ ...at, facing: faceToward(at.x, at.z, 0, 0), kind, coast: false, wedge: a, footprint: fp, pad: PIECE_INFO[kind].pad, reach: 0 });
+  });
+  return out;
+}
+
+/**
+ * The parasols and sandcastles on the east beach, between the grass and the water: each as near as it
+ * can be to its own bearing in the open east, clear of the coastal pieces and of each other.
+ */
+export function beachFor(island: IslandPlan, pieces: readonly PiecePlan[]): Facing[] {
+  const r = (island.land + island.walk) / 2;
+  const shore = pieces.filter((p) => p.coast);
+  const out: Facing[] = [];
+  [-0.2, -0.07, 0.07, 0.2].forEach((want, i) => {
+    let best: Spot | null = null;
+    let bestD = Infinity;
+    for (let k = 0; k <= 110; k++) {
+      const a = -0.55 + k * 0.01;
+      const p = { x: Math.cos(a) * r, z: Math.sin(a) * r };
+      if (shore.some((q) => pieceDistance(q, p.x, p.z) < q.footprint + 4)) continue;
+      if (out.some((q) => Math.hypot(q.x - p.x, q.z - p.z) < 7)) continue;
+      if (Math.abs(a - want) < bestD) {
+        bestD = Math.abs(a - want);
+        best = p;
+      }
+    }
+    if (!best) return;
+    const at = spot(best.x, best.z);
+    out.push({ ...at, facing: round(faceToward(at.x, at.z, 0, 0) + (i % 2 ? 0.3 : -0.3)) });
+  });
+  return out;
 }
 
 /* ---------------- hopping ---------------- */

@@ -6,8 +6,9 @@
 // This file builds it: the terrain mesh and its painted texture, the sea around it, the scattered
 // town models (trees, bushes, rocks, grass, palms, lamp posts), our props from mapProps.ts
 // (pavilions, arches, masts, fingerposts, the Walking times board, stalls, beacons, bunting), the
-// beach props and critters, a BVH collider (terrain + prop boxes), the kid with the town's
-// controls, camera and sound, and the map overlay (mapOverlay.ts: monument, portal, pins, HUD).
+// set pieces round the rim (mapPieces.ts), the beach props and critters, a BVH collider (terrain +
+// prop boxes), the kid with the town's controls, camera and sound, and the map overlay
+// (mapOverlay.ts: monument, portal, pins, HUD).
 
 import {
   AnimationMixer,
@@ -28,7 +29,7 @@ import { gsap } from 'gsap';
 import { COMPANIES, DISTRICTS, PEOPLE } from '../data/catalog';
 import { layoutWorld, seededRandom } from '../data/layout';
 import { L } from '../site';
-import { GROUND_COLORS, SEA_Y, beachSpots, hillSide, islandHeight, scatter, seaSound } from './mapGround';
+import { GROUND_COLORS, SEA_Y, beachSpots, coveSand, hillSide, islandHeight, scatter, seaSound } from './mapGround';
 import { CAMERA, DISTRICT_PAVING, MONUMENT_PAD, ROAD_W, kidTheta, planFromLayout, type MapPlan } from './mapLayout';
 import { ROOF_KINDS, buildArch, buildBeacon, buildBoard, buildBunting, buildFingerpost, buildMast, buildPavilion, buildStall } from './mapProps';
 import { client } from './core/client';
@@ -45,6 +46,7 @@ import { makeInstanced } from './scene/helpers';
 import { Sky } from './scene/sky';
 import { Sea } from './scene/sea';
 import { buildMapOverlay } from './mapOverlay';
+import { buildPieces } from './mapPieces';
 import { cpuCanvas } from '../three/cpuCanvas';
 
 /** The people area's color on the island and in the HUD (never a district's). */
@@ -87,13 +89,20 @@ function paintGround(plan: MapPlan, extent: number): HTMLCanvasElement {
     ctx.ellipse(w(Math.cos(a) * r), w(Math.sin(a) * r), (4 + rand() * 16) * px, (3 + rand() * 10) * px, rand() * Math.PI, 0, Math.PI * 2);
     ctx.fill();
   }
-  // Hills a deeper green, the higher the darker.
+  // Hills a deeper green, the higher the darker; the coves' floors sandy toward the beach.
   const cell = 2.5;
-  ctx.fillStyle = C.hill;
   for (let z = -land; z < land; z += cell) {
     for (let x = -land; x < land; x += cell) {
+      const sand = coveSand(plan, x + cell / 2, z + cell / 2);
+      if (sand > 0.02) {
+        ctx.fillStyle = C.sand;
+        ctx.globalAlpha = Math.min(1, sand * 1.2);
+        ctx.fillRect(w(x), w(z), cell * px + 1, cell * px + 1);
+        continue;
+      }
       const h = islandHeight(plan, x + cell / 2, z + cell / 2);
       if (h < 1.8) continue;
+      ctx.fillStyle = C.hill;
       ctx.globalAlpha = Math.min(0.5, (h - 1.8) / 10);
       ctx.fillRect(w(x), w(z), cell * px + 1, cell * px + 1);
     }
@@ -453,6 +462,13 @@ export class MapScene extends BaseScene {
     });
     for (const s of plan.stalls) this.placeProp(buildStall(s.color), s.x, s.z, s.ry);
     for (const p of plan.posts) this.placeProp(buildFingerpost(p.text, p.color), p.x, p.z, p.facing);
+    // The set pieces round the island: one on the shore and one in the hills of each wedge.
+    {
+      const pieces = buildPieces(plan, (x, z) => this.groundY(x, z), this.still);
+      this.add(pieces.group);
+      this.colliderBoxes.push(...pieces.colliders);
+      this.propUpdates.push((t) => pieces.update(t));
+    }
     this.placeProp(
       buildBoard('Walking times', plan.board.rows.map((r) => ({ text: `${r.text} · ${r.seconds}s`, color: r.color, bearing: r.bearing }))),
       plan.board.x,
